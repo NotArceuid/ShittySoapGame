@@ -1,6 +1,6 @@
 import { SvelteMap } from "svelte/reactivity";
 import { InvokeableEvent } from "../Shared/Events";
-import { ReactiveText } from "../Shared/ReactiveText";
+import { ReactiveText } from "../Shared/ReactiveText.svelte.ts";
 
 export const UnlockUpgrades: InvokeableEvent<UpgradesKey> = new InvokeableEvent<UpgradesKey>();
 
@@ -25,7 +25,7 @@ UpgradesData.set(UpgradesKey.MaxBulk, {
 UpgradesData.set(UpgradesKey.SpeedUpgrade, {
   name: "It's too slow!!",
   description: () => new ReactiveText("Improves Producer Speed by 100%"),
-  maxCount: 1,
+  maxCount: 700,
   Requirements: [[() => new ReactiveText("Cost: 150"), () => true]],
   ShowCondition: [() => true]
 })
@@ -33,7 +33,7 @@ UpgradesData.set(UpgradesKey.SpeedUpgrade, {
 UpgradesData.set(UpgradesKey.QualityUpgrade, {
   name: "Not rich enough!!",
   description: () => new ReactiveText("Improves Producer Quality by 100%"),
-  maxCount: 1,
+  maxCount: 600,
   Requirements: [[() => new ReactiveText("Cost: 180"), () => true]],
   ShowCondition: [() => true]
 })
@@ -78,7 +78,7 @@ UpgradesData.set(UpgradesKey.Cat, {
   ShowCondition: [() => true]
 })
 
-interface IUpgrades {
+export interface IUpgrades {
   name: string,
   description: () => ReactiveText,
   unlocked?: boolean

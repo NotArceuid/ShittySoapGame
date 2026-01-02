@@ -1,12 +1,49 @@
+<script lang="ts">
+	import {
+		UpgradesData,
+		type IUpgrades,
+	} from "../../../Game/Soap/Upgrades.svelte";
+
+	let hoveredUpgrade = $state<IUpgrades | null>();
+	function hoverUpgrade(upgrade: IUpgrades | null) {
+		hoveredUpgrade = upgrade;
+	}
+
+	function buyUpgrades(upgrade: IUpgrades) {}
+</script>
+
 <div class="absolute m-2">
 	<h1 class="mt-auto">The tab where i bully you with upgrades >:)</h1>
-	<button>(0/1)</button>
-	<button>(0/1)</button>
-	<button>(0/700)</button>
-	<button>Not rich enough!! (0/600)</button>
-	<button>Do you have OCD? (0/1)</button>
-	<button>Promotions!! (0/1)</button>
-	<button>Hello orange soap (0/1)</button>
-	<button>Learn to eat red soap (0/1)</button>
-	<button>Buy a.. cat? (0/1)</button>
+
+	{#each UpgradesData as upgrade}
+		<button
+			onclick={() => buyUpgrades(upgrade[1])}
+			onmouseover={() => {
+				hoverUpgrade(upgrade[1]);
+			}}
+			onmouseout={() => {
+				hoverUpgrade(null);
+			}}
+			onfocus={() => {
+				hoverUpgrade(upgrade[1]);
+			}}
+			onblur={() => {
+				hoverUpgrade(upgrade[1]);
+			}}
+			>{upgrade[1].name} ({!upgrade[1].count ? 0 : upgrade[1].count}/{upgrade[1]
+				.maxCount})</button
+		>
+	{/each}
+
+	<!-- Bottom frag -->
+	<div class="mt-auto">
+		<span>
+			{#if hoveredUpgrade}
+				{hoveredUpgrade.description()}
+				({!hoveredUpgrade?.count
+					? 0
+					: hoveredUpgrade?.count}/{hoveredUpgrade?.maxCount})
+			{/if}
+		</span>
+	</div>
 </div>
