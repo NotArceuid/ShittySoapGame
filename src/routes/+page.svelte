@@ -81,23 +81,24 @@
 		<div class="absolute bottom-5 right-5">
 			<NotificationHandler />
 		</div>
+		{#if dev}
+			<h1>What</h1>
+			<div class="absolute -top-1">
+				<input
+					type="checkbox"
+					bind:checked={DevHacks.speedhack}
+					onchange={() => {
+						gameloop.stop();
+						gameloop = new GameLoop();
+						gameloop.start();
+					}}
+				/>
+				<input type="checkbox" bind:checked={DevHacks.skipMenu} />
+				<input type="checkbox" bind:checked={DevHacks.skipUnlock} />
+				<input type="checkbox" bind:checked={DevHacks.skipRequirements} />
+			</div>
+		{/if}
 	</div>
-	{#if dev}
-		<div class="absolute">
-			<input
-				type="checkbox"
-				bind:checked={DevHacks.speedhack}
-				onchange={() => {
-					gameloop.stop();
-					gameloop = new GameLoop();
-					gameloop.start();
-				}}
-			/>
-			<input type="checkbox" bind:checked={DevHacks.skipMenu} />
-			<input type="checkbox" bind:checked={DevHacks.skipUnlock} />
-			<input type="checkbox" bind:checked={DevHacks.skipRequirements} />
-		</div>
-	{/if}
 {:else}
 	<div class="flex items-center justify-center min-h-screen">
 		<div class="text-center">
