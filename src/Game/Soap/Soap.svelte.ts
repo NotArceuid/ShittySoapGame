@@ -6,7 +6,6 @@ export class Soap implements ISoapData {
   public Tier: number;
   public Amount: Decimal;
   public Quality: Decimal;
-  public SoapGain: Decimal;
   public Progress: Decimal;
   public MaxProgress: Decimal;
   public Unlocked: boolean;
@@ -16,7 +15,6 @@ export class Soap implements ISoapData {
     this.Tier = $state(data.Tier);
     this.Amount = $state(data.Amount);
     this.Quality = $state(data.Quality);
-    this.SoapGain = $state(data.SoapGain);
     this.Progress = $state(data.Progress);
     this.MaxProgress = $state(data.MaxProgress);
     this.Unlocked = $state(data.Unlocked);
@@ -29,14 +27,6 @@ export class Soap implements ISoapData {
   public Sell(amount: Decimal) {
     Player.Money = Player.Money.add(this.Quality.mul(amount));
     this.Amount = this.Amount.minus(amount);
-  }
-
-  public AddProgress(value: Decimal) {
-    this.Progress = this.Progress.add(value);
-    if (this.Progress.gte(this.MaxProgress)) {
-      this.Progress = Decimal.ZERO;
-      this.SoapMade(this.SoapGain);
-    }
   }
 
   public SoapMade(gain: Decimal) {
@@ -65,7 +55,6 @@ export interface ISoapData {
   Tier: number;
   Amount: Decimal;
   Quality: Decimal;
-  SoapGain: Decimal;
   Progress: Decimal;
   MaxProgress: Decimal;
   Unlocked: boolean;
@@ -80,6 +69,5 @@ export const SoapData: ISoapData[] = [
     Progress: Decimal.ZERO,
     MaxProgress: new Decimal(100),
     Unlocked: true,
-    SoapGain: Decimal.ONE
   }
 ]

@@ -2,20 +2,17 @@ import { SoapType } from "../../../Game/Soap/Soap.svelte";
 import { Player } from "../../../Game/Player.svelte";
 import { Decimal } from "../../../Game/Shared/BreakInfinity/Decimal.svelte";
 import { ExpPolynomial } from "../../../Game/Shared/Math";
+import { Multipliers } from "../../../Game/Shared/Multipliers";
 
 export class SoapProducer implements SoapProducerProps {
   public SoapType: SoapType;
-  public Speed: Decimal;
   public SpeedCount: number;
-  public Quality: Decimal;
   public QualityCount: number;
   public Unlocked: boolean;
   public SpeedFormula: ExpPolynomial;
   public QualityFormula: ExpPolynomial;
 
   constructor(soapType: SoapType) {
-    this.Speed = $state(Decimal.ONE);
-    this.Quality = $state(Decimal.ONE);
     this.SoapType = $state(soapType);
     this.Unlocked = $state(true);
     this.SpeedCount = $state(0);
@@ -33,13 +30,25 @@ export class SoapProducer implements SoapProducerProps {
     return this.QualityFormula.Integrate(this.QualityCount, this.QualityCount + amount);
   }
 
+  get Quality() {
+    return Multipliers.QualityMultiplier.Get().mul(1 + (this.QualityCount * 1.0) * Math.pow(2, Math.floor(this.QualityCount / 25))).div(3);
+  }
+
+  get Speed() {
+    return Multipliers.SpeedMultiplier.Get().mul(1 + (this.SpeedCount * 1.0) * Math.pow(2, Math.floor(this.SpeedCount / 25)));
+  }
+
   AddProgress() {
     let soap = Player.Soap.get(this.SoapType);
-    if (!soap) {
-      return
-    }
+    if (!soap) return;
 
-    soap.AddProgress(this.Speed);
+    soap.Progress = soap.Progress.add(this.Speed);
+
+    // Overexceeded logic here
+    if (soap.Progress.gte(soap.MaxProgress)) {
+      soap.Progress = Decimal.ZERO;
+      soap.SoapMade(this.Quality);
+    }
   }
 
   UpgradeQuality(amount: number) {

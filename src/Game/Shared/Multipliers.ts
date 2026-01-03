@@ -1,6 +1,6 @@
-import { Decimal } from "./Shared/BreakInfinity/Decimal.svelte";
+import { Decimal } from "./BreakInfinity/Decimal.svelte";
 
-interface Multiplier {
+export interface Multiplier {
   priority: number;
   value: () => Decimal;
   type: MultiplierType;
@@ -57,12 +57,6 @@ class MultiplierBase {
 }
 
 export const Multipliers = {
-  ActionSpeed: new MultiplierBase(),
-  GoldGain: new MultiplierBase(),
-  MaxGold: new MultiplierBase(),
-  HealthRegen: new MultiplierBase(),
-  MaxHealth: new MultiplierBase(),
-  StrengthMultiplier: new MultiplierBase(),
-  StrengthGainMultiplier: new MultiplierBase(),
-  StaminaGainMultiplier: new MultiplierBase(),
+  QualityMultiplier: new MultiplierBase(),
+  SpeedMultiplier: new MultiplierBase(),
 };

@@ -13,11 +13,6 @@
 	import Howtfdoiplay from "./Pages/guide/howtfdoiplay.svelte";
 	import Cat from "./Pages/Cat/Cat.svelte";
 	import NotificationHandler from "../Components/Common/NotificationHandler.svelte";
-	import {
-		AchievementKey,
-		InvokeAchievement,
-		UnlockAchievement,
-	} from "../Game/Achievements/Achievements.svelte.ts";
 	import Achievements from "./Pages/Achievements/Achievements.svelte";
 
 	let gameRunning = true;
