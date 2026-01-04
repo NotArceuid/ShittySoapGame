@@ -33,7 +33,7 @@ export class Soap implements ISoapData {
 }
 
 export enum SoapPages {
-  Sell, Produce, Upgrades
+  Sell, Produce, Upgrades, Foundry
 }
 
 export enum SoapType {

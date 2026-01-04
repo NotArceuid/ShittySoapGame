@@ -5,7 +5,6 @@ import { Decimal } from "../Shared/BreakInfinity/Decimal.svelte.ts";
 import { ExpPolynomial } from "../Shared/Math.ts";
 import { Player } from "../Player.svelte.ts";
 import { SaveSystem } from "../Saves.ts";
-import { count, log } from "console";
 
 export const UnlockUpgrades: InvokeableEvent<UpgradesKey> = new InvokeableEvent<UpgradesKey>();
 export const UpgradesData: SvelteMap<UpgradesKey, BaseUpgrade> = new SvelteMap<UpgradesKey, BaseUpgrade>();

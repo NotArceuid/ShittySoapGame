@@ -83,6 +83,7 @@ class PlayerClass implements ISaveable {
       curSoap.Progress = data.progress;
       curSoap.Unlocked = data.unlocked;
       curSoap.Amount = data.amount;
+      this._player.Soaps.set(data.type, curSoap);
     })
   }
 }
