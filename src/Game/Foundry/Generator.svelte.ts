@@ -2,7 +2,7 @@ import { SvelteMap } from "svelte/reactivity";
 import { SaveSystem } from "../Saves";
 import { InvokeableEvent } from "../Shared/Events";
 import { ReactiveText } from "../Shared/ReactiveText.svelte";
-import type { IFoundryInfo } from "./Foundry.svelte";
+import type { IUpgradesInfo } from "../../routes/Components/UpgradesInfo.svelte";
 
 export const UnlockGenerators: InvokeableEvent<GeneratorsKey> = new InvokeableEvent<GeneratorsKey>();
 export const GeneratorsData: SvelteMap<GeneratorsKey, BaseGenerator> = new SvelteMap<GeneratorsKey, BaseGenerator>();
@@ -11,7 +11,7 @@ export enum GeneratorsKey {
   ChargeSpeed, ChargeCapacity
 }
 
-export abstract class BaseGenerator implements IFoundryInfo {
+export abstract class BaseGenerator implements IUpgradesInfo {
   getMax: () => number = () => { return 1 }
   abstract name: string;
   abstract description: () => ReactiveText;

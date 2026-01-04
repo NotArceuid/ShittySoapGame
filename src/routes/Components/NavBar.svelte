@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MainPageHandler, Pages } from "../../page.svelte";
+	import { MainPageHandler, Pages } from "../page.svelte";
 </script>
 
 <div id="navbar">

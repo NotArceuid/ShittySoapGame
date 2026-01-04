@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { CollapsibleCard } from "svelte5-collapsible";
 	import { slide } from "svelte/transition";
-	import { Bulk, Player } from "../../../Game/Player.svelte";
+	import { Bulk, Player } from "../../Game/Player.svelte";
 
 	let selectedStyle = `bg-gray-200`;
 	function SwitchBulk(bulk: Bulk) {

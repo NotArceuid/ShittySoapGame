@@ -3,7 +3,7 @@
 		AchievementsData,
 		UnlockAchievement,
 		type IAchievement,
-	} from "../../../Game/Achievements/Achievements.svelte.ts";
+	} from "../../Game/Achievements/Achievements.svelte.ts";
 
 	let data = $state<IAchievement>();
 	let visible = $state(false);
