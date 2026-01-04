@@ -3,23 +3,47 @@ import { Player } from "../../../Game/Player.svelte";
 import { Decimal } from "../../../Game/Shared/BreakInfinity/Decimal.svelte";
 import { ExpPolynomial } from "../../../Game/Shared/Math";
 import { Multipliers } from "../../../Game/Shared/Multipliers";
+import { SaveSystem, type ISaveable } from "../../../Game/Saves";
 
-export class SoapProducer implements SoapProducerProps {
+export class SoapProducer implements SoapProducerProps, ISaveable {
   public SoapType: SoapType;
   public SpeedCount: number;
   public QualityCount: number;
+  public Tier: number;
   public Unlocked: boolean;
   public SpeedFormula: ExpPolynomial;
   public QualityFormula: ExpPolynomial;
 
   constructor(soapType: SoapType) {
     this.SoapType = $state(soapType);
+    this.saveKey = $state(this.SoapType);
     this.Unlocked = $state(true);
+    this.Tier = $state(0);
     this.SpeedCount = $state(0);
     this.QualityCount = $state(0);
 
     this.SpeedFormula = new ExpPolynomial(new Decimal(4), new Decimal(1.15));
     this.QualityFormula = new ExpPolynomial(new Decimal(2), new Decimal(1.17));
+
+    SaveSystem.SaveCallback(this.saveKey, () => this.getSaveData());
+    SaveSystem.LoadCallback(this.saveKey, (data) => this.loadSaveData(data as SoapProducerProps));
+  }
+
+  saveKey: string;
+  getSaveData(): unknown {
+    return {
+      SpeedCount: this.SpeedCount,
+      QualityCount: this.QualityCount,
+      Unlocked: this.Unlocked,
+      Tier: this.Tier,
+    }
+  }
+
+  loadSaveData(data: SoapProducerProps): void {
+    this.SpeedCount = data.SpeedCount;
+    this.QualityCount = data.QualityCount;
+    this.Unlocked = data.Unlocked;
+    this.Tier = data.Tier;
   }
 
   GetSpeedCost(amount: number) {
@@ -72,11 +96,18 @@ export class SoapProducer implements SoapProducerProps {
     this.SpeedCount = this.SpeedCount + amount;
     this.Speed.add(amount);
   }
+
+  TierUp() {
+    if (this.SpeedCount > 1000) {
+      this.Tier++;
+    }
+  }
 }
 
 export interface SoapProducerProps {
   SoapType: SoapType;
-  Speed: Decimal;
-  Quality: Decimal;
+  SpeedCount: number;
+  QualityCount: number;
+  Tier: number;
   Unlocked: boolean;
 }

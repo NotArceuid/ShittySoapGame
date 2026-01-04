@@ -3,7 +3,6 @@
 	import { Update } from "../../../Game/Game.svelte";
 	import { Bulk, Player } from "../../../Game/Player.svelte";
 	import { SoapProducer } from "./SoapProducer.svelte.ts";
-	import { log } from "console";
 
 	let { type }: { type: SoapType } = $props();
 	let producer = $derived(new SoapProducer(type));
@@ -120,8 +119,8 @@
 							Cost: {producer.GetSpeedCost(speedCostAmt).format()}
 						</div></button
 					>
-					<button
-						>Rank Up <div>(1/1000)</div></button
+					<button onclick={producer.TierUp}
+						>Rank Up <div>({producer.SpeedCount}/1000)</div></button
 					>
 				</div>
 			</div>

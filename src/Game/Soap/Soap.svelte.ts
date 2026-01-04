@@ -3,7 +3,6 @@ import { Decimal } from "../Shared/BreakInfinity/Decimal.svelte";
 
 export class Soap implements ISoapData {
   public Type: SoapType;
-  public Tier: number;
   public Amount: Decimal;
   public Quality: Decimal;
   public Progress: Decimal;
@@ -12,7 +11,6 @@ export class Soap implements ISoapData {
 
   constructor(data: ISoapData) {
     this.Type = $state(data.Type);
-    this.Tier = $state(data.Tier);
     this.Amount = $state(data.Amount);
     this.Quality = $state(data.Quality);
     this.Progress = $state(data.Progress);
@@ -53,7 +51,6 @@ export enum SoapType {
 
 export interface ISoapData {
   Type: SoapType;
-  Tier: number;
   Amount: Decimal;
   Quality: Decimal;
   Progress: Decimal;
@@ -64,7 +61,6 @@ export interface ISoapData {
 export const SoapData: ISoapData[] = [
   {
     Type: SoapType.Red,
-    Tier: 0,
     Amount: Decimal.ZERO,
     Quality: Decimal.ONE,
     Progress: Decimal.ZERO,
@@ -73,7 +69,6 @@ export const SoapData: ISoapData[] = [
   },
   {
     Type: SoapType.Orange,
-    Tier: 0,
     Amount: Decimal.ZERO,
     Quality: Decimal.ONE,
     Progress: Decimal.ZERO,
@@ -82,7 +77,6 @@ export const SoapData: ISoapData[] = [
   },
   {
     Type: SoapType.Yellow,
-    Tier: 0,
     Amount: Decimal.ZERO,
     Quality: Decimal.ONE,
     Progress: Decimal.ZERO,
@@ -91,7 +85,6 @@ export const SoapData: ISoapData[] = [
   },
   {
     Type: SoapType.Green,
-    Tier: 0,
     Amount: Decimal.ZERO,
     Quality: Decimal.ONE,
     Progress: Decimal.ZERO,
@@ -100,7 +93,6 @@ export const SoapData: ISoapData[] = [
   },
   {
     Type: SoapType.Blue,
-    Tier: 0,
     Amount: Decimal.ZERO,
     Quality: Decimal.ONE,
     Progress: Decimal.ZERO,
@@ -109,7 +101,6 @@ export const SoapData: ISoapData[] = [
   },
   {
     Type: SoapType.Indigo,
-    Tier: 0,
     Amount: Decimal.ZERO,
     Quality: Decimal.ONE,
     Progress: Decimal.ZERO,
@@ -118,7 +109,6 @@ export const SoapData: ISoapData[] = [
   },
   {
     Type: SoapType.Violet,
-    Tier: 0,
     Amount: Decimal.ZERO,
     Quality: Decimal.ONE,
     Progress: Decimal.ZERO,
@@ -127,7 +117,6 @@ export const SoapData: ISoapData[] = [
   },
   {
     Type: SoapType.White,
-    Tier: 0,
     Amount: Decimal.ZERO,
     Quality: Decimal.ONE,
     Progress: Decimal.ZERO,
@@ -136,7 +125,6 @@ export const SoapData: ISoapData[] = [
   },
   {
     Type: SoapType.Black,
-    Tier: 0,
     Amount: Decimal.ZERO,
     Quality: Decimal.ONE,
     Progress: Decimal.ZERO,
@@ -145,7 +133,6 @@ export const SoapData: ISoapData[] = [
   },
   {
     Type: SoapType.Rainbow,
-    Tier: 0,
     Amount: Decimal.ZERO,
     Quality: Decimal.ONE,
     Progress: Decimal.ZERO,
@@ -153,3 +140,10 @@ export const SoapData: ISoapData[] = [
     Unlocked: false,
   },
 ]
+
+export interface SoapSaveData {
+  type: SoapType,
+  progress: Decimal,
+  unlocked: boolean,
+  amount: Decimal
+}

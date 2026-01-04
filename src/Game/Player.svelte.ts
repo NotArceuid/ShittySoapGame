@@ -1,8 +1,6 @@
-import { Soap, SoapData, SoapType } from "./Soap/Soap.svelte.ts";
-import { Update } from "./Game.svelte.ts";
-import { SaveSystem, type Saveable } from "./Saves.ts";
+import { Soap, SoapData, SoapType, type SoapSaveData } from "./Soap/Soap.svelte.ts";
+import { SaveSystem, type ISaveable } from "./Saves.ts";
 import { Decimal } from "./Shared/BreakInfinity/Decimal.svelte";
-import { UpgradesData, UpgradesKey } from "./Soap/Upgrades.svelte.ts";
 import { SvelteMap } from "svelte/reactivity";
 
 interface IPlayer {
@@ -13,7 +11,7 @@ interface IPlayer {
   Bulk: Bulk;
 }
 
-class PlayerClass implements Saveable {
+class PlayerClass implements ISaveable {
   _player = $state<IPlayer>({
     Name: "Player",
     Money: new Decimal(0),
@@ -58,35 +56,47 @@ class PlayerClass implements Saveable {
 
   saveKey: string = "player_data";
   getSaveData(): unknown {
+    let soap: SoapSaveData[] = [];
+    this.Soap.forEach((v, k) => {
+      soap.push({
+        type: k,
+        progress: v.Progress,
+        unlocked: v.Unlocked,
+        amount: v.Amount,
+      })
+    })
+
     return {
       Name: this.Name,
       Money: this.Money,
-      Soaps: this.Soap,
+      Soaps: soap,
     };
   }
 
   loadSaveData(data: IPlayer): void {
     this._player.Name = data.Name;
     this._player.Money = data.Money;
-    this._player.Soaps = data.Soaps;
-  }
 
-  onLoadComplete(): void { }
+    let soap = data.Soaps as unknown as SoapSaveData[];
+    soap.forEach(data => {
+      let curSoap = this._player.Soaps.get(data.type)!;
+      curSoap.Progress = data.progress;
+      curSoap.Unlocked = data.unlocked;
+      curSoap.Amount = data.amount;
+    })
+  }
 }
+
+export const Player = new PlayerClass();
+SaveSystem.SaveCallback(Player.saveKey, () => {
+  return Player.getSaveData();
+});
+
+SaveSystem.LoadCallback(Player.saveKey, (data) => {
+  Player.loadSaveData(data as IPlayer);
+});
 
 // Yes, this is some real shitty code right here
 export enum Bulk {
   One, Ten, TwoFive, Max, Juanzerozeo
 }
-
-export const Player = new PlayerClass();
-Update.add(() => {
-
-});
-
-SaveSystem.SaveCallback(Player.saveKey, () => {
-  return Player.getSaveData();
-});
-SaveSystem.LoadCallback(Player.saveKey, (data) => {
-  Player.loadSaveData(data as IPlayer);
-});

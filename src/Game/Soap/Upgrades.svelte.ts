@@ -4,6 +4,8 @@ import { ReactiveText } from "../Shared/ReactiveText.svelte.ts";
 import { Decimal } from "../Shared/BreakInfinity/Decimal.svelte.ts";
 import { ExpPolynomial } from "../Shared/Math.ts";
 import { Player } from "../Player.svelte.ts";
+import { SaveSystem } from "../Saves.ts";
+import { count, log } from "console";
 
 export const UnlockUpgrades: InvokeableEvent<UpgradesKey> = new InvokeableEvent<UpgradesKey>();
 export const UpgradesData: SvelteMap<UpgradesKey, BaseUpgrade> = new SvelteMap<UpgradesKey, BaseUpgrade>();
@@ -23,7 +25,7 @@ export abstract class BaseUpgrade {
   count: number = $state(0)
 
   getMax?: () => number;
-  unlocked?: boolean;
+  unlocked: boolean = $state(false);
   buyAmount?: number;
 }
 
@@ -155,3 +157,38 @@ UpgradesData.set(UpgradesKey.TierUp, new TierUpUpgrade());
 UpgradesData.set(UpgradesKey.OrangeSoap, new OrangeSoapUpgrade());
 UpgradesData.set(UpgradesKey.EatRedSoap, new EatRedSoapUpgrade());
 UpgradesData.set(UpgradesKey.Cat, new CatUpgrade());
+
+const saveKey = "upgrades";
+SaveSystem.SaveCallback(saveKey, () => SaveData());
+
+interface UpgradeSaveData {
+  upgradesKey: UpgradesKey;
+  count: number;
+  unlocked: boolean;
+}
+
+function SaveData() {
+  let upgrades: UpgradeSaveData[] = [];
+  UpgradesData.forEach((v, k) => {
+    upgrades.push({
+      upgradesKey: k,
+      count: v.count,
+      unlocked: v.unlocked,
+    })
+  })
+
+  return {
+    Upgrades: upgrades
+  }
+}
+
+SaveSystem.LoadCallback(saveKey, (data) => LoadData(data as UpgradeSaveData[]));
+function LoadData(data: UpgradeSaveData[]) {
+  data.forEach((ele) => {
+    let currUpgrade = UpgradesData.get(ele.upgradesKey)!;
+    currUpgrade.count = ele.count;
+    currUpgrade.unlocked = ele.unlocked;
+
+    UpgradesData.set(ele.upgradesKey, currUpgrade);
+  })
+}
