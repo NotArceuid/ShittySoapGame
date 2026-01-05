@@ -21,14 +21,14 @@
 	}
 </script>
 
-<div>
+<div class="w-full h-full flex items-center align-middle flex-col">
 	{#if upgrade}
 		<h1>
 			{upgrade.name}
 			({upgrade.count}/{upgrade.maxCount})
 		</h1>
 		<h1 class="mb-2">{upgrade.description()}</h1>
-		<button class={canBuy} onclick={buyUpgrades}>
+		<button class=" ml-auto mr-auto {canBuy}" onclick={buyUpgrades}>
 			<div>
 				<div>Cost: {upgrade.Requirements[0]()}</div>
 			</div>

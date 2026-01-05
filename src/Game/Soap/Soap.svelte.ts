@@ -21,7 +21,9 @@ export class Soap implements ISoapData {
   }
 
   public CanSell(amount: Decimal | number): boolean {
-    return this.Amount.gt(amount);
+    // equality check with 0 can be skipped here because selling by zero is 0,
+    // if negative, then it's the user's problem :)
+    return this.Amount.gte(amount);
   }
 
   public Sell(amount: Decimal | number) {

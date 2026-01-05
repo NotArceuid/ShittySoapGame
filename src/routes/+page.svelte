@@ -87,9 +87,7 @@
 						MainLoop.restart();
 					}}
 				/>
-				<input type="checkbox" bind:checked={DevHacks.skipMenu} />
 				<input type="checkbox" bind:checked={DevHacks.skipUnlock} />
-				<input type="checkbox" bind:checked={DevHacks.skipRequirements} />
 			</div>
 		{/if}
 	</div>

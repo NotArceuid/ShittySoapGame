@@ -11,7 +11,7 @@ export const UnlockUpgrades: InvokeableEvent<UpgradesKey> = new InvokeableEvent<
 export const UpgradesData: SvelteMap<UpgradesKey, BaseUpgrade> = new SvelteMap<UpgradesKey, BaseUpgrade>();
 
 export enum UpgradesKey {
-  Hold, SellButton, Bulk, SpeedUpgrade,
+  HoldSell, Bulk, SpeedUpgrade,
   QualityUpgrade, OCD, TierUp, OrangeSoap,
   EatRedSoap, Foundry, Cat
 }
@@ -31,18 +31,12 @@ export abstract class BaseUpgrade implements IUpgradesInfo {
   unlocked: boolean = $state(false);
   buyAmount: number = $state(0);
 }
-class HoldUpgrade extends BaseUpgrade {
-  name = "Hold to sell";
-  description = () => new ReactiveText("Unlocks the ability to sell soap by holding the mouse button ");
-  maxCount = 1;
-  Requirements = [() => new ReactiveText("Cost: 25"), () => Player.Money.gte(25)] as [() => ReactiveText, () => boolean];
-  ShowCondition = () => true;
-}
+
 class HoldButtonUpgrade extends BaseUpgrade {
   name = "Mouse broken?";
-  description = () => new ReactiveText("Unlock the ability to sell by holding the [S] key (this works anywhere btw)");
+  description = () => new ReactiveText("Unlock the ability to sell by holding the [S] key (this works anywhere btw) ");
   maxCount = 1;
-  Requirements = [() => new ReactiveText("Cost: 75"), () => Player.Money.gte(75)] as [() => ReactiveText, () => boolean];
+  Requirements = [() => new ReactiveText("25"), () => Player.Money.gte(25)] as [() => ReactiveText, () => boolean];
   ShowCondition = () => true;
 }
 class SpeedUpgrade extends BaseUpgrade {
@@ -139,8 +133,7 @@ class CatUpgrade extends BaseUpgrade {
   ShowCondition = () => true;
 }
 
-UpgradesData.set(UpgradesKey.Hold, new HoldUpgrade());
-UpgradesData.set(UpgradesKey.SellButton, new HoldButtonUpgrade());
+UpgradesData.set(UpgradesKey.HoldSell, new HoldButtonUpgrade());
 UpgradesData.set(UpgradesKey.SpeedUpgrade, new SpeedUpgrade());
 UpgradesData.set(UpgradesKey.QualityUpgrade, new QualityUpgrade());
 UpgradesData.set(UpgradesKey.Bulk, new BulkUpgrade());

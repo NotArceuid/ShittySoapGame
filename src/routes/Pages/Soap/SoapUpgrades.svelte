@@ -14,7 +14,7 @@
 	<div class="flex flex-wrap overflow-scroll">
 		{#each UpgradesData as upgrade}
 			<button
-				class="{currUpgrade?.name == upgrade[1].name ? 'bg-gray-200' : ''} "
+				class="{currUpgrade?.name == upgrade[1].name ? 'bg-gray-100' : ''} "
 				onclick={() => hoverUpgrade(upgrade[1] as IUpgradesInfo)}
 				>{upgrade[1].name} ({upgrade[1].count}/{upgrade[1].maxCount})</button
 			>

@@ -44,7 +44,7 @@ export class GameLoop {
   constructor(options: GameLoopOptions = {}) {
     this.state = GameloopState.STOPPED;
     this.options = {
-      step: 500 / (DevHacks.speedhack ? 100 : 10),
+      step: 500 / 10,
       maxUpdates: 300,
       ...options,
     };
@@ -126,7 +126,7 @@ export class GameLoop {
 
   restart() {
     this.stop()
-    this.options.step = 500 / (DevHacks.speedhack ? 100 : 10);
+    this.options.step = 500 / (DevHacks.speedhack ? 30 : 10);
     this.start()
   }
 }
