@@ -8,7 +8,7 @@ interface IPlayer {
   Money: Decimal;
   SC: number;
   Soaps: SvelteMap<SoapType, Soap>;
-  Bulk: Bulk;
+  BulkAmount: number;
 }
 
 class PlayerClass implements ISaveable {
@@ -17,7 +17,7 @@ class PlayerClass implements ISaveable {
     Money: new Decimal(0),
     SC: 0,
     Soaps: new SvelteMap<SoapType, Soap>(),
-    Bulk: Bulk.One,
+    BulkAmount: 1,
   });
 
   constructor() {
@@ -30,12 +30,12 @@ class PlayerClass implements ISaveable {
       })
   }
 
-  get Bulk() {
-    return this._player.Bulk;
+  get BulkAmount() {
+    return this._player.BulkAmount;
   }
 
-  set Bulk(value) {
-    this._player.Bulk = value;
+  set BulkAmount(value) {
+    this._player.BulkAmount = value;
   }
 
   get Name() {
@@ -61,6 +61,7 @@ class PlayerClass implements ISaveable {
       soap.push({
         type: k,
         progress: v.Progress,
+        producedAmount: v.ProducedAmount,
         unlocked: v.Unlocked,
         amount: v.Amount,
       })
@@ -83,6 +84,7 @@ class PlayerClass implements ISaveable {
       curSoap.Progress = data.progress;
       curSoap.Unlocked = data.unlocked;
       curSoap.Amount = data.amount;
+      curSoap.ProducedAmount = data.producedAmount;
       this._player.Soaps.set(data.type, curSoap);
     })
   }
@@ -96,8 +98,3 @@ SaveSystem.SaveCallback(Player.saveKey, () => {
 SaveSystem.LoadCallback(Player.saveKey, (data) => {
   Player.loadSaveData(data as IPlayer);
 });
-
-// Yes, this is some real shitty code right here
-export enum Bulk {
-  One, Ten, TwoFive, Max, Juanzerozeo
-}

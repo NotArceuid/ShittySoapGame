@@ -1,34 +1,15 @@
 <script lang="ts">
 	import type { Soap } from "../../../Game/Soap/Soap.svelte";
-	import { Bulk, Player } from "../../../Game/Player.svelte";
-	import { Decimal } from "../../../Game/Shared/BreakInfinity/Decimal.svelte";
+	import { Player } from "../../../Game/Player.svelte";
 	import {
 		UpgradesData,
 		UpgradesKey,
 	} from "../../../Game/Soap/Upgrades.svelte";
+	import { Decimal } from "../../../Game/Shared/BreakInfinity/Decimal.svelte";
 
 	let { soap }: { soap: Soap } = $props();
-	let amount = $state(Decimal.ONE);
-	let can = $derived(amount.lt(soap.Amount) ? "" : "bg-gray-100");
-	$effect(() => {
-		switch (Player.Bulk) {
-			case Bulk.One:
-				amount = Decimal.ONE;
-				break;
-			case Bulk.Ten:
-				amount = new Decimal(10);
-				break;
-			case Bulk.TwoFive:
-				amount = new Decimal(25);
-				break;
-			case Bulk.Juanzerozeo:
-				amount = new Decimal(100);
-				break;
-			case Bulk.Max:
-				amount = soap.Amount;
-				break;
-		}
-	});
+	let amount = $derived(Decimal.min(Player.BulkAmount, soap.Amount));
+	let can = $derived(soap.Amount.lt(amount) ? "" : "bg-gray-100");
 
 	// 0 - sell
 	// 1 - eat
@@ -41,7 +22,6 @@
 	);
 
 	function Sell(): void {
-		if (soap.Amount.lt(amount)) return;
 		if (soap.CanSell(amount)) {
 			soap.Sell(amount);
 		}

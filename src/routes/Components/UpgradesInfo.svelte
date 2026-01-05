@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Render } from "../../Game/Game.svelte.ts";
-	import { Bulk, Player } from "../../Game/Player.svelte.ts";
+	import { Player } from "../../Game/Player.svelte.ts";
 	import type { IUpgradesInfo } from "./UpgradesInfo.svelte.ts";
 
 	let { upgrade }: { upgrade?: IUpgradesInfo } = $props();
@@ -12,25 +12,8 @@
 
 	let amount = $state(1);
 	$effect(() => {
-		if (!upgrade) return;
-		switch (Player.Bulk) {
-			case Bulk.One:
-				amount = 1;
-				break;
-			case Bulk.Ten:
-				amount = 10;
-				break;
-			case Bulk.TwoFive:
-				amount = 25;
-				break;
-			case Bulk.Juanzerozeo:
-				amount = 100;
-				break;
-			case Bulk.Max:
-				if (upgrade.getMax) amount = upgrade.getMax();
-				break;
-		}
-
+		if (!upgrade || !upgrade.getMax) return;
+		upgrade.buyAmount = Math.min(upgrade.getMax(), Player.BulkAmount);
 		upgrade.buyAmount = amount;
 	});
 	function buyUpgrades() {
@@ -47,7 +30,7 @@
 		<h1 class="mb-2">{upgrade.description()}</h1>
 		<button class={canBuy} onclick={buyUpgrades}>
 			<div>
-				<div>{upgrade.Requirements[0]()}</div>
+				<div>Cost: {upgrade.Requirements[0]()}</div>
 			</div>
 		</button>
 	{/if}

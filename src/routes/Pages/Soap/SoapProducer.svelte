@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { SoapType } from "../../../Game/Soap/Soap.svelte.ts";
-	import { Render, Update } from "../../../Game/Game.svelte";
-	import { Bulk, Player } from "../../../Game/Player.svelte";
+	import { Update } from "../../../Game/Game.svelte";
+	import { Player } from "../../../Game/Player.svelte";
 	import { SoapProducer } from "./SoapProducer.svelte.ts";
-	import { log } from "console";
 
 	let { type }: { type: SoapType } = $props();
 	let producer = $derived(new SoapProducer(type));
@@ -15,44 +14,21 @@
 	let qualityCostAmt = $state(1);
 
 	$effect(() => {
-		switch (Player.Bulk) {
-			case Bulk.One:
-				speedCostAmt = 1;
-				qualityCostAmt = 1;
-				break;
+		const speedMax = producer.SpeedFormula.BuyMax(
+			Player.Money,
+			producer.SpeedCount,
+		);
 
-			case Bulk.Ten:
-				speedCostAmt = 10;
-				qualityCostAmt = 10;
-				break;
+		const speedAmt = speedMax >= 1 ? speedMax : 1;
 
-			case Bulk.TwoFive:
-				speedCostAmt = 25;
-				qualityCostAmt = 25;
-				break;
-			case Bulk.Max:
-				const speedMax = producer.SpeedFormula.BuyMax(
-					Player.Money,
-					producer.SpeedCount,
-				);
-				const qualityMax = producer.QualityFormula.BuyMax(
-					Player.Money,
-					producer.QualityCount,
-				);
+		const qualityMax = producer.QualityFormula.BuyMax(
+			Player.Money,
+			producer.QualityCount,
+		);
+		const qualityAmt = qualityMax >= 1 ? qualityMax : 1;
 
-				speedCostAmt = speedMax >= 1 ? speedMax : 1;
-				qualityCostAmt = qualityMax >= 1 ? qualityMax : 1;
-				break;
-
-			case Bulk.Juanzerozeo:
-				speedCostAmt = 100;
-				qualityCostAmt = 100;
-				break;
-			default:
-				speedCostAmt = 1;
-				qualityCostAmt = 1;
-				break;
-		}
+		speedCostAmt = Math.min(Player.BulkAmount, speedAmt);
+		qualityCostAmt = Math.min(Player.BulkAmount, qualityAmt);
 	});
 
 	let qualityCanBuy = $derived(
@@ -62,6 +38,12 @@
 	);
 	let speedCanBuy = $derived(
 		producer.GetSpeedCost(speedCostAmt).gt(Player.Money)
+			? "bg-gray-100 hover:cursor-default"
+			: "hover:cursor-pointer",
+	);
+
+	let canRankUp = $derived(
+		producer.Soap?.Amount.lt(producer.RankUpReq)
 			? "bg-gray-100 hover:cursor-default"
 			: "hover:cursor-pointer",
 	);
@@ -108,7 +90,7 @@
 							Cost: {producer.GetSpeedCost(speedCostAmt).format()}
 						</div></button
 					>
-					<button onclick={producer.TierUp}
+					<button onclick={producer.TierUp} class={canRankUp}
 						>Rank Up <div>
 							({soap?.ProducedAmount}/ {producer.RankUpReq})
 						</div></button

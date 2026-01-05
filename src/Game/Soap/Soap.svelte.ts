@@ -20,11 +20,11 @@ export class Soap implements ISoapData {
     this.Unlocked = $state(data.Unlocked);
   }
 
-  public CanSell(amount: Decimal): boolean {
-    return amount <= this.Amount;
+  public CanSell(amount: Decimal | number): boolean {
+    return this.Amount.gt(amount);
   }
 
-  public Sell(amount: Decimal) {
+  public Sell(amount: Decimal | number) {
     Player.Money = Player.Money.add(this.Quality.mul(amount));
     this.Amount = this.Amount.minus(amount);
   }

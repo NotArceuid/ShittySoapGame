@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { CollapsibleCard } from "svelte5-collapsible";
 	import { slide } from "svelte/transition";
-	import { Bulk, Player } from "../../Game/Player.svelte";
+	import { Player } from "../../Game/Player.svelte";
+	import { UpgradesData, UpgradesKey } from "../../Game/Soap/Upgrades.svelte";
+	import { DevHacks } from "../../Game/Game.svelte";
 
-	let selectedStyle = `bg-gray-200`;
-	function SwitchBulk(bulk: Bulk) {
-		Player.Bulk = bulk;
-	}
+	let maxBulkAmt = $derived(UpgradesData.get(UpgradesKey.Bulk)!.count + 1);
 </script>
 
 <div class="border-l w-2/12">
@@ -26,39 +25,21 @@
 			{/snippet}
 		</CollapsibleCard>
 	</div>
-	<div class="w-full flex flex-col text-center border-t" id="bulk">
-		<h1>Bulk</h1>
-		<div class="flex flex-row m-2 mt-0">
-			<button
-				onclick={() => SwitchBulk(Bulk.One)}
-				class={Player.Bulk == Bulk.One ? selectedStyle : ""}>1</button
-			>
-			<button
-				onclick={() => SwitchBulk(Bulk.Ten)}
-				class={Player.Bulk == Bulk.Ten ? selectedStyle : ""}>10</button
-			>
-			<button
-				onclick={() => SwitchBulk(Bulk.TwoFive)}
-				class={Player.Bulk == Bulk.TwoFive ? selectedStyle : ""}>25</button
-			>
-			<button
-				onclick={() => SwitchBulk(Bulk.Juanzerozeo)}
-				class={Player.Bulk == Bulk.Juanzerozeo ? selectedStyle : ""}>💯</button
-			>
-			<button
-				onclick={() => SwitchBulk(Bulk.Max)}
-				class={Player.Bulk == Bulk.Max ? selectedStyle : ""}>Max</button
-			>
+	{#if UpgradesData.get(UpgradesKey.Bulk)!.count > 0 || DevHacks.skipUnlock}
+		<div class="w-full flex flex-col text-center border-t">
+			<h1>Bulk Limit</h1>
+			<div class="relative w-full px-4">
+				<div class="flex flex-row h-full align-middle items-center">
+					<input
+						type="range"
+						min="1"
+						max={maxBulkAmt}
+						bind:value={Player.BulkAmount}
+						class="w-full h-2 bg-gray-200 cursor-pointer"
+					/>
+					<h1>{Player.BulkAmount}</h1>
+				</div>
+			</div>
 		</div>
-	</div>
+	{/if}
 </div>
-
-<style>
-	#bulk button {
-		margin-right: 0.3rem;
-		width: 2.5rem;
-		height: 1.5rem;
-		padding: 0;
-		font-size: 0.8rem;
-	}
-</style>

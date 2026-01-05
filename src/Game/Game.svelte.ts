@@ -133,9 +133,7 @@ export class GameLoop {
 
 export const DevHacks = $state({
   speedhack: false,
-  skipMenu: false,
   skipUnlock: false,
-  skipRequirements: false,
 });
 
 export const MainLoop = new GameLoop();

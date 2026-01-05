@@ -60,10 +60,3 @@ export function LoadColors(): void {
     }
   }
 }
-
-function TurnAllHacks() {
-  DevHacks.speedhack = true;
-  DevHacks.skipMenu = true;
-  DevHacks.skipUnlock = true;
-  DevHacks.skipRequirements = true;
-}
