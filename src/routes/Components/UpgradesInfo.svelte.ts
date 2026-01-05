@@ -8,4 +8,5 @@ export interface IUpgradesInfo {
 
   getMax?: () => number;
   buyAmount: number;
+  buy: () => void;
 }

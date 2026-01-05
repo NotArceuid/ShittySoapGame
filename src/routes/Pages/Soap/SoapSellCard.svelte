@@ -6,6 +6,7 @@
 		UpgradesData,
 		UpgradesKey,
 	} from "../../../Game/Soap/Upgrades.svelte";
+	import { log } from "console";
 
 	let { soap }: { soap: Soap } = $props();
 	let amount = $state(Decimal.ONE);
@@ -31,36 +32,62 @@
 		}
 	});
 
+	// 0 - sell
+	// 1 - eat
+	// 2 - offer
+	// fck la, no enums in compoennets
+	let holdTimer: NodeJS.Timeout | null = null;
+	const HOLD_DELAY = 300;
 	let holdUpgradeUnlocked = $derived(
-		UpgradesData.get(UpgradesKey.Hold)!.count > 0,
+		UpgradesData.get(UpgradesKey.Hold)!.count == 0,
 	);
 
-	function Sell() {
+	function Sell(): void {
 		if (soap.CanSell(amount)) {
 			soap.Sell(amount);
 		}
 	}
 
-	function HoldSell() {
-		if (holdUpgradeUnlocked) {
-			Sell();
+	function start(event: MouseEvent | TouchEvent, type: number): void {
+		log(holdUpgradeUnlocked + " " + (event instanceof MouseEvent) + " ");
+		if (
+			holdUpgradeUnlocked &&
+			event instanceof MouseEvent &&
+			event.button === 0
+		) {
+			holdTimer = setInterval(() => {
+				switch (type) {
+					case 0:
+						Sell();
+						break;
+					case 1:
+						Eat();
+						break;
+					case 2:
+						Offer();
+						break;
+				}
+			}, HOLD_DELAY);
 		}
 	}
 
-	function Consume() {}
-
-	function HoldConsume() {
-		if (holdUpgradeUnlocked) {
-			Consume();
+	function end(): void {
+		if (holdTimer) {
+			clearTimeout(holdTimer);
+			holdTimer = null;
 		}
 	}
-	function Offer() {}
 
-	function HoldOffer() {
-		if (holdUpgradeUnlocked) {
-			Offer();
-		}
-	}
+	function Eat(): void {}
+	function Offer(): void {}
+
+	$effect(() => {
+		return () => {
+			if (holdTimer) {
+				clearTimeout(holdTimer);
+			}
+		};
+	});
 </script>
 
 <div class="border m-2 p-2 min-w-5/12">
@@ -70,16 +97,39 @@
 		<h1 class="ml-auto">Quality: {soap.Quality}</h1>
 	</div>
 	<div class="flex flex-row">
-		<button class="w-full {can}" onmousedown={HoldSell} onclick={Sell}
-			>Sell {amount.format()}x</button
+		<button
+			class="w-full {can}"
+			onclick={Sell}
+			onmousedown={(e) => start(e, 0)}
+			ontouchstart={(e) => start(e, 0)}
+			onmouseup={end}
+			onmouseleave={end}
+			ontouchend={end}
 		>
+			Sell {amount.format()}x
+		</button>
+
 		<button
 			class="w-full {can} mr-1 ml-1"
-			onclick={Consume}
-			onmousedown={HoldConsume}>Eat {amount.format()}x</button
+			onclick={Eat}
+			onmousedown={(e) => start(e, 1)}
+			ontouchstart={(e) => start(e, 1)}
+			onmouseup={end}
+			onmouseleave={end}
+			ontouchend={end}
 		>
-		<button class="w-full {can}" onclick={Offer} onmousedown={HoldOffer}
-			>Offer {amount.format()}x</button
+			Eat {amount.format()}x
+		</button>
+		<button
+			class="w-full {can}"
+			onclick={Offer}
+			onmousedown={(e) => start(e, 2)}
+			ontouchstart={(e) => start(e, 2)}
+			onmouseup={end}
+			onmouseleave={end}
+			ontouchend={end}
 		>
+			Offer {amount.format()}x
+		</button>
 	</div>
 </div>

@@ -17,6 +17,10 @@ export enum UpgradesKey {
 }
 
 export abstract class BaseUpgrade implements IUpgradesInfo {
+  buy = () => {
+    this.count = Math.min(this.buyAmount, this.maxCount);
+  }
+
   abstract name: string;
   abstract description: () => ReactiveText;
   abstract maxCount: number;

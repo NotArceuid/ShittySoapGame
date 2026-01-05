@@ -1,8 +1,5 @@
 <script lang="ts">
-	import {
-		UpgradesData,
-		type BaseUpgrade,
-	} from "../../../Game/Soap/Upgrades.svelte";
+	import { UpgradesData } from "../../../Game/Soap/Upgrades.svelte";
 	import type { IUpgradesInfo } from "../../Components/UpgradesInfo.svelte.ts";
 	import UpgradesInfo from "../../Components/UpgradesInfo.svelte";
 
@@ -10,8 +7,6 @@
 	function hoverUpgrade(_upgrade: IUpgradesInfo) {
 		currUpgrade = _upgrade;
 	}
-
-	function buyUpgrades(upgrade: BaseUpgrade) {}
 </script>
 
 <div class="absolute m-2 w-full flex flex-col h-8/12">

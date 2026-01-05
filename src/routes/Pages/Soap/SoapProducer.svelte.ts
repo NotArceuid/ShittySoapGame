@@ -23,7 +23,7 @@ export class SoapProducer implements SoapProducerProps, ISaveable {
     this.QualityCount = $state(0);
 
     this.SpeedFormula = new ExpPolynomial(new Decimal(4), new Decimal(1.15));
-    this.QualityFormula = new ExpPolynomial(new Decimal(2), new Decimal(1.17));
+    this.QualityFormula = new ExpPolynomial(new Decimal(1.8), new Decimal(1.17));
 
     SaveSystem.SaveCallback(this.saveKey, () => this.getSaveData());
     SaveSystem.LoadCallback(this.saveKey, (data) => this.loadSaveData(data as SoapProducerProps));

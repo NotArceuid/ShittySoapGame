@@ -33,6 +33,9 @@
 
 		upgrade.buyAmount = amount;
 	});
+	function buyUpgrades() {
+		if (upgrade) upgrade.buy();
+	}
 </script>
 
 <div>
@@ -42,7 +45,7 @@
 			({upgrade.count}/{upgrade.maxCount})
 		</h1>
 		<h1 class="mb-2">{upgrade.description()}</h1>
-		<button class={canBuy}>
+		<button class={canBuy} onclick={buyUpgrades}>
 			<div>
 				<div>{upgrade.Requirements[0]()}</div>
 			</div>
