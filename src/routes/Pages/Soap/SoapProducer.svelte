@@ -56,7 +56,7 @@
 </script>
 
 <div class="border">
-	<div class="m-2 p-2">
+	<div class="m-2">
 		{#if producer.Unlocked}
 			<div class=" mb-2 flex flex-row">
 				<h1 class="text-nowrap mt-auto">Making: {type}</h1>

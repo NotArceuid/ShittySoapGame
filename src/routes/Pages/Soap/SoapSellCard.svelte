@@ -15,7 +15,7 @@
 	);
 
 	let holdUpgradeUnlocked = $derived(
-		UpgradesData.get(UpgradesKey.HoldSell)!.count > 0,
+		UpgradesData.get(UpgradesKey.HoldButtonUpgrade)!.count > 0,
 	);
 
 	function Sell(): void {
@@ -29,7 +29,7 @@
 
 	onMount(() => {
 		document.addEventListener("keydown", (ev) => {
-			if (ev.code !== "KeyS" && holdUpgradeUnlocked) return;
+			if (ev.code !== "KeyS" || !holdUpgradeUnlocked) return;
 			Sell();
 		});
 	});
@@ -46,11 +46,13 @@
 			Sell {amount.format()}x
 		</button>
 
-		<button class="w-full {can} mr-1 ml-1" onclick={Eat}>
-			Eat {amount.format()}x
-		</button>
-		<button class="w-full {can}" onclick={Offer}>
-			Offer {amount.format()}x
-		</button>
+		{#if false}
+			<button class="w-full {can} mr-1 ml-1" onclick={Eat}>
+				Eat {amount.format()}x
+			</button>
+			<button class="w-full {can}" onclick={Offer}>
+				Offer {amount.format()}x
+			</button>
+		{/if}
 	</div>
 </div>

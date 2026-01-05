@@ -9,19 +9,19 @@
 	}
 </script>
 
-<div class="absolute m-2 w-full flex flex-col h-8/12">
-	<h1 class="">The tab where i bully you with upgrades >:)</h1>
-	<div class="flex flex-wrap overflow-scroll">
+<div class="absolute m-2 w-full flex flex-col h-9/12">
+	<div class="flex flex-wrap">
 		{#each UpgradesData as upgrade}
 			<button
-				class="{currUpgrade?.name == upgrade[1].name ? 'bg-gray-100' : ''} "
+				class="w-64 h-12 shrink-0 m-2"
+				class:bg-gray-100={currUpgrade?.name == upgrade[1].name}
 				onclick={() => hoverUpgrade(upgrade[1] as IUpgradesInfo)}
 				>{upgrade[1].name} ({upgrade[1].count}/{upgrade[1].maxCount})</button
 			>
 		{/each}
 	</div>
 	<!-- Bottom frag -->
-	<div class="mt-auto pt-4 flex flex-col items-center content-center">
+	<div class="mt-auto">
 		<UpgradesInfo upgrade={currUpgrade} />
 	</div>
 </div>

@@ -5,7 +5,9 @@
 	import { UpgradesData, UpgradesKey } from "../../Game/Soap/Upgrades.svelte";
 	import { DevHacks } from "../../Game/Game.svelte";
 
-	let maxBulkAmt = $derived(UpgradesData.get(UpgradesKey.Bulk)!.count + 1);
+	let maxBulkAmt = $derived(
+		UpgradesData.get(UpgradesKey.BulkUpgrade)!.count + 1,
+	);
 </script>
 
 <div class="border-l w-2/12">
@@ -25,7 +27,7 @@
 			{/snippet}
 		</CollapsibleCard>
 	</div>
-	{#if UpgradesData.get(UpgradesKey.Bulk)!.count > 0 || DevHacks.skipUnlock}
+	{#if UpgradesData.get(UpgradesKey.BulkUpgrade)!.count > 0 || DevHacks.skipUnlock}
 		<div class="w-full flex flex-col text-center border-t">
 			<h1>Bulk Limit</h1>
 			<div class="relative w-full px-4">

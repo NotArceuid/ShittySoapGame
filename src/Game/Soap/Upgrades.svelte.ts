@@ -11,9 +11,9 @@ export const UnlockUpgrades: InvokeableEvent<UpgradesKey> = new InvokeableEvent<
 export const UpgradesData: SvelteMap<UpgradesKey, BaseUpgrade> = new SvelteMap<UpgradesKey, BaseUpgrade>();
 
 export enum UpgradesKey {
-  HoldSell, Bulk, SpeedUpgrade,
-  QualityUpgrade, OCD, TierUp, OrangeSoap,
-  EatRedSoap, Foundry, Cat
+  HoldButtonUpgrade, QualityUpgrade, SpeedUpgrade, RedSoapAutoSeller,
+  BulkUpgrade, RedTierUp, EatRedSoapUpgrade, OrangeSoapUpgrade,
+  UnlockFoundry, CatPrestige
 }
 
 export abstract class BaseUpgrade implements IUpgradesInfo {
@@ -37,30 +37,6 @@ class HoldButtonUpgrade extends BaseUpgrade {
   description = () => new ReactiveText("Unlock the ability to sell by holding the [S] key (this works anywhere btw) ");
   maxCount = 1;
   Requirements = [() => new ReactiveText("25"), () => Player.Money.gte(25)] as [() => ReactiveText, () => boolean];
-  ShowCondition = () => true;
-}
-class SpeedUpgrade extends BaseUpgrade {
-  name = "It's too slow!!";
-  description = () => new ReactiveText("Improves Producer Speed by 100%");
-  unlocked = true;
-  maxCount = 700;
-  buyAmount = $state(1);
-  private speedCost = new ExpPolynomial(new Decimal(100), new Decimal(1.15));
-
-  Requirements = [
-    () => {
-      return new ReactiveText(`Cost: ${this.speedCost.Integrate(this.count, this.count + this.buyAmount).format()}`)
-    },
-    () => {
-      return Player.Money.gte(this.speedCost.Integrate(this.count, this.count + this.buyAmount)) && this.count < this.maxCount
-    }
-  ] as [() => ReactiveText, () => boolean];
-
-  getMax = () => {
-    let amt = this.speedCost.BuyMax(Player.Money, this.count);
-    return amt == -1 ? 1 : amt;
-  }
-
   ShowCondition = () => true;
 }
 class QualityUpgrade extends BaseUpgrade {
@@ -87,21 +63,55 @@ class QualityUpgrade extends BaseUpgrade {
 
   ShowCondition = () => true;
 }
+class SpeedUpgrade extends BaseUpgrade {
+  name = "It's too slow!!";
+  description = () => new ReactiveText("Improves Producer Speed by 100%");
+  unlocked = true;
+  maxCount = 700;
+  buyAmount = $state(1);
+  private speedCost = new ExpPolynomial(new Decimal(100), new Decimal(1.15));
+
+  Requirements = [
+    () => {
+      return new ReactiveText(`Cost: ${this.speedCost.Integrate(this.count, this.count + this.buyAmount).format()}`)
+    },
+    () => {
+      return Player.Money.gte(this.speedCost.Integrate(this.count, this.count + this.buyAmount)) && this.count < this.maxCount
+    }
+  ] as [() => ReactiveText, () => boolean];
+
+  getMax = () => {
+    let amt = this.speedCost.BuyMax(Player.Money, this.count);
+    return amt == -1 ? 1 : amt;
+  }
+
+  ShowCondition = () => true;
+}
+class RedSoapAutoSellter extends BaseUpgrade {
+  name = "Red soap autosell";
+  description = () => new ReactiveText("Happy now? This upgrades fires 1 time every 5s and will decrease by 0.5s with each subsequence upgrade.. hehe");
+  maxCount = 9;
+  get cost(): Decimal {
+    return new Decimal(250).mul(new Decimal(2).pow(UpgradesData.get(UpgradesKey.RedSoapAutoSeller)!.count));
+  }
+  Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
+  ShowCondition = () => true;
+}
 class BulkUpgrade extends BaseUpgrade {
   name = "I Want More!!!";
   description = () => new ReactiveText("Increases Bulk Limit by 1 per level");
   maxCount = 9;
   get cost(): Decimal {
-    return new Decimal(1000).pow(UpgradesData.get(UpgradesKey.Bulk)!.count + 1);
+    return new Decimal(10000).mul(new Decimal(100).pow(UpgradesData.get(UpgradesKey.BulkUpgrade)!.count));
   }
   Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
   ShowCondition = () => true;
 }
-class TierUpUpgrade extends BaseUpgrade {
-  name = "Promotions";
-  description = () => new ReactiveText("Unlock Tier up");
+class RedTierUp extends BaseUpgrade {
+  name = "Red Promotions";
+  description = () => new ReactiveText("Mini wall lol");
   maxCount = 1;
-  Requirements = [() => new ReactiveText("Cost: 100,000"), () => Player.Money.gt(100000)] as [() => ReactiveText, () => boolean];
+  Requirements = [() => new ReactiveText(new Decimal(100_000).format()), () => Player.Money.gt(100_000)] as [() => ReactiveText, () => boolean];
   ShowCondition = () => true;
 }
 class EatRedSoapUpgrade extends BaseUpgrade {
@@ -119,7 +129,7 @@ class OrangeSoapUpgrade extends BaseUpgrade {
   ShowCondition = () => true;
 }
 class UnlockFoundry extends BaseUpgrade {
-  name = "Unlocks the Foundry feature!!";
+  name = "Unlock Foundry";
   description = () => new ReactiveText("The last push before cat prestige >:)");
   maxCount = 1;
   Requirements = [() => new ReactiveText("Cost: 1b"), () => Player.Money.gt("1e12")] as [() => ReactiveText, () => boolean];
@@ -133,15 +143,16 @@ class CatUpgrade extends BaseUpgrade {
   ShowCondition = () => true;
 }
 
-UpgradesData.set(UpgradesKey.HoldSell, new HoldButtonUpgrade());
+UpgradesData.set(UpgradesKey.HoldButtonUpgrade, new HoldButtonUpgrade());
 UpgradesData.set(UpgradesKey.SpeedUpgrade, new SpeedUpgrade());
 UpgradesData.set(UpgradesKey.QualityUpgrade, new QualityUpgrade());
-UpgradesData.set(UpgradesKey.Bulk, new BulkUpgrade());
-UpgradesData.set(UpgradesKey.TierUp, new TierUpUpgrade());
-UpgradesData.set(UpgradesKey.OrangeSoap, new OrangeSoapUpgrade());
-UpgradesData.set(UpgradesKey.EatRedSoap, new EatRedSoapUpgrade());
-UpgradesData.set(UpgradesKey.Foundry, new UnlockFoundry());
-UpgradesData.set(UpgradesKey.Cat, new CatUpgrade());
+UpgradesData.set(UpgradesKey.RedSoapAutoSeller, new RedSoapAutoSellter());
+UpgradesData.set(UpgradesKey.BulkUpgrade, new BulkUpgrade());
+UpgradesData.set(UpgradesKey.RedTierUp, new RedTierUp());
+UpgradesData.set(UpgradesKey.OrangeSoapUpgrade, new OrangeSoapUpgrade());
+UpgradesData.set(UpgradesKey.EatRedSoapUpgrade, new EatRedSoapUpgrade());
+UpgradesData.set(UpgradesKey.UnlockFoundry, new UnlockFoundry());
+UpgradesData.set(UpgradesKey.CatPrestige, new CatUpgrade());
 
 const saveKey = "upgrades";
 SaveSystem.SaveCallback(saveKey, () => SaveData());
