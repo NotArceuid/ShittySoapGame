@@ -4,6 +4,8 @@ import { Decimal } from "../../../Game/Shared/BreakInfinity/Decimal.svelte";
 import { ExpPolynomial } from "../../../Game/Shared/Math";
 import { Multipliers } from "../../../Game/Shared/Multipliers";
 import { SaveSystem, type ISaveable } from "../../../Game/Saves";
+import { count, log } from "console";
+import { UpgradesData, UpgradesKey } from "../../../Game/Soap/Upgrades.svelte";
 
 export class SoapProducer implements SoapProducerProps, ISaveable {
   public SoapType: SoapType;
@@ -55,15 +57,29 @@ export class SoapProducer implements SoapProducerProps, ISaveable {
   }
 
   get Quality() {
-    return Multipliers.QualityMultiplier.Get().mul(1 + (this.QualityCount * 1.0) * Math.pow(2, Math.floor(this.QualityCount / 25))).div(3);
+    return Multipliers.QualityMultiplier.Get()
+      .mul(1 + (this.QualityCount * 1.0) * Math.pow(2, Math.floor(this.QualityCount / 25))).div(3)
+      .mul(UpgradesData.get(UpgradesKey.TierUp)!.count > 1 ? this.Tier * 7.5 : 1);
   }
 
   get Speed() {
-    return Multipliers.SpeedMultiplier.Get().mul(1 + (this.SpeedCount * 1.0) * Math.pow(2, Math.floor(this.SpeedCount / 25)));
+    return Multipliers.SpeedMultiplier.Get()
+      // Multiplier from upgrade
+      .mul(1 + (this.SpeedCount * 1.0) * Math.pow(2, Math.floor(this.SpeedCount / 25)))
+      // Multiplier from tier
+      .div(UpgradesData.get(UpgradesKey.TierUp)!.count > 1 ? this.Tier * 5 : 1);
+  }
+
+  get RankUpReq() {
+    return new Decimal(1000).mul(new Decimal(10).pow(this.Tier));
+  }
+
+  get Soap() {
+    return Player.Soap.get(this.SoapType);
   }
 
   AddProgress() {
-    let soap = Player.Soap.get(this.SoapType);
+    let soap = this.Soap;
     if (!soap) return;
 
     soap.Progress = soap.Progress.add(this.Speed);
@@ -98,9 +114,11 @@ export class SoapProducer implements SoapProducerProps, ISaveable {
   }
 
   TierUp() {
-    if (this.SpeedCount > 1000) {
-      this.Tier++;
-    }
+    let soap = this.Soap;
+    if (!soap || soap.ProducedAmount.lt(this.RankUpReq))
+      return;
+
+    this.Tier++;
   }
 }
 

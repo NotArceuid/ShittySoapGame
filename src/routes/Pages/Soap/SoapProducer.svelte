@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { SoapType } from "../../../Game/Soap/Soap.svelte.ts";
-	import { Update } from "../../../Game/Game.svelte";
+	import { Render, Update } from "../../../Game/Game.svelte";
 	import { Bulk, Player } from "../../../Game/Player.svelte";
 	import { SoapProducer } from "./SoapProducer.svelte.ts";
+	import { log } from "console";
 
 	let { type }: { type: SoapType } = $props();
 	let producer = $derived(new SoapProducer(type));
 
-	let soap = $derived(Player.Soap.get(producer.SoapType));
+	let soap = $derived(Player.Soap.get(type)!);
 	let width = $derived(soap?.Progress.div(soap.MaxProgress).mul(100));
 
 	let speedCostAmt = $state(1);
@@ -56,7 +57,7 @@
 
 	let qualityCanBuy = $state("");
 	let speedCanBuy = $state("");
-	$effect(() => {
+	Render.add(() => {
 		qualityCanBuy =
 			producer.GetQualityCost(qualityCostAmt) > Player.Money
 				? "bg-gray-100 hover:cursor-default"
@@ -79,22 +80,13 @@
 	<div class="m-2 p-2">
 		{#if producer.Unlocked}
 			<div class=" mb-2 flex flex-row">
-				<h1 class="flex items-center content-center">Making:</h1>
-				<select class="border p-1 ml-2" bind:value={type}>
-					{#each Player.Soap as k}
-						{#if k[1].Unlocked}
-							<option value={k[0]}>{k[1].Type}</option>
-						{/if}
-					{/each}
-				</select>
+				<h1 class="text-nowrap mt-auto">Making: {type}</h1>
 
 				<div class="w-11/12 h-full ml-4 flex flex-col relative">
-					{#if soap}
-						<h1 class="ml-auto">
-							({soap?.Progress.format()} /
-							{soap?.MaxProgress.format()})
-						</h1>
-					{/if}
+					<h1 class="ml-auto">
+						({soap.Progress.format()} /
+						{soap.MaxProgress.format()})
+					</h1>
 					<div class="h-2">
 						<div class="bg-blue-300 absolute h-2" style="width: {width}%"></div>
 						<div class="border w-full h-full z-10"></div>
@@ -120,7 +112,9 @@
 						</div></button
 					>
 					<button onclick={producer.TierUp}
-						>Rank Up <div>({producer.SpeedCount}/1000)</div></button
+						>Rank Up <div>
+							({soap?.ProducedAmount}/ {producer.RankUpReq})
+						</div></button
 					>
 				</div>
 			</div>
