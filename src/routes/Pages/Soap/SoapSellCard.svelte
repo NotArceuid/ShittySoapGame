@@ -35,7 +35,7 @@
 	});
 </script>
 
-<div class="border m-2 p-2 min-w-5/12">
+<div class="border m-2 p-2 min-w-md">
 	<h1>{soap.Type}</h1>
 	<div class="flex flex-row">
 		<h1>Amount: {soap.Amount.format()}</h1>
@@ -46,10 +46,13 @@
 			Sell {amount.format()}x
 		</button>
 
-		{#if false}
+		{#if UpgradesData.get(UpgradesKey.EatRedSoapUpgrade)!.count > 0}
 			<button class="w-full {can} mr-1 ml-1" onclick={Eat}>
 				Eat {amount.format()}x
 			</button>
+		{/if}
+
+		{#if UpgradesData.get(UpgradesKey.CatPrestige)!.count > 0}
 			<button class="w-full {can}" onclick={Offer}>
 				Offer {amount.format()}x
 			</button>

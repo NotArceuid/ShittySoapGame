@@ -85,7 +85,7 @@
 					>
 					<button onclick={producer.TierUp} class={canRankUp}
 						>Rank Up <div>
-							({soap?.ProducedAmount}/ {producer.RankUpReq})
+							({soap?.ProducedAmount.format()}/ {producer.RankUpReq.format()})
 						</div></button
 					>
 				</div>

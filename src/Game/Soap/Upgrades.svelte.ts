@@ -12,7 +12,7 @@ export const UpgradesData: SvelteMap<UpgradesKey, BaseUpgrade> = new SvelteMap<U
 
 export enum UpgradesKey {
   HoldButtonUpgrade, QualityUpgrade, SpeedUpgrade, RedSoapAutoSeller,
-  BulkUpgrade, RedTierUp, EatRedSoapUpgrade, OrangeSoapUpgrade,
+  BulkUpgrade, EatRedSoapUpgrade, OrangeSoapUpgrade,
   UnlockFoundry, CatPrestige
 }
 
@@ -47,7 +47,7 @@ class QualityUpgrade extends BaseUpgrade {
 
   private qualityCost = new ExpPolynomial(new Decimal(100), new Decimal(1.17));
   get cost() {
-    return this.qualityCost.Integrate(this.count, this.count + this.buyAmount);
+    return this.qualityCost.Integrate(this.count, this.count + this.buyAmount).round();
   }
   Requirements = [
     () => {
@@ -73,7 +73,7 @@ class SpeedUpgrade extends BaseUpgrade {
 
   private speedCost = new ExpPolynomial(new Decimal(100), new Decimal(1.15));
   get cost() {
-    return this.speedCost.Integrate(this.count, this.count + this.buyAmount);
+    return this.speedCost.Integrate(this.count, this.count + this.buyAmount).round();
   }
 
   Requirements = [
@@ -125,13 +125,6 @@ class BulkUpgrade extends BaseUpgrade {
   Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
   ShowCondition = () => true;
 }
-class RedTierUp extends BaseUpgrade {
-  name = "Red Promotions";
-  description = () => new ReactiveText("Mini wall lol");
-  maxCount = 1;
-  Requirements = [() => new ReactiveText(new Decimal(100_000).format()), () => Player.Money.gt(100_000)] as [() => ReactiveText, () => boolean];
-  ShowCondition = () => true;
-}
 class EatRedSoapUpgrade extends BaseUpgrade {
   name = "Learn to eat red soap";
   description = () => new ReactiveText("Why would you do that?");
@@ -166,7 +159,6 @@ UpgradesData.set(UpgradesKey.SpeedUpgrade, new SpeedUpgrade());
 UpgradesData.set(UpgradesKey.QualityUpgrade, new QualityUpgrade());
 UpgradesData.set(UpgradesKey.RedSoapAutoSeller, new RedSoapAutoSellter());
 UpgradesData.set(UpgradesKey.BulkUpgrade, new BulkUpgrade());
-UpgradesData.set(UpgradesKey.RedTierUp, new RedTierUp());
 UpgradesData.set(UpgradesKey.OrangeSoapUpgrade, new OrangeSoapUpgrade());
 UpgradesData.set(UpgradesKey.EatRedSoapUpgrade, new EatRedSoapUpgrade());
 UpgradesData.set(UpgradesKey.UnlockFoundry, new UnlockFoundry());

@@ -16,7 +16,7 @@
 		pageHandler.RegisterPages(SoapPages.Upgrades, elements[2] as HTMLElement);
 		pageHandler.RegisterPages(SoapPages.Foundry, elements[3] as HTMLElement);
 
-		pageHandler.ChangePage(SoapPages.Foundry);
+		pageHandler.ChangePage(SoapPages.Produce);
 	});
 </script>
 

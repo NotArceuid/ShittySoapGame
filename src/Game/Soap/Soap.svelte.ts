@@ -32,7 +32,7 @@ export class Soap implements ISoapData {
   }
 
   public SoapMade(gain: Decimal) {
-    this.Amount = this.Amount.add(gain);
+    this.ProducedAmount = this.ProducedAmount.add(gain);
   }
 }
 
