@@ -1,14 +1,16 @@
 <script lang="ts">
-	import { SoapType } from "../../../Game/Soap/Soap.svelte.ts";
-	import { Update } from "../../../Game/Game.svelte";
+	import { Soaps, type SoapType } from "../../../Game/Soap/Soap.svelte.ts";
+	import { DevHacks, Update } from "../../../Game/Game.svelte";
 	import { Player } from "../../../Game/Player.svelte";
 	import { SoapProducer } from "./SoapProducer.svelte.ts";
+	import SoapSellTab from "./SoapSellTab.svelte";
 
 	let { type }: { type: SoapType } = $props();
 	let producer = $derived(new SoapProducer(type));
 
-	let soap = $derived(Player.Soap.get(type)!);
+	let soap = $derived(Soaps.get(type)!);
 	let width = $derived(soap?.Progress.div(soap.MaxProgress).mul(100));
+	let rankUpUnlocked = $state(false);
 
 	const speedCostAmt = $derived(
 		Math.min(
@@ -51,55 +53,67 @@
 <div class="border">
 	<div class="m-2">
 		{#if producer.Unlocked}
-			<div class=" mb-2 flex flex-row">
-				<h1 class="text-nowrap mt-auto">Making: {type}</h1>
+			<div class="flex flex-row">
+				<div class="flex flex-col">
+					<div class=" mb-2 flex flex-row">
+						<div class="w-full h-full flex flex-col relative">
+							<div class="flex flex-row">
+								<h1 class="mr-auto">Red Soap ({soap.Amount.format()}x)</h1>
+								<h1 class="ml-auto">
+									({soap.Progress.format()} /
+									{soap.MaxProgress.format()})
+								</h1>
+							</div>
+							<div class="h-2">
+								<div
+									class="bg-blue-300 absolute h-2"
+									style="width: {width}%"
+								></div>
+								<div class="border w-full h-full z-10"></div>
+							</div>
+						</div>
+					</div>
 
-				<div class="w-11/12 h-full ml-4 flex flex-col relative">
-					<h1 class="ml-auto">
-						({soap.Progress.format()} /
-						{soap.MaxProgress.format()})
-					</h1>
-					<div class="h-2">
-						<div class="bg-blue-300 absolute h-2" style="width: {width}%"></div>
-						<div class="border w-full h-full z-10"></div>
+					<div class="w-full h-full flex flex-row">
+						<button
+							onclick={() => producer.UpgradeQuality(qualityCostAmt)}
+							class={qualityCanBuy}
+							>Upgrade Quality +{qualityCostAmt}
+							<div>
+								({producer.QualityCount}) Cost: ${producer
+									.GetQualityCost(qualityCostAmt)
+									.format()}
+							</div></button
+						>
+						<button
+							class="ml-1 mr-1 {speedCanBuy}"
+							onclick={() => producer.UpgradeSpeed(speedCostAmt)}
+							>Upgrade Speed +{speedCostAmt}
+							<div>
+								({producer.SpeedCount}) Cost: ${producer
+									.GetSpeedCost(speedCostAmt)
+									.format()}
+							</div></button
+						>
+						{#if rankUpUnlocked || DevHacks.skipUnlock}
+							<button onclick={producer.TierUp} class={canRankUp}
+								>Rank Up <div>
+									({soap?.ProducedAmount.format()}/ {producer.RankUpReq.format()})
+								</div></button
+							>
+						{/if}
+					</div>
+					<div class="flex flex-row mt-3">
+						<h1 class="">
+							Total: {producer.Soap?.ProducedAmount.format()}
+						</h1>
+						<h1 class="ml-auto">Quality: {producer.Quality.format()}</h1>
+						<h1 class="ml-auto">Speed: {producer.Speed.format()}</h1>
 					</div>
 				</div>
-			</div>
-			<div class="flex flex-col">
-				<div class="w-full h-full flex flex-row">
-					<button
-						onclick={() => producer.UpgradeQuality(qualityCostAmt)}
-						class={qualityCanBuy}
-						>Upgrade Quality +{qualityCostAmt}
-						<div>
-							({producer.QualityCount}) Cost: {producer
-								.GetQualityCost(qualityCostAmt)
-								.format()}
-						</div></button
-					>
-					<button
-						class="ml-1 mr-1 {speedCanBuy}"
-						onclick={() => producer.UpgradeSpeed(speedCostAmt)}
-						>Upgrade Speed +{speedCostAmt}
-						<div>
-							({producer.SpeedCount}) Cost: {producer
-								.GetSpeedCost(speedCostAmt)
-								.format()}
-						</div></button
-					>
-					<button onclick={producer.TierUp} class={canRankUp}
-						>Rank Up <div>
-							({soap?.ProducedAmount.format()}/ {producer.RankUpReq.format()})
-						</div></button
-					>
+				<div class="ml-2 pl-2 border-l">
+					<SoapSellTab soapType={type} />
 				</div>
-			</div>
-			<div class="flex flex-row mt-3">
-				<h1>Quality: {producer.Quality.format()}</h1>
-				<h1 class="ml-auto">Speed: {producer.Speed.format()}</h1>
-				<h1 class="ml-auto">
-					Produced: {producer.Soap?.ProducedAmount.format()}
-				</h1>
 			</div>
 		{:else}
 			<div class="flex flex-row">

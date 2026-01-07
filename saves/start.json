@@ -1,99 +1,36 @@
 {
   "player_data": {
     "Name": "Player",
-    "Money": "90.646732907707",
-    "Soaps": [
-      {
-        "type": "Red Soap",
-        "progress": "54",
-        "producedAmount": "0",
-        "unlocked": true,
-        "amount": "12"
-      },
-      {
-        "type": "Orange Soap",
-        "progress": "0",
-        "producedAmount": "0",
-        "unlocked": false,
-        "amount": "0"
-      },
-      {
-        "type": "Yellow Soap",
-        "progress": "0",
-        "producedAmount": "0",
-        "unlocked": false,
-        "amount": "0"
-      },
-      {
-        "type": "Green Soap",
-        "progress": "0",
-        "producedAmount": "0",
-        "unlocked": false,
-        "amount": "0"
-      },
-      {
-        "type": "Blue Soap",
-        "progress": "0",
-        "producedAmount": "0",
-        "unlocked": false,
-        "amount": "0"
-      },
-      {
-        "type": "Indigo Soap",
-        "progress": "0",
-        "producedAmount": "0",
-        "unlocked": false,
-        "amount": "0"
-      },
-      {
-        "type": "Violet Soap",
-        "progress": "0",
-        "producedAmount": "0",
-        "unlocked": false,
-        "amount": "0"
-      },
-      {
-        "type": "White Soap",
-        "progress": "0",
-        "producedAmount": "0",
-        "unlocked": false,
-        "amount": "0"
-      },
-      {
-        "type": "Black Soap",
-        "progress": "0",
-        "producedAmount": "0",
-        "unlocked": false,
-        "amount": "0"
-      },
-      {
-        "type": "Rainbow Soap",
-        "progress": "0",
-        "producedAmount": "0",
-        "unlocked": false,
-        "amount": "0"
-      }
-    ]
+    "Money": "28.650693644884303"
+  },
+  "soap": {
+    "upgradesUnlocked": true,
+    "foundryUnlocked": false
   },
   "upgrades": {
     "Upgrades": [
       {
         "upgradesKey": 0,
-        "count": 0,
+        "count": 1,
         "unlocked": false
       },
       {
         "upgradesKey": 2,
-        "count": 1,
-        "unlocked": true
-      },
-      {
-        "upgradesKey": 3,
-        "count": 1,
+        "count": 0,
         "unlocked": true
       },
       {
         "upgradesKey": 1,
+        "count": 0,
+        "unlocked": true
+      },
+      {
+        "upgradesKey": 3,
+        "count": 0,
+        "unlocked": false
+      },
+      {
+        "upgradesKey": 4,
         "count": 0,
         "unlocked": false
       },
@@ -109,16 +46,6 @@
       },
       {
         "upgradesKey": 7,
-        "count": 0,
-        "unlocked": false
-      },
-      {
-        "upgradesKey": 8,
-        "count": 0,
-        "unlocked": false
-      },
-      {
-        "upgradesKey": 9,
         "count": 0,
         "unlocked": false
       }
@@ -139,8 +66,8 @@
     ]
   },
   "Red Soap": {
-    "SpeedCount": 1,
-    "QualityCount": 1,
+    "SpeedCount": 4,
+    "QualityCount": 4,
     "Unlocked": true,
     "Tier": 0
   }

@@ -1,5 +1,7 @@
+import { SvelteMap } from "svelte/reactivity";
 import { Player } from "../Player.svelte";
 import { Decimal } from "../Shared/BreakInfinity/Decimal.svelte";
+import { SaveSystem } from "../Saves";
 
 export class Soap implements ISoapData {
   public Type: SoapType;
@@ -38,7 +40,7 @@ export class Soap implements ISoapData {
 }
 
 export enum SoapPages {
-  Sell, Produce, Upgrades, Foundry
+  Produce, Upgrades, Foundry
 }
 
 export enum SoapType {
@@ -165,3 +167,31 @@ export interface SoapSaveData {
   amount: Decimal
   producedAmount: Decimal,
 }
+
+export const Soaps = new SvelteMap<SoapType, Soap>();
+SoapData.forEach((val, idx) => {
+  Soaps.set(val.Type, new Soap(SoapData[idx]))
+})
+
+SaveSystem.SaveCallback("soap", () => {
+  let soap: SoapSaveData[] = [];
+  Soaps.forEach((v, k) => {
+    soap.push({
+      type: k,
+      progress: v.Progress,
+      producedAmount: v.ProducedAmount,
+      unlocked: v.Unlocked,
+      amount: v.Amount,
+    })
+  })
+
+  return {
+    soap: soap
+  }
+})
+
+SaveSystem.LoadCallback("soap", (_) => {
+  Soaps.forEach(data => {
+    Soaps.set(data.Type, data);
+  })
+})

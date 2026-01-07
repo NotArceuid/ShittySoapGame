@@ -48,7 +48,7 @@ export interface DataSnapshotEvent {
 class SaveManager {
   public compressionEnabled: boolean = dev ? false : true;
   private snapshotCallbacks: Map<string, () => unknown> = new Map();
-  private loadCallbacks: Map<string, (data: unknown) => void> = new Map();
+  private loadCallbacks: Map<string, (data: any) => void> = new Map();
 
   public readonly events: SaveEvents = {
     onBeforeSave: new InvokeableEvent<SaveContext>(),
@@ -58,11 +58,11 @@ class SaveManager {
     onDataSnapshot: new InvokeableEvent<DataSnapshotEvent>(),
   };
 
-  SaveCallback(key: string, snapshotFn: () => unknown): void {
+  SaveCallback<T>(key: string, snapshotFn: () => T): void {
     this.snapshotCallbacks.set(key, snapshotFn);
   }
 
-  LoadCallback(key: string, loadFn: (data: unknown) => void): void {
+  LoadCallback<T>(key: string, loadFn: (data: T) => void): void {
     this.loadCallbacks.set(key, loadFn);
   }
 

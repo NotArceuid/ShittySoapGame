@@ -1,4 +1,4 @@
-import { SoapType } from "../../../Game/Soap/Soap.svelte";
+import { Soaps, type SoapType } from "../../../Game/Soap/Soap.svelte";
 import { Player } from "../../../Game/Player.svelte";
 import { Decimal } from "../../../Game/Shared/BreakInfinity/Decimal.svelte";
 import { ExpPolynomial } from "../../../Game/Shared/Math";
@@ -23,15 +23,15 @@ export class SoapProducer implements SoapProducerProps, ISaveable {
     this.SpeedCount = $state(0);
     this.QualityCount = $state(0);
 
-    this.SpeedFormula = new ExpPolynomial(new Decimal(4), new Decimal(1.15));
-    this.QualityFormula = new ExpPolynomial(new Decimal(1.8), new Decimal(1.17));
+    this.SpeedFormula = new ExpPolynomial(new Decimal(7.29), new Decimal(1.15));
+    this.QualityFormula = new ExpPolynomial(new Decimal(4.5), new Decimal(1.17));
 
-    SaveSystem.SaveCallback(this.saveKey, () => this.getSaveData());
-    SaveSystem.LoadCallback(this.saveKey, (data) => this.loadSaveData(data as SoapProducerProps));
+    SaveSystem.SaveCallback<SoapProducerProps>(this.saveKey, () => this.getSaveData());
+    SaveSystem.LoadCallback<SoapProducerProps>(this.saveKey, (data) => this.loadSaveData(data));
   }
 
   saveKey: string;
-  getSaveData(): unknown {
+  getSaveData(): any {
     return {
       SpeedCount: this.SpeedCount,
       QualityCount: this.QualityCount,
@@ -73,11 +73,11 @@ export class SoapProducer implements SoapProducerProps, ISaveable {
   }
 
   get RankUpReq() {
-    return new Decimal(1000).mul(new Decimal(10).pow(this.Tier));
+    return new Decimal(1_000_000).mul(new Decimal(10).pow(this.Tier));
   }
 
   get Soap() {
-    return Player.Soap.get(this.SoapType);
+    return Soaps.get(this.SoapType)!
   }
 
   AddProgress() {
