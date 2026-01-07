@@ -126,7 +126,7 @@ export class GameLoop {
 
   restart() {
     this.stop()
-    this.options.step = 500 / (DevHacks.speedhack ? 30 : 10);
+    this.options.step = 500 / (DevHacks.speedhack ? 50 : 10);
     this.start()
   }
 }

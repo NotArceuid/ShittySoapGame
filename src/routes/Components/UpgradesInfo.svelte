@@ -7,14 +7,24 @@
 		upgrade?.Requirements?.every((t) => t()) ? "" : "bg-gray-100",
 	);
 
-	let amount = $state(1);
-	$effect(() => {
-		if (!upgrade || !upgrade.getMax) return;
-		upgrade.buyAmount = Math.min(upgrade.getMax(), Player.BulkAmount);
-		upgrade.buyAmount = amount;
+	let amount = $derived.by<number>(() => {
+		if (!upgrade || !upgrade.getMax) return 1;
+		return Math.max(
+			1,
+			Math.min(
+				upgrade.maxCount - upgrade.count,
+				Math.min(upgrade.getMax(), Player.BulkAmount),
+			),
+		);
 	});
+
+	$effect(() => {
+		if (upgrade && upgrade.buyAmount) upgrade.buyAmount = amount;
+	});
+
 	function buyUpgrades() {
-		if (upgrade) upgrade.buy();
+		if (!upgrade) return;
+		upgrade.buy();
 	}
 </script>
 
@@ -27,7 +37,7 @@
 		<h1 class="mb-2">{upgrade.description()}</h1>
 		<button class=" ml-auto mr-auto {canBuy}" onclick={buyUpgrades}>
 			<div>
-				<div>Cost: {upgrade.Requirements[0]()}</div>
+				<div>Cost({amount}): {upgrade.Requirements[0]()}</div>
 			</div>
 		</button>
 	{/if}

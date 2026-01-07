@@ -1,56 +1,54 @@
 {
   "player_data": {
     "Name": "Player",
-    "Money": "28.650693644884303"
+    "Money": "889.7078820657309"
   },
   "soap": {
     "upgradesUnlocked": true,
     "foundryUnlocked": false
   },
-  "upgrades": {
-    "Upgrades": [
-      {
-        "upgradesKey": 0,
-        "count": 1,
-        "unlocked": false
-      },
-      {
-        "upgradesKey": 2,
-        "count": 0,
-        "unlocked": true
-      },
-      {
-        "upgradesKey": 1,
-        "count": 0,
-        "unlocked": true
-      },
-      {
-        "upgradesKey": 3,
-        "count": 0,
-        "unlocked": false
-      },
-      {
-        "upgradesKey": 4,
-        "count": 0,
-        "unlocked": false
-      },
-      {
-        "upgradesKey": 5,
-        "count": 0,
-        "unlocked": false
-      },
-      {
-        "upgradesKey": 6,
-        "count": 0,
-        "unlocked": false
-      },
-      {
-        "upgradesKey": 7,
-        "count": 0,
-        "unlocked": false
-      }
-    ]
-  },
+  "upgrades": [
+    {
+      "upgradesKey": 0,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "upgradesKey": 2,
+      "count": 3,
+      "unlocked": true
+    },
+    {
+      "upgradesKey": 1,
+      "count": 2,
+      "unlocked": true
+    },
+    {
+      "upgradesKey": 3,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "upgradesKey": 4,
+      "count": 2,
+      "unlocked": false
+    },
+    {
+      "upgradesKey": 5,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "upgradesKey": 6,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "upgradesKey": 7,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
   "generator": {
     "Generators": [
       {
@@ -65,10 +63,14 @@
       }
     ]
   },
+  "Red Soap producer": {
+    "eatenUnlocked": false
+  },
   "Red Soap": {
-    "SpeedCount": 4,
-    "QualityCount": 4,
+    "SpeedCount": 19,
+    "QualityCount": 17,
     "Unlocked": true,
-    "Tier": 0
+    "Tier": 0,
+    "DecelerateCount": 0
   }
 }

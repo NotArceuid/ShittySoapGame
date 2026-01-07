@@ -30,8 +30,9 @@ export class Soap implements ISoapData {
   }
 
   public Sell(amount: Decimal) {
-    let mult = (Soaps.get(SoapType.Red)?.EatAmount!).div(100);
-    Player.Money = Player.Money.add(amount.mul(mult));
+    let eatMult = Soaps.get(SoapType.Red)?.EatAmount!.div(100).add(Decimal.ONE);
+    let mult = eatMult;
+    Player.Money = Player.Money.add(amount.mul(mult!));
     this.Amount = this.Amount.minus(amount);
   }
 

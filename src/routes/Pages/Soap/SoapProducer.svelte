@@ -120,7 +120,9 @@
 							</div></button
 						>
 						{#if rankUpUnlocked || DevHacks.skipUnlock}
-							<button onclick={producer.TierUp} class=" mr-1 mt-1 {canRankUp}  "
+							<button
+								onclick={producer.Decelerate}
+								class=" mr-1 mt-1 {canRankUp}  "
 								>Decelerate
 								<div>
 									({producer.Speed.format()}/ {producer.DecelerateReq.format()})
