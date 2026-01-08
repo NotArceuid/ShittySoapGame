@@ -30,12 +30,12 @@ export class Soap implements ISoapData {
     return this.Amount.gte(amount);
   }
 
-  public Sell(amount: Decimal) {
+  public Sell(amount: Decimal, red?: Decimal) {
     let eatMult = Soaps.get(SoapType.Red)?.EatAmount!.div(100).add(Decimal.ONE);
     let mult = eatMult;
 
     Player.Money = Player.Money.add(amount.mul(mult!));
-    this.Amount = this.Amount.minus(amount);
+    this.Amount = this.Amount.minus(amount.minus(red ?? 0));
   }
 
   public Eat(amount: Decimal) {

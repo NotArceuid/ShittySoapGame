@@ -34,3 +34,6 @@ export interface IAchievement {
   description: string,
   unlocked?: boolean
 }
+
+// Decelerate.. I hope you enjoy stacking speed upgrades
+// 25 T- seat soap desc: The wall is now over

@@ -77,7 +77,7 @@
 	);
 
 	let autosellCap = $derived(
-		50 - 5 * UpgradesData.get(UpgradesKey.RedSoapAutoSeller)!.count,
+		30 - 3 * UpgradesData.get(UpgradesKey.RedSoapAutoSeller)!.count,
 	);
 
 	Update.add(() => {
@@ -91,7 +91,17 @@
 			counter++;
 		}
 		if (counter >= autosellCap) {
-			soap.Sell(soap.Amount.div(101 - sellBonus));
+			let sellPercentage = UpgradesData.get(
+				UpgradesKey.RedSoapAutoSellBonus,
+			)!.count;
+			let sellAmount = soap.Amount.mul(sellPercentage).div(100);
+
+			let reductionPercentage = UpgradesData.get(
+				UpgradesKey.RedSoapAutoSellCostRed,
+			)!.count;
+			let reductionAmount = sellAmount.mul(reductionPercentage).div(100);
+
+			soap.Sell(sellAmount, reductionAmount);
 			counter = 0;
 		}
 	});

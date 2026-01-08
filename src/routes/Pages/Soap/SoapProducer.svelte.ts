@@ -58,19 +58,21 @@ export class SoapProducer {
   }
 
   get Quality() {
+    let upgCount = UpgradesData.get(UpgradesKey.QualityUpgrade)!.count;
     let amt = Multipliers.QualityMultiplier.Get()
-      .mul(1 + (this.QualityCount * 1.0) * Math.pow(2, Math.floor(this.QualityCount / 25))).div(3) // Multi from upgrade
-      .mul(UpgradesData.get(UpgradesKey.QualityUpgrade)!.count + 1)
-      .pow(this.DecelerateCount !== 0 ? 1 + this.DecelerateCount / 2.25 : 1)
+      .mul(1 + this.QualityCount).div(3) // Multi from upgrade
+      .mul(((upgCount) + 1) * Math.pow(2, Math.floor(upgCount) / 25))
+      .pow(this.DecelerateCount !== 0 ? 1 + this.DecelerateCount / 2.25 : 1) // mult from decel
       .mul(this.Tier !== 0 ? this.Tier * 7.5 : 1) // Multi from tier
     return amt;
   }
 
   get Speed() {
+    let upgCount = UpgradesData.get(UpgradesKey.SpeedUpgrade)!.count;
     let amt = Multipliers.SpeedMultiplier.Get()
-      .mul(1 + (this.SpeedCount * 1.0) * Math.pow(2, Math.floor(this.SpeedCount / 25))) // Multi from upgrade 
-      .mul((UpgradesData.get(UpgradesKey.SpeedUpgrade)!.count / 2) + 1)
-      .div(this.DecelerateCount !== 0 ? this.DecelerateCount * 5 : 1)
+      .mul(1 + (this.SpeedCount)) // Multi from upgrade 
+      .mul(((upgCount) + 1) * Math.pow(2, Math.floor(upgCount / 25)))
+      .div(this.DecelerateCount !== 0 ? this.DecelerateCount * 5 : 1) // nerfs from decel
 
     return amt
   }
@@ -80,11 +82,11 @@ export class SoapProducer {
   }
 
   get DecelerateReq() {
-    return new Decimal(1250).mul(new Decimal(2).pow(this.DecelerateCount));
+    return new Decimal(1000).mul(new Decimal(10).pow(this.DecelerateCount));
   }
 
   get MaxProgress() {
-    return this.Soap.MaxProgress.mul(new Decimal(10).pow(this.DecelerateCount));
+    return this.Soap.MaxProgress.mul(new Decimal(15).pow(this.DecelerateCount));
   }
 
   private get Soap() {

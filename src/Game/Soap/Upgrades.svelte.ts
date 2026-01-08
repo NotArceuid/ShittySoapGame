@@ -49,14 +49,14 @@ class RedSoapAutoSellter extends BaseUpgrade {
   maxCount = 9;
 
   get cost(): Decimal {
-    return new Decimal(this.count).factorial().mul(25);
+    return new Decimal(this.count + 1).factorial().mul(10);
   }
 
   getMax = () => {
     let count = 0;
     let tempCost = Decimal.ZERO;
     while (count < this.maxCount) {
-      let nextCost = new Decimal(count).factorial().mul(25);
+      let nextCost = new Decimal(count + 1).factorial().mul(10);
       tempCost = tempCost.add(nextCost)
       if (Player.Money.lessThan(tempCost)) break;
       count++;
@@ -66,6 +66,7 @@ class RedSoapAutoSellter extends BaseUpgrade {
 
   Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
   ShowCondition = () => true;
+
 }
 class QualityUpgrade extends BaseUpgrade {
   name = "Not rich enough!!";
@@ -126,7 +127,7 @@ class RedSoapAutoSellBonus extends BaseUpgrade {
   description = () => new ReactiveText("Still not satisfied yet? This upgrade increases the effect of red soap autoseller by 1% per level");
   maxCount = 100;
 
-  private costFormula = new Exponential(new Decimal(957), new Decimal(1.4));
+  private costFormula = new Exponential(new Decimal(957), new Decimal(1.3));
   get cost(): Decimal {
     return this.costFormula.Integrate(this.count, this.count + this.buyAmount).round();
   }
@@ -144,7 +145,7 @@ class RedSoapAutoSellerCostRed extends BaseUpgrade {
   description = () => new ReactiveText("Too greedy buying the previous upgrade? Reduces the cost deduction of red soap autoseller by 1% per level");
   maxCount = 99;
 
-  private costFormula = new Exponential(new Decimal(5000), new Decimal(2.5));
+  private costFormula = new Exponential(new Decimal(5000), new Decimal(1.3));
   get cost(): Decimal {
     return this.costFormula.Integrate(this.count, this.count + this.buyAmount).round();
   }
@@ -190,7 +191,7 @@ class EatRedSoapUpgrade extends BaseUpgrade {
   description = () => new ReactiveText("Why would you do that?");
   maxCount = 1;
   get cost() {
-    return new Decimal("2.5e+19");
+    return new Decimal("2.5e+13");
   }
   Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.gt(this.cost)] as [() => ReactiveText, () => boolean];
   ShowCondition = () => true;

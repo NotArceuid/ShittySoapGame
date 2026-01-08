@@ -1,4 +1,4 @@
-import { SaveSystem, type ISaveable } from "./Saves.ts";
+import { SaveSystem } from "./Saves.ts";
 import { Decimal } from "./Shared/BreakInfinity/Decimal.svelte";
 
 interface IPlayer {
@@ -8,7 +8,7 @@ interface IPlayer {
   BulkAmount: number;
 }
 
-class PlayerClass implements ISaveable {
+class PlayerClass {
   _player = $state<IPlayer>({
     Name: "Player",
     Money: new Decimal(0),

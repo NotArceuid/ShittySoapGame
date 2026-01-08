@@ -1,7 +1,7 @@
 {
   "player_data": {
     "Name": "Player",
-    "Money": "110559.746962267"
+    "Money": "60367624906.5122"
   },
   "soap": {
     "upgradesUnlocked": true,
@@ -10,32 +10,32 @@
   "upgrades": [
     {
       "key": 0,
-      "count": 1,
-      "unlocked": false
-    },
-    {
-      "key": 1,
-      "count": 15,
-      "unlocked": true
-    },
-    {
-      "key": 2,
-      "count": 24,
-      "unlocked": true
-    },
-    {
-      "key": 3,
       "count": 9,
       "unlocked": false
     },
     {
+      "key": 1,
+      "count": 75,
+      "unlocked": true
+    },
+    {
+      "key": 2,
+      "count": 100,
+      "unlocked": true
+    },
+    {
+      "key": 3,
+      "count": 53,
+      "unlocked": false
+    },
+    {
       "key": 4,
-      "count": 16,
+      "count": 24,
       "unlocked": false
     },
     {
       "key": 5,
-      "count": 3,
+      "count": 7,
       "unlocked": false
     },
     {
@@ -50,11 +50,6 @@
     },
     {
       "key": 8,
-      "count": 0,
-      "unlocked": false
-    },
-    {
-      "key": 9,
       "count": 0,
       "unlocked": false
     }
@@ -78,10 +73,10 @@
     "decelerate": true
   },
   "red soap": {
-    "speedcnt": 48,
-    "qualitycnt": 40,
+    "speedcnt": 123,
+    "qualitycnt": 111,
     "unlocked": true,
     "tier": 0,
-    "decelerate": 0
+    "decelerate": 2
   }
 }
