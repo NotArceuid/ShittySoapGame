@@ -14,8 +14,8 @@
 	import CurrenciesPanel from "./Components/CurrenciesPanel.svelte";
 	import NotificationHandler from "./Components/NotificationHandler.svelte";
 	import NavBar from "./Components/NavBar.svelte";
+	import { isLoading } from "svelte-i18n";
 
-	let gameRunning = true;
 	MainLoop.start();
 
 	async function LoadPlayerData() {
@@ -36,28 +36,29 @@
 		`${PKG_NAME} v${PKG_VERSION}${dev ? "(dev)" : ""}`,
 	);
 
-	onMount(() => {
-		PagesState.set(Pages.Settings, -1);
-		PagesState.set(Pages.Soap, -1);
+  isLoading.subscribe((state) => {
+    if (state ) return;
+    PagesState.set(Pages.Settings, -1);
+    PagesState.set(Pages.Soap, -1);
 
-		let elements = document.getElementById("locations")?.children!;
-		MainPageHandler.RegisterPages(Pages.Soap, elements[0] as HTMLElement);
-		MainPageHandler.RegisterPages(Pages.Cat, elements[1] as HTMLElement);
-		MainPageHandler.RegisterPages(
-			Pages.Achievements,
-			elements[2] as HTMLElement,
-		);
-		MainPageHandler.RegisterPages(Pages.Settings, elements[3] as HTMLElement);
-		MainPageHandler.RegisterPages(
-			Pages.HowTfDoIPlay,
-			elements[4] as HTMLElement,
-		);
+    let elements = document.getElementById("locations")?.children!;
+    MainPageHandler.RegisterPages(Pages.Soap, elements[0] as HTMLElement);
+    MainPageHandler.RegisterPages(Pages.Cat, elements[1] as HTMLElement);
+    MainPageHandler.RegisterPages(
+      Pages.Achievements,
+      elements[2] as HTMLElement,
+    );
+    MainPageHandler.RegisterPages(Pages.Settings, elements[3] as HTMLElement);
+    MainPageHandler.RegisterPages(
+      Pages.HowTfDoIPlay,
+      elements[4] as HTMLElement,
+    );
 
-		MainPageHandler.ChangePage(Pages.Soap);
-	});
+    MainPageHandler.ChangePage(Pages.Soap);
+  })
 </script>
 
-{#if gameRunning}
+{#if isLoading}
 	<div
 		class="h-full relative p-6 flex flex-col"
 		style="border-color: rgba({ColorTheme.BorderColor.r}, {ColorTheme

@@ -76,7 +76,7 @@
     "speedcnt": 123,
     "qualitycnt": 111,
     "unlocked": true,
-    "tier": 0,
-    "decelerate": 2
+    "decelerate": 2,
+    "eatamt": "0"
   }
 }

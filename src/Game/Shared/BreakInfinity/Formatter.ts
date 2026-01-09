@@ -1,4 +1,3 @@
-import { log } from "console";
 
 // Types for the number formatter
 export type Notation = "standard" | "scientific";

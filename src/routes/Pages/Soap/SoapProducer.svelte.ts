@@ -43,7 +43,7 @@ export class SoapProducer {
       this.QualityCount = data.qualitycnt;
       this.Unlocked = data.unlocked;
       this.DecelerateCount = data.decelerate;
-      this.EatAmount = data.eatamt;
+      this.EatAmount = new Decimal(data.eatamt);
     });
   }
 

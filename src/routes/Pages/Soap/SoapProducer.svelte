@@ -99,7 +99,7 @@
 
 	let eatenUnlocked = $state(false);
 	$effect(() => {
-		if (producer.EatAmount.gt(0)) eatenUnlocked = true;
+		if (UpgradesData.get(UpgradesKey.EatRedSoapUpgrade)) eatenUnlocked = true;
 		if (producer.Speed.gt(30)) decelerateUnlocked = true;
 	});
 
