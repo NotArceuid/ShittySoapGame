@@ -43,6 +43,9 @@
 			({upgrade.count}/{upgrade.maxCount})
 		</h1>
 		<h1 class="mb-2">{upgrade.description()}</h1>
+    {#if upgrade.effect}
+  		<h1 class="mb-2">{upgrade.effect()}</h1>
+    {/if}
 		<button class=" ml-auto mr-auto {canBuy}" onclick={buyUpgrades}>
 			<div>
 				<div>Cost({amount}): {upgrade.Requirements[0]()}</div>

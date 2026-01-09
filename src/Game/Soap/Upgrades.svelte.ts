@@ -43,9 +43,10 @@ export abstract class BaseUpgrade implements IUpgradesInfo {
   unlocked: boolean = $state(false);
   buyAmount: number = $state(1);
 }
+
 class RedSoapAutoSellter extends BaseUpgrade {
   name = "Mouse brokwn :(";
-  description = () => new ReactiveText("Unlocks the red soap autosell. Happy now?");
+  description = () => new ReactiveText("Unlocks the red soap autosell. Happy now? Each level decreases the time interval by 5 tick");
   maxCount = 9;
 
   get cost(): Decimal {
@@ -62,6 +63,10 @@ class RedSoapAutoSellter extends BaseUpgrade {
       count++;
     }
     return count;
+  }
+
+  effect = () => {
+    return new ReactiveText(`Current Effect: ${30 - 3 * this.count} ticks`);
   }
 
   Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
@@ -87,6 +92,10 @@ class QualityUpgrade extends BaseUpgrade {
     }
   ] as [() => ReactiveText, () => boolean];
 
+  effect = () => {
+    return new ReactiveText(`Current Multiplier: ${new Decimal(((this.count) + 1) * Math.pow(2, Math.floor(this.count / 25))).mul(100).format()}%`);
+  }
+
   getMax = () => {
     let amt = this.qualityCost.BuyMax(Player.Money, this.count);
     return amt == -1 ? 1 : amt;
@@ -103,6 +112,10 @@ class SpeedUpgrade extends BaseUpgrade {
   private speedCost = new ExpPolynomial(new Decimal(365), new Decimal(1.15));
   get cost() {
     return this.speedCost.Integrate(this.count, this.count + this.buyAmount).round();
+  }
+
+  effect = () => {
+    return new ReactiveText(`Current Multiplier: ${new Decimal(((this.count) + 1) * Math.pow(2, Math.floor(this.count / 25))).mul(100).format()}%`);
   }
 
   Requirements = [
@@ -125,7 +138,7 @@ class SpeedUpgrade extends BaseUpgrade {
 class RedSoapAutoSellBonus extends BaseUpgrade {
   name = "Gooder autoseller";
   description = () => new ReactiveText("Still not satisfied yet? This upgrade increases the effect of red soap autoseller by 1% per level");
-  maxCount = 100;
+  maxCount = 99;
 
   private costFormula = new Exponential(new Decimal(957), new Decimal(1.3));
   get cost(): Decimal {
@@ -135,6 +148,10 @@ class RedSoapAutoSellBonus extends BaseUpgrade {
   getMax = () => {
     let amt = this.costFormula.BuyMax(Player.Money, this.count);
     return amt == -1 ? 1 : amt
+  }
+
+  effect = () => {
+    return new ReactiveText(`Red Soap Conversion: ${this.count}%`);
   }
 
   Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
@@ -148,6 +165,10 @@ class RedSoapAutoSellerCostRed extends BaseUpgrade {
   private costFormula = new ExpPolynomial(new Decimal(5000), new Decimal(1.5));
   get cost(): Decimal {
     return this.costFormula.Integrate(this.count, this.count + this.buyAmount).round();
+  }
+
+  effect = () => {
+    return new ReactiveText(`Cost Reduction: ${this.count}%`);
   }
 
   getMax = () => {
@@ -183,6 +204,11 @@ class BulkUpgrade extends BaseUpgrade {
 
     return count;
   }
+
+  effect = () => {
+    return new ReactiveText(`Bulk amount: ${this.count}`)
+  }
+
   Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
   ShowCondition = () => true;
 }
