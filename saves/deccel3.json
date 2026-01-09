@@ -1,16 +1,16 @@
 {
   "0": {
-    "speedcnt": 189,
-    "qualitycnt": 169,
+    "speedcnt": 200,
+    "qualitycnt": 179,
     "unlocked": true,
-    "decelerate": 2,
+    "decelerate": 3,
     "eatamt": "11020300616029.5",
-    "producedamt": "203616781185313",
+    "producedamt": "844679352602365.1",
     "type": 0
   },
   "player_data": {
     "Name": "Player",
-    "Money": "740796350292021"
+    "Money": "2283633181991220"
   },
   "soap": {
     "upgradesUnlocked": true,
@@ -24,12 +24,12 @@
     },
     {
       "key": 1,
-      "count": 150,
+      "count": 154,
       "unlocked": true
     },
     {
       "key": 2,
-      "count": 164,
+      "count": 175,
       "unlocked": true
     },
     {
@@ -49,7 +49,7 @@
     },
     {
       "key": 6,
-      "count": 0,
+      "count": 1,
       "unlocked": false
     },
     {

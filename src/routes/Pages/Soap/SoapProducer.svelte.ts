@@ -64,7 +64,7 @@ export class SoapProducer {
     let amt = Multipliers.QualityMultiplier.Get()
       .mul(1 + this.QualityCount).div(3) // Multi from upgrade
       .mul(((upgCount) + 1) * Math.pow(2, Math.floor(upgCount) / 25))
-      .mul((this.DecelerateCount + 1) * 10000) // mult from decel
+      .mul(new Decimal(2500).mul(Decimal.pow(5, this.DecelerateCount + 1))) // mult from decel
     return amt;
   }
 
@@ -161,7 +161,7 @@ export class SoapProducer {
   }
 
   Eat() {
-    if (this.Soap.ProducedAmount.lt(this.EatReq))
+    if (this.Soap.ProducedAmount.lt(this.EatReq) || UpgradesData.get(UpgradesKey.EatRedSoapUpgrade)?.count! < 0)
       return;
 
     this.EatAmount = this.EatAmount.add(this.ProducedAmount);
