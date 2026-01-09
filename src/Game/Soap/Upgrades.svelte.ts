@@ -258,3 +258,10 @@ SaveSystem.LoadCallback<UpgradeSaveData[]>(saveKey, (data) => {
     UpgradesData.set(ele.key, currUpgrade);
   }
 });
+
+export function ResetUpgrades() {
+  UpgradesData.forEach((v, k) => {
+    v.count = 0;
+    UpgradesData.set(k, v);
+  })
+}

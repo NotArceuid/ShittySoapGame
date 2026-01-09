@@ -4,14 +4,13 @@ import { Decimal } from "../../../Game/Shared/BreakInfinity/Decimal.svelte";
 import { ExpPolynomial } from "../../../Game/Shared/Math";
 import { Multipliers } from "../../../Game/Shared/Multipliers";
 import { SaveSystem } from "../../../Game/Saves";
-import { UpgradesData, UpgradesKey } from "../../../Game/Soap/Upgrades.svelte";
+import { ResetUpgrades, UpgradesData, UpgradesKey } from "../../../Game/Soap/Upgrades.svelte";
 import { log } from "console";
 
 export class SoapProducer {
   public SoapType: SoapType;
   public SpeedCount: number;
   public QualityCount: number;
-  public Tier: number;
   public Unlocked: boolean;
   public DecelerateCount: number;
   public SpeedFormula: ExpPolynomial;
@@ -21,7 +20,6 @@ export class SoapProducer {
   constructor(soapType: SoapType) {
     this.SoapType = $state(soapType);
     this.Unlocked = $state(true);
-    this.Tier = $state(0);
     this.DecelerateCount = $state(0)
     this.SpeedCount = $state(0);
     this.QualityCount = $state(0);
@@ -36,16 +34,16 @@ export class SoapProducer {
         speedcnt: this.SpeedCount,
         qualitycnt: this.QualityCount,
         unlocked: this.Unlocked,
-        tier: this.Tier,
-        decelerate: this.DecelerateCount
+        decelerate: this.DecelerateCount,
+        eatamt: this.EatAmount,
       }
     });
     SaveSystem.LoadCallback<SoapProducerSave>(saveKey, (data) => {
       this.SpeedCount = data.speedcnt;
       this.QualityCount = data.qualitycnt;
       this.Unlocked = data.unlocked;
-      this.Tier = data.tier;
       this.DecelerateCount = data.decelerate;
+      this.EatAmount = data.eatamt;
     });
   }
 
@@ -63,7 +61,6 @@ export class SoapProducer {
       .mul(1 + this.QualityCount).div(3) // Multi from upgrade
       .mul(((upgCount) + 1) * Math.pow(2, Math.floor(upgCount) / 25))
       .pow(this.DecelerateCount !== 0 ? 1 + this.DecelerateCount / 2.25 : 1) // mult from decel
-      .mul(this.Tier !== 0 ? this.Tier * 7.5 : 1) // Multi from tier
     return amt;
   }
 
@@ -77,8 +74,8 @@ export class SoapProducer {
     return amt
   }
 
-  get RankUpReq() {
-    return new Decimal(1_000_000).mul(new Decimal(10).pow(this.Tier));
+  get EatReq() {
+    return this.Soap.EatReq;
   }
 
   get DecelerateReq() {
@@ -104,6 +101,9 @@ export class SoapProducer {
   get EatAmount() {
     return this.Soap.EatAmount;
   }
+  set EatAmount(value) {
+    this.Soap.EatAmount = value;
+  }
 
   get EatMessage() {
     return this.Soap.EatMessage;
@@ -114,7 +114,6 @@ export class SoapProducer {
 
     // Overexceeded logic here
     if (this.Progress.gte(this.MaxProgress)) {
-      log("hmm")
       this.Progress = Decimal.ZERO;
       this.Soap?.SoapMade(this.Quality);
     }
@@ -149,23 +148,24 @@ export class SoapProducer {
     this.DecelerateCount++;
   }
 
-  TierUp() {
+  Eat() {
     let soap = this.Soap;
-    if (!soap || soap.ProducedAmount.lt(this.RankUpReq))
+    if (!soap || soap.ProducedAmount.lt(this.EatReq))
       return;
+    this.EatAmount = this.EatAmount.add(this.Amount);
 
     this.QualityCount = 0;
     this.SpeedCount = 0;
     this.DecelerateCount = 0;
 
-    this.Tier++;
+    ResetUpgrades();
   }
 }
 
 export interface SoapProducerSave {
   speedcnt: number;
   qualitycnt: number;
-  tier: number;
   unlocked: boolean;
   decelerate: number;
+  eatamt: Decimal;
 }

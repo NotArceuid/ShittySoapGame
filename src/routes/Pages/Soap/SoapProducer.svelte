@@ -11,7 +11,6 @@
 		UpgradesKey,
 	} from "../../../Game/Soap/Upgrades.svelte.ts";
 	import { Decimal } from "../../../Game/Shared/BreakInfinity/Decimal.svelte.ts";
-	import { onMount } from "svelte";
 	import { log } from "console";
 
 	let { type }: { type: SoapType } = $props();
@@ -19,7 +18,6 @@
 	let producer = $derived(new SoapProducer(type));
 	let soap = $derived(Soaps.get(type)!);
 	let width = $derived(producer.Progress.div(producer.MaxProgress).mul(100));
-	let rankUpUnlocked = $state(false);
 	let decelerateUnlocked = $state(false);
 
 	const speedCostAmt = $derived(
@@ -45,15 +43,13 @@
 			: "hover:cursor-pointer",
 	);
 	let accelerateIndicator = $derived(
-		producer.DecelerateCount > 1 ? "" : "bg-gray-100",
+		producer.DecelerateCount > 1 ? "bg-gray-100" : "",
 	);
 	let canDeccelerate = $derived(
 		producer.Speed.gt(producer.DecelerateReq) ? "" : "bg-gray-100",
 	);
-	let canRankUp = $derived(
-		producer.Amount.lt(producer.RankUpReq)
-			? "bg-gray-100 hover:cursor-default"
-			: "hover:cursor-pointer",
+	let canEat = $derived(
+		producer.ProducedAmount.lt(producer.EatReq) ? "bg-gray-100" : "",
 	);
 	let amount = $derived(Decimal.min(Player.BulkAmount, soap.Amount));
 	let can = $derived(
@@ -66,16 +62,11 @@
 		}
 	}
 
-	function Eat(): void {}
 	function Offer(): void {}
 	function Accelerate(): void {
 		producer.DecelerateCount = Math.max(producer.DecelerateCount - 1, 0);
 	}
 	let counter = $state(0);
-	let sellBonus = $derived(
-		UpgradesData.get(UpgradesKey.RedSoapAutoSellBonus)!.count,
-	);
-
 	let autosellCap = $derived(
 		30 - 3 * UpgradesData.get(UpgradesKey.RedSoapAutoSeller)!.count,
 	);
@@ -187,10 +178,10 @@
 								</div></button
 							>
 						{/if}
-						{#if rankUpUnlocked || DevHacks.skipUnlock}
-							<button onclick={producer.TierUp} class=" ml-0 mt-1 {canRankUp}"
-								>Promote <div>
-									({soap?.ProducedAmount.format()}/ {producer.RankUpReq.format()})
+						{#if eatenUnlocked || DevHacks.skipUnlock}
+							<button onclick={producer.Eat} class=" ml-0 mt-1 {canEat}"
+								>Eat Soap <div>
+									({soap?.ProducedAmount.format()}/ {producer.EatReq.format()})
 								</div></button
 							>
 						{/if}
@@ -203,12 +194,6 @@
 							<button class="w-full {can}" onclick={Sell}>
 								Sell {amount.format()}x
 							</button>
-
-							{#if UpgradesData.get(UpgradesKey.EatRedSoapUpgrade)!.count > 0 || DevHacks.skipUnlock}
-								<button class="w-full {can}" onclick={Eat}>
-									Eat {amount.format()}x
-								</button>
-							{/if}
 
 							{#if UpgradesData.get(UpgradesKey.CatPrestige)!.count > 0 || DevHacks.skipUnlock}
 								<button class="w-full {can}" onclick={Offer}>
@@ -239,7 +224,6 @@
 						<h1 class="ml-auto">Quality: {producer.Quality.format()}</h1>
 						<h1 class="ml-auto">Speed: {producer.Speed.format()}</h1>
 					</div>
-
 					{#if eatenUnlocked || DevHacks.skipUnlock}
 						<div class="flex flex-row">
 							<h1>
