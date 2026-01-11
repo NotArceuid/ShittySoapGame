@@ -70,6 +70,37 @@
 		30 - 3 * UpgradesData[UpgradesKey.RedSoapAutoSeller].count,
 	);
 
+	const autobuyTick = 5;
+	let qualityAutoBuyCount = $state(0);
+	let speedAutoBuyCount = $state(0);
+	Update.add(() => {
+		if (
+			qualityAutoBuyCount < autobuyTick &&
+			UpgradesData[UpgradesKey.RedQualityAutobuy].count > 0
+		) {
+			qualityAutoBuyCount++;
+		}
+
+		if (qualityAutoBuyCount >= autobuyTick) {
+			qualityAutoBuyCount = 0;
+			producer.UpgradeQuality(qualityCostAmt);
+		}
+	});
+
+	Update.add(() => {
+		if (
+			speedAutoBuyCount < autobuyTick &&
+			UpgradesData[UpgradesKey.RedSpeedAutobuy].count > 0
+		) {
+			speedAutoBuyCount++;
+		}
+
+		if (speedAutoBuyCount >= autobuyTick) {
+			speedAutoBuyCount = 0;
+			producer.UpgradeSpeed(speedCostAmt);
+		}
+	});
+
 	Update.add(() => {
 		if (producer.Unlocked) {
 			producer.AddProgress();
@@ -80,11 +111,14 @@
 		if (counter < autosellCap) {
 			counter++;
 		}
+
 		if (counter >= autosellCap) {
-			let sellPercentage = UpgradesData[UpgradesKey.RedSoapAutoSellBonus].count + 1
+			let sellPercentage =
+				UpgradesData[UpgradesKey.RedSoapAutoSellBonus].count + 1;
 			let sellAmount = soap.Amount.mul(sellPercentage).div(100);
 
-			let reductionPercentage = UpgradesData[UpgradesKey.RedSoapAutoSellCostRed].count;
+			let reductionPercentage =
+				UpgradesData[UpgradesKey.RedSoapAutoSellCostRed].count;
 			let reductionAmount = sellAmount.mul(reductionPercentage).div(100);
 
 			soap.Sell(sellAmount, reductionAmount);
@@ -94,7 +128,8 @@
 
 	let eatenUnlocked = $state(false);
 	$effect(() => {
-		if (UpgradesData[UpgradesKey.EatRedSoapUpgrade].count > 0) eatenUnlocked = true;
+		if (UpgradesData[UpgradesKey.EatRedSoapUpgrade].count > 0)
+			eatenUnlocked = true;
 		if (producer.Speed.gt(30)) decelerateUnlocked = true;
 	});
 
@@ -175,7 +210,7 @@
 						{/if}
 						{#if eatenUnlocked || DevHacks.skipUnlock}
 							<button onclick={() => producer.Eat()} class=" ml-0 mt-1 {canEat}"
-								>Eat Soap <div> 
+								>Eat Soap <div>
 									({soap?.ProducedAmount.format()}/ {producer.EatReq.format()})
 								</div></button
 							>

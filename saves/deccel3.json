@@ -1,16 +1,97 @@
 {
   "0": {
-    "speedcnt": 200,
-    "qualitycnt": 179,
+    "speedcnt": 218,
+    "qualitycnt": 201,
     "unlocked": true,
     "decelerate": 3,
-    "eatamt": "111020300616029.5",
-    "producedamt": "844679352602365.1",
+    "eatamt": "955699653218395",
+    "producedamt": "77517257174848.61",
     "type": 0
+  },
+  "1": {
+    "speedcnt": 0,
+    "qualitycnt": 0,
+    "unlocked": true,
+    "decelerate": 0,
+    "eatamt": "0",
+    "producedamt": "0",
+    "type": 1
+  },
+  "2": {
+    "speedcnt": 0,
+    "qualitycnt": 0,
+    "unlocked": true,
+    "decelerate": 0,
+    "eatamt": "0",
+    "producedamt": "0",
+    "type": 2
+  },
+  "3": {
+    "speedcnt": 0,
+    "qualitycnt": 0,
+    "unlocked": true,
+    "decelerate": 0,
+    "eatamt": "0",
+    "producedamt": "0",
+    "type": 3
+  },
+  "4": {
+    "speedcnt": 0,
+    "qualitycnt": 0,
+    "unlocked": true,
+    "decelerate": 0,
+    "eatamt": "0",
+    "producedamt": "0",
+    "type": 4
+  },
+  "5": {
+    "speedcnt": 0,
+    "qualitycnt": 0,
+    "unlocked": true,
+    "decelerate": 0,
+    "eatamt": "0",
+    "producedamt": "0",
+    "type": 5
+  },
+  "6": {
+    "speedcnt": 0,
+    "qualitycnt": 0,
+    "unlocked": true,
+    "decelerate": 0,
+    "eatamt": "0",
+    "producedamt": "0",
+    "type": 6
+  },
+  "7": {
+    "speedcnt": 0,
+    "qualitycnt": 0,
+    "unlocked": true,
+    "decelerate": 0,
+    "eatamt": "0",
+    "producedamt": "0",
+    "type": 7
+  },
+  "8": {
+    "speedcnt": 0,
+    "qualitycnt": 0,
+    "unlocked": true,
+    "decelerate": 0,
+    "eatamt": "0",
+    "producedamt": "0",
+    "type": 8
+  },
+  "9": {
+    "speedcnt": 0,
+    "qualitycnt": 0,
+    "unlocked": true,
+    "decelerate": 0,
+    "eatamt": "0",
+    "producedamt": "0",
+    "type": 9
   },
   "player_data": {
     "Name": "Player",
-    "Money": "2283633181991220"
+    "Money": "1390507494260510000"
   },
   "soap": {
     "upgradesUnlocked": true,
@@ -18,52 +99,57 @@
   },
   "upgrades": [
     {
-      "key": "RedSoapAutoSeller",
+      "key": 0,
       "count": 9,
       "unlocked": false
     },
     {
-      "key": "QualityUpgrade",
-      "count": 154,
+      "key": 1,
+      "count": 186,
       "unlocked": true
     },
     {
-      "key": "SpeedUpgrade",
-      "count": 175,
+      "key": 2,
+      "count": 202,
       "unlocked": true
     },
     {
-      "key": "RedSoapAutoSellBonus",
-      "count": 100,
+      "key": 3,
+      "count": 99,
       "unlocked": false
     },
     {
-      "key": "RedSoapAutoSellCostRed",
-      "count": 77,
+      "key": 4,
+      "count": 99,
       "unlocked": false
     },
     {
-      "key": "BulkUpgrade",
+      "key": 5,
       "count": 9,
       "unlocked": false
     },
     {
-      "key": "EatRedSoapUpgrade",
+      "key": 6,
       "count": 1,
       "unlocked": false
     },
     {
-      "key": "RedQualityAutobuy",
+      "key": 7,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 8,
       "count": 0,
       "unlocked": false
     },
     {
-      "key": "UnlockFoundry",
+      "key": 9,
       "count": 0,
       "unlocked": false
     },
     {
-      "key": "CatPrestige",
+      "key": 10,
       "count": 0,
       "unlocked": false
     }

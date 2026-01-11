@@ -22,6 +22,7 @@ export enum UpgradesKey {
   BulkUpgrade,
   EatRedSoapUpgrade,
   RedQualityAutobuy,
+  RedSpeedAutobuy,
   UnlockFoundry,
   CatPrestige
 }
@@ -228,16 +229,31 @@ class EatRedSoapUpgrade extends BaseUpgrade {
 }
 
 class RedQualityAutobuy extends BaseUpgrade {
-  name: string = "Red Soap Quality Autobuy"
+  name: string = "Quality Automation"
   description: () => ReactiveText = () => new ReactiveText("Quality autobuyer for red soap")
   maxCount: number = 1;
   Requirements: [() => ReactiveText, () => boolean] = [
-    () => new ReactiveText(this.cost.format()), () => Player.Money.gte(this.cost)
+    () => new ReactiveText(this.cost.format(), " + Red Soap Deccelerate 3"), () => Player.Money.gte(this.cost) && SoapProducers[SoapType.Red].DecelerateCount >= 3
   ]
 
-  ShowCondition: () => boolean = () => SoapProducers[SoapType.Red].DecelerateCount > 0;
+  ShowCondition: () => boolean = () => SoapProducers[SoapType.Red].DecelerateCount >= 2;
   get cost() {
-    return new Decimal("1e+15")
+    return new Decimal("1e+18")
+  }
+
+}
+
+class RedSpeedAutobuy extends BaseUpgrade {
+  name: string = "Automate speed"
+  description: () => ReactiveText = () => new ReactiveText("Pretty sure getting to deccel 3 is quite painful eh? Autobuys red soap speed upgrade. ")
+  maxCount: number = 1;
+  Requirements: [() => ReactiveText, () => boolean] = [
+    () => new ReactiveText(this.cost.format(), "+ Red Soap Deccelerate 4"), () => Player.Money.gte(this.cost) && SoapProducers[SoapType.Red].DecelerateCount > 3
+  ]
+
+  ShowCondition: () => boolean = () => SoapProducers[SoapType.Red].DecelerateCount >= 3;
+  get cost() {
+    return new Decimal("1e+17")
   }
 
 }
@@ -273,6 +289,7 @@ export const UpgradesData: Record<UpgradesKey, BaseUpgrade> = {
   [UpgradesKey.BulkUpgrade]: new BulkUpgrade(),
   [UpgradesKey.EatRedSoapUpgrade]: new EatRedSoapUpgrade(),
   [UpgradesKey.RedQualityAutobuy]: new RedQualityAutobuy(),
+  [UpgradesKey.RedSpeedAutobuy]: new RedSpeedAutobuy(),
   [UpgradesKey.UnlockFoundry]: new UnlockFoundry(),
   [UpgradesKey.CatPrestige]: new CatUpgrade(),
 }; const saveKey = "upgrades";
@@ -302,7 +319,7 @@ SaveSystem.LoadCallback<UpgradeSaveData[]>(saveKey, (data) => {
 }
 
 export function ResetUpgrades() {
-  let exceptions = [UpgradesKey.BulkUpgrade, UpgradesKey.EatRedSoapUpgrade];
+  let exceptions = [UpgradesKey.BulkUpgrade, UpgradesKey.EatRedSoapUpgrade, UpgradesKey.RedQualityAutobuy];
   let record = new Map<number, number>();
   for (const exp of exceptions) {
     let index = Object.values(UpgradesKey).indexOf(exp);
