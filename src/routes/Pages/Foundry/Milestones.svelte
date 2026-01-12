@@ -45,12 +45,9 @@
 		{#if chargeunlocked || DevHacks.skipUnlock}
 			<button class="grow" onclick={() => ChangePage(0)}>Charge</button>
 		{/if}
-		{#if ticketUnlocked || DevHacks.skipUnlock}
-			<button class="grow" onclick={() => ChangePage(1)}>Ticket</button>
-		{/if}
-		{#if assemblerunlocked || DevHacks.skipUnlock}
-			<button class="grow" onclick={() => ChangePage(2)}>Assembler</button>
-		{/if}
+		<button class="grow" onclick={() => ChangePage(1)}
+			>{ticketUnlocked ? "Ticket" : "???"}</button
+		>
 	</div>
 
 	<div id="foundry-milestones" class="relative">
@@ -73,7 +70,7 @@
 
 		{#if currentPage === 1}
 			<div class="absolute p-2 w-full overflow-y-scroll">
-				<h1>Ticket Milestones Content</h1>
+				<h1>Comming soon tm(d)</h1>
 			</div>
 		{/if}
 

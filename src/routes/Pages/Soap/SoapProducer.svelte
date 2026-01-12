@@ -14,10 +14,36 @@
 	import { log } from "console";
 	import ActionButton from "../../Components/ActionButton.svelte";
 
-	let { type }: { type: SoapType } = $props();
+	let {
+		type,
+		canAutobuyQuality,
+		canAutobuySpeed,
+		canAutoDeccelerate,
+		deccelerateUnlockThreshold,
+		autoEatInterval,
+		canAutoEat,
+		autoEatBonus,
+		autoSellInterval,
+		canAutoSell,
+		autoSellBonus,
+	}: {
+		type: SoapType;
+		canAutobuyQuality: boolean;
+		canAutobuySpeed: boolean;
+		canAutoDeccelerate: boolean;
+		deccelerateUnlockThreshold: Decimal;
+		autoEatInterval: number;
+		canAutoEat: boolean;
+		autoEatBonus: Decimal;
+		autoSellInterval: number;
+		canAutoSell: boolean;
+		autoSellBonus: Decimal | number;
+	} = $props();
+
 	let producer = $derived(SoapProducers[type]);
 	let soap = $derived(Soaps[type]!);
-
+	let qualityAutobuy = $state(false);
+	let speedAutobuy = $state(false);
 	const speedCostAmt = $derived(
 		Math.min(
 			Player.BulkAmount,
@@ -43,67 +69,42 @@
 	function Accelerate(): void {
 		producer.DecelerateCount = Math.max(producer.DecelerateCount - 1, 0);
 	}
+	let qualityInterval = $state(0);
+	let speedInterval = $state(0);
+	let autobuyTick = 5;
+	Update.add(() => {
+		if (qualityInterval < autobuyTick && qualityAutobuy) {
+			qualityInterval++;
+			if (qualityInterval >= autobuyTick) {
+				qualityInterval = 0;
+				producer.UpgradeQuality(qualityCostAmt);
+			}
+		}
+
+		if (speedInterval < autobuyTick && speedAutobuy) {
+			speedInterval++;
+			if (speedInterval >= autobuyTick) {
+				speedInterval = 0;
+				producer.UpgradeSpeed(speedCostAmt);
+			}
+		}
+	});
+
 	let counter = $state(0);
-	let autosellCap = $derived(
-		30 - 3 * UpgradesData[UpgradesKey.RedSoapAutoSeller].count,
-	);
-
-	const autobuyTick = 5;
-	let qualityAutoBuyCount = $state(0);
-	let qualityAutobuy = $state(true);
-	let speedAutoBuyCount = $state(0);
-	let speedAutobuy = $state(true);
-	Update.add(() => {
-		if (
-			qualityAutoBuyCount < autobuyTick &&
-			UpgradesData[UpgradesKey.RedQualityAutobuy].count > 0 &&
-			qualityAutobuy
-		) {
-			qualityAutoBuyCount++;
-		}
-
-		if (qualityAutoBuyCount >= autobuyTick) {
-			qualityAutoBuyCount = 0;
-			producer.UpgradeQuality(qualityCostAmt);
-		}
-	});
-
-	Update.add(() => {
-		if (
-			speedAutoBuyCount < autobuyTick &&
-			UpgradesData[UpgradesKey.RedSpeedAutobuy].count > 0 &&
-			speedAutobuy
-		) {
-			speedAutoBuyCount++;
-		}
-
-		if (speedAutoBuyCount >= autobuyTick) {
-			speedAutoBuyCount = 0;
-			producer.UpgradeSpeed(speedCostAmt);
-		}
-	});
-
 	Update.add(() => {
 		if (producer.Unlocked) {
 			producer.AddProgress();
 		}
 
-		if (UpgradesData[UpgradesKey.RedSoapAutoSeller].count == 0) return;
+		if (!canAutoSell) return;
 
-		if (counter < autosellCap) {
+		if (counter < autoSellInterval) {
 			counter++;
 		}
 
-		if (counter >= autosellCap) {
-			let sellPercentage =
-				UpgradesData[UpgradesKey.RedSoapAutoSellBonus].count + 1;
-			let sellAmount = soap.Amount.mul(sellPercentage).div(100);
-
-			let reductionPercentage =
-				UpgradesData[UpgradesKey.RedSoapAutoSellCostRed].count;
-			let reductionAmount = sellAmount.mul(reductionPercentage).div(100);
-
-			soap.Sell(sellAmount, reductionAmount);
+		if (counter >= autoSellInterval) {
+			let sellAmount = soap.Amount.mul(autoSellBonus).div(100);
+			soap.Sell(sellAmount);
 			counter = 0;
 		}
 	});
@@ -111,9 +112,8 @@
 	let eatenUnlocked = $state(false);
 	let decelerateUnlocked = $state(false);
 	$effect(() => {
-		if (UpgradesData[UpgradesKey.EatRedSoapUpgrade].count > 0)
-			eatenUnlocked = true;
-		if (producer.Speed.gt(30)) decelerateUnlocked = true;
+		if (producer.Speed.gt(deccelerateUnlockThreshold))
+			decelerateUnlocked = true;
 	});
 
 	interface SoapProducerSave {
@@ -140,7 +140,7 @@
 
 <div class="border p-2">
 	{#if producer.Unlocked}
-		<div class="flex flex-row">
+		<div class="flex flex-row border-b pb-4">
 			<div class="flex flex-col">
 				<div class="mb-3 w-full h-full flex flex-col relative">
 					<div class="flex flex-row">
@@ -179,11 +179,13 @@
 							{/snippet}
 						</ActionButton>
 
-						{#if UpgradesData[UpgradesKey.RedQualityAutobuy].count > 0 || DevHacks.skipUnlock}
+						{#if canAutobuyQuality || DevHacks.skipUnlock}
 							<!-- Had to use style for padding because tailwinds padding doesnt work here bruvh-->
 							<ActionButton
-								onclick={() => (qualityAutobuy = !qualityAutobuy)}
-								disabled={qualityAutobuy}
+								onclick={() => {
+									if (canAutobuyQuality) qualityAutobuy = !qualityAutobuy;
+								}}
+								disabled={!qualityAutobuy}
 								customStyle="padding-bottom: 0px; padding-top: 0px;"
 							>
 								{#snippet content()}
@@ -212,10 +214,12 @@
 							{/snippet}
 						</ActionButton>
 
-						{#if UpgradesData[UpgradesKey.RedSpeedAutobuy].count > 0 || DevHacks.skipUnlock}
+						{#if canAutobuySpeed || DevHacks.skipUnlock}
 							<ActionButton
-								onclick={() => (speedAutobuy = !speedAutobuy)}
-								disabled={speedAutobuy}
+								onclick={() => {
+									if (canAutobuySpeed) speedAutobuy = !speedAutobuy;
+								}}
+								disabled={!speedAutobuy}
 								customStyle="padding-bottom: 0px; padding-top: 0px;"
 							>
 								{#snippet content()}
@@ -254,6 +258,7 @@
 					{/if}
 				</div>
 			</div>
+
 			<div class="ml-2 pl-2 border-l">
 				<div class="flex flex-col h-full">
 					<h1 class="text-center underline mb-2">Actions</h1>
@@ -292,6 +297,7 @@
 				</div>
 			</div>
 		</div>
+
 		<CollapsibleCard transition={{ transition: slide }} isOpen={true}>
 			{#snippet header()}
 				<div class="h-2 flex flex-row"></div>

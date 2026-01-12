@@ -5,29 +5,32 @@ import { ExpPolynomial } from "../../../Game/Shared/Math";
 import { Multipliers } from "../../../Game/Shared/Multipliers";
 import { SaveSystem } from "../../../Game/Saves";
 import { ResetUpgrades, UpgradesData, UpgradesKey } from "../../../Game/Soap/Upgrades.svelte";
-import { log } from "console";
 import { AchievementKey, AchievementsData } from "../../../Game/Achievements/Achievements.svelte";
 import { ChargeMilestones } from "../Foundry/Foundry.svelte.ts";
+import { log } from "console";
 
 export class SoapProducer {
   public SoapType: SoapType;
-  public SpeedCount: number;
-  public QualityCount: number;
-  public Unlocked: boolean;
-  public DecelerateCount: number;
-  public SpeedFormula: ExpPolynomial;
-  public QualityFormula: ExpPolynomial;
-  public Progress: Decimal;
+  public Unlocked: boolean = $state(false);
+
+  public SpeedCount: number = $state(0)
+  public SpeedFormula: ExpPolynomial = new ExpPolynomial(new Decimal(7.29), new Decimal(1.15));
+
+  public QualityCount: number = $state(0);
+  public QualityFormula: ExpPolynomial = new ExpPolynomial(new Decimal(4.5), new Decimal(1.17));
+
+  public AutoDeccelerate: boolean = $state(false);
+  public DecelerateCount: number = $state(0)
+
+  public Progress: Decimal = $state(Decimal.ZERO)
+
+  public AutoEat: boolean = $state(false);
+  public AutoSellUnlocked: boolean = $state(false);
+
+  public EatSoapUnlocked: boolean = $state(false)
 
   constructor(soapType: SoapType) {
     this.SoapType = $state(soapType);
-    this.Unlocked = $state(true);
-    this.DecelerateCount = $state(0)
-    this.SpeedCount = $state(0);
-    this.QualityCount = $state(0);
-    this.Progress = $state(Decimal.ZERO);
-    this.SpeedFormula = new ExpPolynomial(new Decimal(7.29), new Decimal(1.15));
-    this.QualityFormula = new ExpPolynomial(new Decimal(4.5), new Decimal(1.17));
 
     let saveKey = this.SoapType.toString();
     SaveSystem.SaveCallback<SoapProducerSave>(saveKey, () => {
@@ -67,7 +70,7 @@ export class SoapProducer {
       .mul(1 + this.QualityCount).div(3) // Multi from upgrade
       .mul(((upgCount) + 1) * Math.pow(2, Math.floor(upgCount) / 25))
       .mul(this.DecelerateCount > 0 ? new Decimal(2500).mul(Decimal.pow(5, this.DecelerateCount + 1)) : 1) // mult from decel
-      .mul(ChargeMilestones.get(0)!.formula())
+      .mul(ChargeMilestones.get(0)!.formula().add(1))
 
     return amt;
   }
@@ -78,50 +81,42 @@ export class SoapProducer {
       .mul(1 + (this.SpeedCount)) // Multi from upgrade 
       .mul(((upgCount) + 1) * Math.pow(2, Math.floor(upgCount / 25)))
       .div(this.DecelerateCount !== 0 ? this.DecelerateCount * 5 : 1) // nerfs from decel
-      .mul(ChargeMilestones.get(1)!.formula())
+      .mul(ChargeMilestones.get(1)!.formula().add(1))
 
     return amt
   }
 
+  // Exposing soap's properties
   get EatReq() {
     return this.Soap.EatReq;
   }
-
   get DecelerateReq() {
     return new Decimal(1000).mul(this.DecelerateCount + 1).mul(new Decimal(10).pow(this.DecelerateCount));
   }
-
   get MaxProgress() {
     return this.Soap.MaxProgress.mul(new Decimal(100).pow(this.DecelerateCount));
   }
-
   private get Soap() {
     return Soaps[this.SoapType]!
   }
-
   get Amount() {
     return this.Soap.Amount;
   }
-
   set Amount(value) {
     this.Soap.Amount = value
   }
-
   get ProducedAmount() {
     return this.Soap.ProducedAmount;
   }
-
   set ProducedAmount(value) {
     this.Soap.ProducedAmount = value;
   }
-
   get EatAmount() {
     return this.Soap.EatAmount;
   }
   set EatAmount(value) {
     this.Soap.EatAmount = value;
   }
-
   get EatMessage() {
     return this.Soap.EatMessage;
   }
@@ -210,3 +205,9 @@ export const SoapProducers: Record<SoapType, SoapProducer> = $state({
   [SoapType.Black]: new SoapProducer(SoapType.Black),
   [SoapType.Rainbow]: new SoapProducer(SoapType.Rainbow)
 })
+
+export interface AutosellProps {
+  Bonus: Decimal;
+  CostReduction: Decimal;
+  Cap: Decimal;
+}

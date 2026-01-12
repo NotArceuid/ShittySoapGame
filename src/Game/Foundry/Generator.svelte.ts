@@ -34,6 +34,8 @@ class ChargeSpeed extends BaseGenerator {
     return this.formula.Integrate(this.count, this.count + this.buyAmount);
   }
   buy: () => void = () => {
+    if (Soaps[0].Amount.lt(this.cost))
+      return;
     Soaps[0].Amount = Soaps[0].Amount.minus(this.cost);
     this.count += this.buyAmount;
   };
@@ -51,6 +53,9 @@ class ChargePower extends BaseGenerator {
     return this.formula.Integrate(this.count, this.count + this.buyAmount);
   }
   buy: () => void = () => {
+    if (Soaps[1].Amount.lt(this.cost))
+      return;
+
     Soaps[1].Amount = Soaps[1].Amount.minus(this.cost);
     this.count += this.buyAmount;
   }
@@ -68,6 +73,9 @@ class TicketConversion extends BaseGenerator {
     return this.formula.Integrate(this.count, this.count + this.buyAmount);
   }
   buy: () => void = () => {
+    if (Player.Money.lt(this.cost))
+      return;
+
     Player.Charge = Player.Charge.minus(this.cost);
   }
   name: string = "Ticket Conversion"

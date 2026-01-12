@@ -1,4 +1,3 @@
-import { SvelteMap } from "svelte/reactivity";
 import { Player } from "../Player.svelte";
 import { Decimal } from "../Shared/BreakInfinity/Decimal.svelte";
 import { SaveSystem } from "../Saves";
@@ -21,12 +20,11 @@ export abstract class SoapBase implements ISoapData {
     return this.Amount.gte(amount);
   }
 
-  public Sell(amount: Decimal, red?: Decimal) {
+  public Sell(amount: Decimal) {
     let eatMult = this.EatAmount.gt(0) ? (this.EatAmount.div("5e12")) : 1;
     let mult = eatMult;
 
     Player.Money = Player.Money.add(amount.mul(mult!));
-    this.Amount = this.Amount.minus(amount.minus(red ?? 0));
   }
 
   public SoapMade(gain: Decimal) {

@@ -16,7 +16,6 @@ export enum UpgradesKey {
   QualityUpgrade,
   SpeedUpgrade,
   RedSoapAutoSellBonus,
-  RedSoapAutoSellCostRed,
   BulkUpgrade,
   EatRedSoapUpgrade,
   RedQualityAutobuy,
@@ -162,28 +161,7 @@ class RedSoapAutoSellBonus extends BaseUpgrade {
   Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
   ShowCondition = () => true;
 }
-class RedSoapAutoSellerCostRed extends BaseUpgrade {
-  name = "I have no soap now";
-  description = () => new ReactiveText("Too greedy buying the previous upgrade? Reduces the cost deduction of red soap autoseller by 1% per level");
-  maxCount = 99;
 
-  private costFormula = new ExpPolynomial(new Decimal(5000), new Decimal(1.25));
-  get cost(): Decimal {
-    return this.costFormula.Integrate(this.count, this.count + this.buyAmount).round();
-  }
-
-  effect = () => {
-    return new ReactiveText(`Cost Reduction: ${this.count}%`);
-  }
-
-  getMax = () => {
-    let amt = this.costFormula.BuyMax(Player.Money, this.count);
-    return amt == -1 ? 1 : amt
-  }
-
-  Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
-  ShowCondition = () => true;
-}
 class BulkUpgrade extends BaseUpgrade {
   name = "I Want More!!!";
   description = () => new ReactiveText("Increases Bulk Limit by 1 per level");
@@ -328,7 +306,6 @@ export const UpgradesData: Record<UpgradesKey, BaseUpgrade> = $state({
   [UpgradesKey.QualityUpgrade]: new QualityUpgrade(),
   [UpgradesKey.SpeedUpgrade]: new SpeedUpgrade(),
   [UpgradesKey.RedSoapAutoSellBonus]: new RedSoapAutoSellBonus(),
-  [UpgradesKey.RedSoapAutoSellCostRed]: new RedSoapAutoSellerCostRed(),
   [UpgradesKey.BulkUpgrade]: new BulkUpgrade(),
   [UpgradesKey.EatRedSoapUpgrade]: new EatRedSoapUpgrade(),
   [UpgradesKey.RedQualityAutobuy]: new RedQualityAutobuy(),
