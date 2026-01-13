@@ -6,27 +6,36 @@ import { log } from "console";
 
 export abstract class SoapBase implements ISoapData {
   abstract Type: SoapType;
+  abstract MaxProgress: Decimal;
+  abstract EatMessage: () => ReactiveText;
+
+  abstract DeccelerateBase: Decimal;
+  abstract SpeedCostBase: Decimal;
+  abstract SpeedDivisor: Decimal;
+  abstract QualityCostBase: Decimal;
+  abstract QualityDivisor: Decimal;
+  abstract EatReq: Decimal;
+  abstract SellPrice: Decimal;
+
   Amount: Decimal = $state(Decimal.ZERO);
   EatAmount: Decimal = $state(Decimal.ZERO);
   ProducedAmount: Decimal = $state(Decimal.ZERO);
-  abstract MaxProgress: Decimal;
-  abstract EatMessage: () => ReactiveText;
   Unlocked: boolean = $state(false);
-  abstract EatReq: Decimal;
 
-  public CanSell(amount: Decimal | number): boolean {
-    // equality check with 0 can be skipped here because selling by zero is 0,
-    // if negative, then it's the user's problem :)
+  public CanSell(amount: Decimal): boolean {
+    if (amount.lt(0))
+      console.warn("sell amount is negative")
+
     return this.Amount.gte(amount);
   }
 
-  public Sell(amount: Decimal) {
-    let eatMult = this.EatAmount.gt(0) ? (this.EatAmount.div("5e12")) : 1;
-    let mult = eatMult;
-    let net = amount.mul(mult)
 
-    this.Amount = this.Amount.minus(net);
-    Player.Money = Player.Money.add(net);
+  public Sell(amount: Decimal, red?: Decimal) {
+    let eatMult = Soaps[SoapType.Red]?.EatAmount!.div("5e12").add(Decimal.ONE);
+    let mult = this.SellPrice.mul(eatMult);
+
+    Player.Money = Player.Money.add(amount.mul(mult!));
+    this.Amount = this.Amount.minus(amount.minus(red ?? 0));
   }
 
   public SoapMade(gain: Decimal) {
@@ -39,57 +48,96 @@ class RedSoap extends SoapBase {
   EatMessage = () => {
     return new ReactiveText(`Sell multiplier: ${(this.EatAmount.div("5e12").format())}x`)
   }
-
+  SellPrice: Decimal = Decimal.ONE;
+  DeccelerateBase: Decimal = new Decimal(1000);
+  SpeedCostBase: Decimal = new Decimal(7.29);
+  SpeedDivisor: Decimal = Decimal.ONE;
+  QualityCostBase: Decimal = new Decimal(4.5);
+  QualityDivisor: Decimal = Decimal.ONE;
   Type = $state(SoapType.Red);
   MaxProgress = $state(new Decimal(100));
-  EatReq = new Decimal("1e+13");
+  EatReq = new Decimal("2.5e+14");
   Unlocked = true;
 }
 
 class OrangeSoap extends SoapBase {
   EatMessage = () => {
-    return new ReactiveText(``);
+    return new ReactiveText(`Improve charge gain by ${this.EatAmount}%`);
   }
+
+  SellPrice: Decimal = new Decimal(5e15);
+  DeccelerateBase: Decimal = new Decimal(1000);
   Type = SoapType.Orange;
-  MaxProgress = new Decimal(2500);
-  EatReq = Decimal.ZERO;
+  MaxProgress = new Decimal(500);
+  EatReq = new Decimal("1e8");
+  SpeedCostBase: Decimal = new Decimal(2.186e16);
+  QualityCostBase: Decimal = new Decimal(1e16);
+  SpeedDivisor: Decimal = new Decimal(100000);
+  QualityDivisor: Decimal = new Decimal(100000);
 }
 
 class YellowSoap extends SoapBase {
   EatMessage = () => {
     return new ReactiveText(``);
   }
+
+  SellPrice: Decimal = new Decimal(1e18);
+  DeccelerateBase: Decimal = new Decimal(100);
   Type = SoapType.Yellow;
   MaxProgress = new Decimal(100000);
   EatReq = Decimal.ZERO;
+  SpeedCostBase: Decimal = Decimal.ONE;
+  QualityCostBase: Decimal = Decimal.ONE;
+  SpeedDivisor: Decimal = new Decimal(1000);
+  QualityDivisor: Decimal = new Decimal(1000);
 }
 
 class GreenSoap extends SoapBase {
   EatMessage = () => {
     return new ReactiveText(``);
   }
+
+  SellPrice: Decimal = new Decimal(1e18);
+  DeccelerateBase: Decimal = new Decimal(1000);
   Type = SoapType.Green;
   MaxProgress = new Decimal(100_000_000);
   EatReq = Decimal.ZERO;
+  SpeedCostBase: Decimal = Decimal.ONE;
+  QualityCostBase: Decimal = Decimal.ONE;
+  SpeedDivisor: Decimal = new Decimal(1000);
+  QualityDivisor: Decimal = new Decimal(1000);
 }
 
 class BlueSoap extends SoapBase {
   EatMessage = () => {
     return new ReactiveText(``);
   }
+  DeccelerateBase: Decimal = new Decimal(10000);
+
+  SellPrice: Decimal = new Decimal(1e18);
   Type = SoapType.Blue;
   MaxProgress = new Decimal(100);
   EatReq = Decimal.ZERO;
+  SpeedCostBase: Decimal = Decimal.ONE;
+  QualityCostBase: Decimal = Decimal.ONE;
+  SpeedDivisor: Decimal = new Decimal(1000);
+  QualityDivisor: Decimal = new Decimal(1000);
 }
 
 class IndigoSoap extends SoapBase {
   EatMessage = () => {
     return new ReactiveText(``);
   }
+  DeccelerateBase: Decimal = new Decimal(100_000);
 
+  SellPrice: Decimal = new Decimal(1e18);
   Type = SoapType.Indigo;
   MaxProgress = new Decimal(100);
   EatReq = Decimal.ZERO;
+  SpeedCostBase: Decimal = Decimal.ONE;
+  QualityCostBase: Decimal = Decimal.ONE;
+  SpeedDivisor: Decimal = new Decimal(1000);
+  QualityDivisor: Decimal = new Decimal(1000);
 }
 
 class VioletSoap extends SoapBase {
@@ -97,29 +145,50 @@ class VioletSoap extends SoapBase {
     return new ReactiveText(``);
   }
 
+  DeccelerateBase: Decimal = new Decimal(1_000_000);
+  SellPrice: Decimal = new Decimal(1e18);
+
   Type = SoapType.Violet;
   MaxProgress = new Decimal(100);
   EatReq = Decimal.ZERO;
+  SpeedCostBase: Decimal = Decimal.ONE;
+  QualityCostBase: Decimal = Decimal.ONE;
+  SpeedDivisor: Decimal = new Decimal(1000);
+  QualityDivisor: Decimal = new Decimal(1000);
 }
 
 class WhiteSoap extends SoapBase {
   Type = SoapType.White;
   MaxProgress = new Decimal(100);
+
+  DeccelerateBase: Decimal = new Decimal(10_000_000);
+  SellPrice: Decimal = new Decimal(1e18);
   EatMessage = () => {
     return new ReactiveText(``);
   }
 
   EatReq = Decimal.ZERO;
+  SpeedCostBase: Decimal = Decimal.ONE;
+  QualityCostBase: Decimal = Decimal.ONE;
+  SpeedDivisor: Decimal = new Decimal(1000);
+  QualityDivisor: Decimal = new Decimal(1000);
 }
 
 class BlackSoap extends SoapBase {
   EatMessage = () => {
     return new ReactiveText(``);
   }
+  SellPrice: Decimal = new Decimal(1e18);
+
+  DeccelerateBase: Decimal = new Decimal(100_000_000);
 
   Type = SoapType.Black;
   MaxProgress = new Decimal(100);
   EatReq = Decimal.ZERO;
+  SpeedCostBase: Decimal = Decimal.ONE;
+  QualityCostBase: Decimal = Decimal.ONE;
+  SpeedDivisor: Decimal = new Decimal(1000);
+  QualityDivisor: Decimal = new Decimal(1000);
 }
 
 class RainbowSoap extends SoapBase {
@@ -128,8 +197,14 @@ class RainbowSoap extends SoapBase {
     return new ReactiveText(``);
   }
 
+  SellPrice: Decimal = new Decimal(1e18);
+  DeccelerateBase: Decimal = new Decimal(1_000_000_000);
   MaxProgress = new Decimal(100);
   EatReq = Decimal.ZERO;
+  SpeedCostBase: Decimal = Decimal.ONE;
+  QualityCostBase: Decimal = Decimal.ONE;
+  SpeedDivisor: Decimal = new Decimal(1000);
+  QualityDivisor: Decimal = new Decimal(1000);
 }
 
 export enum SoapPages {
@@ -196,26 +271,26 @@ export const Soaps: Record<SoapType, SoapBase> = $state({
 
 SaveSystem.SaveCallback<SoapSaveData[]>("soap", () => {
   let soap: SoapSaveData[] = [];
-  for (const [k, v] of Object.entries(Soaps)) {
+  Object.values(Soaps).forEach((k, v) => {
     soap.push({
-      type: SoapType[k as keyof typeof SoapType],
-      produced: new Decimal(v.ProducedAmount),
-      eaten: v.EatAmount,
-      unlocked: v.Unlocked,
-      amount: v.Amount,
+      type: v,
+      produced: new Decimal(k.ProducedAmount),
+      eaten: k.EatAmount,
+      unlocked: k.Unlocked,
+      amount: k.Amount,
     })
+  })
 
-  }
-
+  log(soap);
   return soap;
 })
 
 SaveSystem.LoadCallback<SoapSaveData[]>("soap", (data) => {
-  for (const [k, v] of Object.entries(data)) {
-    let soapIdx = SoapType[k as keyof typeof SoapType];
+  data.forEach((v, k) => {
+    let soapIdx = Object.keys(Soaps)[k] as unknown as keyof typeof Soaps;
     Soaps[soapIdx].ProducedAmount = new Decimal(v.produced);
     Soaps[soapIdx].EatAmount = new Decimal(v.eaten);
     Soaps[soapIdx].Unlocked = v.unlocked;
     Soaps[soapIdx].Amount = new Decimal(v.amount);
-  }
+  })
 })

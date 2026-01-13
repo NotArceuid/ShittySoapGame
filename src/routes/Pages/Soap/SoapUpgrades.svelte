@@ -26,7 +26,7 @@
 		{#each data as upgrade}
 			{#if (upgrade[1].ShowCondition() && (showMaxxedUpgrades || upgrade[1].count < upgrade[1].maxCount)) || DevHacks.skipUnlock}
 				<ActionButton
-					buttonClass="w-64 h-12 shrink-0 m-2"
+					buttonClass="w-67 h-12 shrink-0 m-2"
 					disabled={upgrade[1].Requirements[1]()}
 					onclick={() => (currUpgrade = upgrade[1])}
 				>

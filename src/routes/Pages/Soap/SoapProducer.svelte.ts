@@ -1,4 +1,4 @@
-import { Soaps, SoapType } from "../../../Game/Soap/Soap.svelte";
+import { SoapBase, Soaps, SoapType } from "../../../Game/Soap/Soap.svelte";
 import { Player } from "../../../Game/Player.svelte";
 import { Decimal } from "../../../Game/Shared/BreakInfinity/Decimal.svelte";
 import { ExpPolynomial } from "../../../Game/Shared/Math";
@@ -8,18 +8,16 @@ import { ResetUpgrades, UpgradesData, UpgradesKey } from "../../../Game/Soap/Upg
 import { AchievementKey, AchievementsData } from "../../../Game/Achievements/Achievements.svelte";
 import { ChargeMilestones } from "../Foundry/Foundry.svelte.ts";
 import { log } from "console";
-import type { TypeOfExpression } from "typescript";
 
 export class SoapProducer {
   public SoapType: SoapType;
+  private Soap: SoapBase;
   public Unlocked: boolean = $state(false);
 
   public SpeedCount: number = $state(0)
-  public SpeedFormula: ExpPolynomial = new ExpPolynomial(new Decimal(7.29), new Decimal(1.15));
-
+  public SpeedFormula: ExpPolynomial;
   public QualityCount: number = $state(0);
-  public QualityFormula: ExpPolynomial = new ExpPolynomial(new Decimal(4.5), new Decimal(1.17));
-
+  public QualityFormula: ExpPolynomial;
   public AutoDeccelerate: boolean = $state(false);
   public DecelerateCount: number = $state(0)
 
@@ -31,7 +29,10 @@ export class SoapProducer {
   public EatSoapUnlocked: boolean = $state(false)
 
   constructor(soapType: SoapType) {
-    this.SoapType = $state(soapType);
+    this.SoapType = soapType;
+    this.Soap = Soaps[soapType];
+    this.SpeedFormula = new ExpPolynomial(this.Soap.SpeedCostBase, new Decimal(1.15));
+    this.QualityFormula = new ExpPolynomial(this.Soap.QualityCostBase, new Decimal(1.17));
   }
 
   GetSpeedCost(amount: number) {
@@ -49,6 +50,7 @@ export class SoapProducer {
       .mul(((upgCount) + 1) * Math.pow(2, Math.floor(upgCount) / 25))
       .mul(this.DecelerateCount > 0 ? new Decimal(2500).mul(Decimal.pow(5, this.DecelerateCount + 1)) : 1) // mult from decel
       .mul(ChargeMilestones.get(0)!.formula().add(1))
+      .div(this.Soap.QualityDivisor);
 
     return amt;
   }
@@ -60,6 +62,7 @@ export class SoapProducer {
       .mul(((upgCount) + 1) * Math.pow(2, Math.floor(upgCount / 25)))
       .div(this.DecelerateCount !== 0 ? this.DecelerateCount * 5 : 1) // nerfs from decel
       .mul(ChargeMilestones.get(1)!.formula().add(1))
+      .div(this.Soap.SpeedDivisor)
 
     return amt
   }
@@ -69,13 +72,10 @@ export class SoapProducer {
     return this.Soap.EatReq;
   }
   get DecelerateReq() {
-    return new Decimal(1000).mul(this.DecelerateCount + 1).mul(new Decimal(10).pow(this.DecelerateCount));
+    return this.Soap.DeccelerateBase.mul(this.DecelerateCount + 1).mul(new Decimal(10).pow(this.DecelerateCount));
   }
   get MaxProgress() {
     return this.Soap.MaxProgress.mul(new Decimal(100).pow(this.DecelerateCount));
-  }
-  private get Soap() {
-    return Soaps[this.SoapType]!
   }
   get Amount() {
     return this.Soap.Amount;
@@ -98,7 +98,6 @@ export class SoapProducer {
   get EatMessage() {
     return this.Soap.EatMessage;
   }
-
   AddProgress() {
     if (AchievementsData[AchievementKey.HighSpeed].check(this.Progress, this.MaxProgress)) AchievementsData[AchievementKey.HighSpeed].unlocked = true;
     this.Progress = this.Progress.add(this.Speed);
@@ -170,7 +169,7 @@ export interface SoapProducerSave {
   type: SoapType;
 }
 
-export const SoapProducers: Record<SoapType, SoapProducer> = $state({
+export const SoapProducers: Record<SoapType, SoapProducer> = {
   [SoapType.Red]: new SoapProducer(SoapType.Red),
   [SoapType.Orange]: new SoapProducer(SoapType.Orange),
   [SoapType.Yellow]: new SoapProducer(SoapType.Yellow),
@@ -181,15 +180,13 @@ export const SoapProducers: Record<SoapType, SoapProducer> = $state({
   [SoapType.White]: new SoapProducer(SoapType.White),
   [SoapType.Black]: new SoapProducer(SoapType.Black),
   [SoapType.Rainbow]: new SoapProducer(SoapType.Rainbow)
-})
+}
 
 export interface AutosellProps {
   Bonus: Decimal;
   CostReduction: Decimal;
   Cap: Decimal;
 }
-
-
 
 let saveKey = "soap_producers";
 SaveSystem.SaveCallback<SoapProducerSave[]>(saveKey, () => {

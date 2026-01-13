@@ -74,7 +74,7 @@ export const AchievementsData: Record<AchievementKey, IAchievement> = $state({
   },
   [AchievementKey.EatSoap]: {
     name: "Eat Soap",
-    description: "Why... just why??",
+    description: "Fyi: there is a wall here [[][][]]",
     check: (...props) => props[0].gt(0)
   },
   [AchievementKey.Deccelerate3]: {

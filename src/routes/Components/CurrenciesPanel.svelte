@@ -27,7 +27,7 @@
 			{/snippet}
 			{#snippet body()}
 				{#each Object.entries(Soaps) as soap}
-					{#if soap[1].Unlocked}
+					{#if soap[1].Unlocked || DevHacks.skipUnlock}
 						<h1>
 							{SoapNameMapping[soap[0] as unknown as SoapType]}: {soap[1].Amount.format()}
 						</h1>

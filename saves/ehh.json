@@ -1,16 +1,85 @@
+This is before eat soapp
 {
   "player": {
     "version": "indevinitely",
-    "playtime": 40,
+    "playtime": 1,
     "name": "Player",
-    "money": "0",
+    "money": "1e15",
     "ticket": "0",
     "charge": "0"
   },
-  "soap": {
-    "upgradesUnlocked": false,
-    "foundryUnlocked": false
-  },
+  "soap": [
+    {
+      "type": 0,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": true,
+      "amount": "0"
+    },
+    {
+      "type": 1,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 2,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 3,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 4,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 5,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 6,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 7,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 8,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 9,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    }
+  ],
   "generator": [
     {
       "generatorsKey": 0,
@@ -34,7 +103,266 @@
       "quality_count": 0,
       "unlocked": true,
       "decelerate_count": 0,
-      "lifetime_produced": "2.66666666666665",
+      "lifetime_produced": "0",
+      "type": 0
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 1
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 2
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 3
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 4
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 5
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 6
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 7
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 8
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 9
+    }
+  ],
+  "upgrades": [
+    {
+      "key": 0,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 1,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 2,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 3,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 4,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 5,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 6,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 7,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 8,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 9,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 10,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 11,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 12,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_page": {
+    "upgradesUnlocked": false,
+    "foundryUnlocked": false
+  },
+  "milestones": {
+    "ticketunlocked": false,
+    "chargeunlocked": false,
+    "assemblerunlocked": false
+  }
+}
+
+this is almost before eat soap
+{
+  "player": {
+    "version": "indevinitely",
+    "playtime": 377,
+    "name": "Player",
+    "money": "81661089144244.7",
+    "ticket": "0",
+    "charge": "0"
+  },
+  "soap": [
+    {
+      "type": 0,
+      "produced": "125339850134878",
+      "eaten": "0",
+      "unlocked": true,
+      "amount": "1124385263917.784"
+    },
+    {
+      "type": 1,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 2,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 3,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 4,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 5,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 6,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 7,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 8,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 9,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    }
+  ],
+  "generator": [
+    {
+      "generatorsKey": 0,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 1,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 2,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_producers": [
+    {
+      "speed_count": 159,
+      "quality_count": 138,
+      "unlocked": true,
+      "decelerate_count": 1,
+      "lifetime_produced": "1125339850134878",
       "type": 0
     },
     {
@@ -118,32 +446,32 @@
     },
     {
       "key": 1,
-      "count": 150,
+      "count": 139,
       "unlocked": true
     },
     {
       "key": 2,
-      "count": 150,
+      "count": 144,
       "unlocked": true
     },
     {
       "key": 3,
-      "count": 0,
+      "count": 84,
       "unlocked": false
     },
     {
       "key": 4,
-      "count": 0,
+      "count": 58,
       "unlocked": false
     },
     {
       "key": 5,
-      "count": 0,
+      "count": 9,
       "unlocked": false
     },
     {
       "key": 6,
-      "count": 0,
+      "count": 1,
       "unlocked": false
     },
     {
@@ -170,8 +498,1875 @@
       "key": 11,
       "count": 0,
       "unlocked": false
+    },
+    {
+      "key": 12,
+      "count": 0,
+      "unlocked": false
     }
   ],
+  "soap_page": {
+    "upgradesUnlocked": true,
+    "foundryUnlocked": false
+  },
+  "milestones": {
+    "ticketunlocked": false,
+    "chargeunlocked": false,
+    "assemblerunlocked": false
+  }
+}
+
+This is right after eat soap 
+{
+  "player": {
+    "version": "indevinitely",
+    "playtime": 445,
+    "name": "Player",
+    "money": "186.824610440838",
+    "ticket": "0",
+    "charge": "0"
+  },
+  "soap": [
+    {
+      "type": 0,
+      "produced": "126",
+      "eaten": "1126257907061920",
+      "unlocked": true,
+      "amount": "92"
+    },
+    {
+      "type": 1,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 2,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 3,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 4,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 5,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 6,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 7,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 8,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 9,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    }
+  ],
+  "generator": [
+    {
+      "generatorsKey": 0,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 1,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 2,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_producers": [
+    {
+      "speed_count": 3,
+      "quality_count": 5,
+      "unlocked": true,
+      "decelerate_count": 0,
+      "lifetime_produced": "126",
+      "type": 0
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 1
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 2
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 3
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 4
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 5
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 6
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 7
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 8
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 9
+    }
+  ],
+  "upgrades": [
+    {
+      "key": 0,
+      "count": 3,
+      "unlocked": false
+    },
+    {
+      "key": 1,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 2,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 3,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 4,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 5,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 6,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 7,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 8,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 9,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 10,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 11,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 12,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_page": {
+    "upgradesUnlocked": true,
+    "foundryUnlocked": false
+  },
+  "milestones": {
+    "ticketunlocked": false,
+    "chargeunlocked": false,
+    "assemblerunlocked": false
+  }
+}
+
+this is abit 
+{
+  "player": {
+    "version": "indevinitely",
+    "playtime": 913,
+    "name": "Player",
+    "money": "299510069602307",
+    "ticket": "0",
+    "charge": "0"
+  },
+  "soap": [
+    {
+      "type": 0,
+      "produced": "122113504406349",
+      "eaten": "1126257907061920",
+      "unlocked": true,
+      "amount": "193059976685.439"
+    },
+    {
+      "type": 1,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 2,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 3,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 4,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 5,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 6,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 7,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 8,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 9,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    }
+  ],
+  "generator": [
+    {
+      "generatorsKey": 0,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 1,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 2,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_producers": [
+    {
+      "speed_count": 181,
+      "quality_count": 157,
+      "unlocked": true,
+      "decelerate_count": 1,
+      "lifetime_produced": "122113504406349",
+      "type": 0
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 1
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 2
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 3
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 4
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 5
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 6
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 7
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 8
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 9
+    }
+  ],
+  "upgrades": [
+    {
+      "key": 0,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 1,
+      "count": 142,
+      "unlocked": true
+    },
+    {
+      "key": 2,
+      "count": 151,
+      "unlocked": true
+    },
+    {
+      "key": 3,
+      "count": 99,
+      "unlocked": false
+    },
+    {
+      "key": 4,
+      "count": 70,
+      "unlocked": false
+    },
+    {
+      "key": 5,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 6,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 7,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 8,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 9,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 10,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 11,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 12,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_page": {
+    "upgradesUnlocked": true,
+    "foundryUnlocked": false
+  },
+  "milestones": {
+    "ticketunlocked": false,
+    "chargeunlocked": false,
+    "assemblerunlocked": false
+  }
+}
+
+  Orange soap 
+{
+  "player": {
+    "version": "indevinitely",
+    "playtime": 1071,
+    "name": "Player",
+    "money": "178563208180314980",
+    "ticket": "0",
+    "charge": "0"
+  },
+  "soap": [
+    {
+      "type": 0,
+      "produced": "409094031363571",
+      "eaten": "1126257907061920",
+      "unlocked": true,
+      "amount": "1696385579657.8699"
+    },
+    {
+      "type": 1,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": true,
+      "amount": "0"
+    },
+    {
+      "type": 2,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 3,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 4,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 5,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 6,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 7,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 8,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 9,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    }
+  ],
+  "generator": [
+    {
+      "generatorsKey": 0,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 1,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 2,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_producers": [
+    {
+      "speed_count": 199,
+      "quality_count": 175,
+      "unlocked": true,
+      "decelerate_count": 2,
+      "lifetime_produced": "409094031363571",
+      "type": 0
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 1
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 2
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 3
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 4
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 5
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 6
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 7
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 8
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 9
+    }
+  ],
+  "upgrades": [
+    {
+      "key": 0,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 1,
+      "count": 166,
+      "unlocked": true
+    },
+    {
+      "key": 2,
+      "count": 183,
+      "unlocked": true
+    },
+    {
+      "key": 3,
+      "count": 99,
+      "unlocked": false
+    },
+    {
+      "key": 4,
+      "count": 82,
+      "unlocked": false
+    },
+    {
+      "key": 5,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 6,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 7,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 8,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 9,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 10,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 11,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 12,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_page": {
+    "upgradesUnlocked": true,
+    "foundryUnlocked": false
+  },
+  "milestones": {
+    "ticketunlocked": false,
+    "chargeunlocked": false,
+    "assemblerunlocked": false
+  }
+}
+
+Orange soappp
+{
+  "player": {
+    "version": "indevinitely",
+    "playtime": 1007,
+    "name": "Player",
+    "money": "0",
+    "ticket": "0",
+    "charge": "0"
+  },
+  "soap": [
+    {
+      "type": 0,
+      "produced": "1539569913646660",
+      "eaten": "1126257907061920",
+      "unlocked": true,
+      "amount": "711180012265.707"
+    },
+    {
+      "type": 1,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": true,
+      "amount": "0"
+    },
+    {
+      "type": 2,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 3,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 4,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 5,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 6,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 7,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 8,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 9,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    }
+  ],
+  "generator": [
+    {
+      "generatorsKey": 0,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 1,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 2,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_producers": [
+    {
+      "speed_count": 181,
+      "quality_count": 157,
+      "unlocked": true,
+      "decelerate_count": 1,
+      "lifetime_produced": "1539569913646660",
+      "type": 0
+    },
+    {
+      "speed_count": 60,
+      "quality_count": 51,
+      "unlocked": true,
+      "decelerate_count": 0,
+      "lifetime_produced": "439678212.21910197",
+      "type": 1
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 2
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 3
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 4
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 5
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 6
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 7
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 8
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 9
+    }
+  ],
+  "upgrades": [
+    {
+      "key": 0,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 1,
+      "count": 142,
+      "unlocked": true
+    },
+    {
+      "key": 2,
+      "count": 151,
+      "unlocked": true
+    },
+    {
+      "key": 3,
+      "count": 99,
+      "unlocked": false
+    },
+    {
+      "key": 4,
+      "count": 70,
+      "unlocked": false
+    },
+    {
+      "key": 5,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 6,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 7,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 8,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 9,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 10,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 11,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 12,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_page": {
+    "upgradesUnlocked": true,
+    "foundryUnlocked": false
+  },
+  "milestones": {
+    "ticketunlocked": false,
+    "chargeunlocked": false,
+    "assemblerunlocked": false
+  }
+}
+
+Unlocked the orange sopa
+{
+  "player": {
+    "version": "indevinitely",
+    "playtime": 1341,
+    "name": "Player",
+    "money": "67648536764805900",
+    "ticket": "0",
+    "charge": "0"
+  },
+  "soap": [
+    {
+      "type": 0,
+      "produced": "4714387683390340",
+      "eaten": "1126257907061920",
+      "unlocked": true,
+      "amount": "3178467341541.9297"
+    },
+    {
+      "type": 1,
+      "produced": "439678381.195164",
+      "eaten": "0",
+      "unlocked": true,
+      "amount": "1.0436009582331878"
+    },
+    {
+      "type": 2,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 3,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 4,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 5,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 6,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 7,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 8,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 9,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    }
+  ],
+  "generator": [
+    {
+      "generatorsKey": 0,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 1,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 2,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_producers": [
+    {
+      "speed_count": 220,
+      "quality_count": 180,
+      "unlocked": true,
+      "decelerate_count": 2,
+      "lifetime_produced": "4714387683390340",
+      "type": 0
+    },
+    {
+      "speed_count": 7,
+      "quality_count": 12,
+      "unlocked": true,
+      "decelerate_count": 0,
+      "lifetime_produced": "439678381.195164",
+      "type": 1
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 2
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 3
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 4
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 5
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 6
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 7
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 8
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 9
+    }
+  ],
+  "upgrades": [
+    {
+      "key": 0,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 1,
+      "count": 177,
+      "unlocked": true
+    },
+    {
+      "key": 2,
+      "count": 203,
+      "unlocked": true
+    },
+    {
+      "key": 3,
+      "count": 99,
+      "unlocked": false
+    },
+    {
+      "key": 4,
+      "count": 70,
+      "unlocked": false
+    },
+    {
+      "key": 5,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 6,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 7,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 8,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 9,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 10,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 11,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 12,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 13,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 14,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 15,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_page": {
+    "upgradesUnlocked": true,
+    "foundryUnlocked": false
+  },
+  "milestones": {
+    "ticketunlocked": false,
+    "chargeunlocked": false,
+    "assemblerunlocked": false
+  }
+}
+
+Somewhere in middle 
+{
+  "player": {
+    "version": "indevinitely",
+    "playtime": 1756,
+    "name": "Player",
+    "money": "815679271052745000000",
+    "ticket": "0",
+    "charge": "0"
+  },
+  "soap": [
+    {
+      "type": 0,
+      "produced": "21967080081406300",
+      "eaten": "1126257907061920",
+      "unlocked": true,
+      "amount": "276318290053164"
+    },
+    {
+      "type": 1,
+      "produced": "439708801.210207",
+      "eaten": "0",
+      "unlocked": true,
+      "amount": "271.472598476852"
+    },
+    {
+      "type": 2,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 3,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 4,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 5,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 6,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 7,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 8,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 9,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    }
+  ],
+  "generator": [
+    {
+      "generatorsKey": 0,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 1,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 2,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_producers": [
+    {
+      "speed_count": 283,
+      "quality_count": 270,
+      "unlocked": true,
+      "decelerate_count": 3,
+      "lifetime_produced": "21967080081406300",
+      "type": 0
+    },
+    {
+      "speed_count": 42,
+      "quality_count": 43,
+      "unlocked": true,
+      "decelerate_count": 0,
+      "lifetime_produced": "439708801.210207",
+      "type": 1
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 2
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 3
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 4
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 5
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 6
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 7
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 8
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 9
+    }
+  ],
+  "upgrades": [
+    {
+      "key": 0,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 1,
+      "count": 228,
+      "unlocked": true
+    },
+    {
+      "key": 2,
+      "count": 260,
+      "unlocked": true
+    },
+    {
+      "key": 3,
+      "count": 99,
+      "unlocked": false
+    },
+    {
+      "key": 4,
+      "count": 99,
+      "unlocked": false
+    },
+    {
+      "key": 5,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 6,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 7,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 8,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 9,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 10,
+      "count": 6,
+      "unlocked": false
+    },
+    {
+      "key": 11,
+      "count": 16,
+      "unlocked": false
+    },
+    {
+      "key": 12,
+      "count": 8,
+      "unlocked": false
+    },
+    {
+      "key": 13,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 14,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 15,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_page": {
+    "upgradesUnlocked": true,
+    "foundryUnlocked": false
+  },
+  "milestones": {
+    "ticketunlocked": false,
+    "chargeunlocked": false,
+    "assemblerunlocked": false
+  }
+}
+
+b4 eatsoap2 
+{
+  "player": {
+    "version": "indevinitely",
+    "playtime": 1946,
+    "name": "Player",
+    "money": "1.04102129754449e+21",
+    "ticket": "0",
+    "charge": "0"
+  },
+  "soap": [
+    {
+      "type": 0,
+      "produced": "24551008445378100",
+      "eaten": "1126257907061920",
+      "unlocked": true,
+      "amount": "85494663086534.89"
+    },
+    {
+      "type": 1,
+      "produced": "439728858.27729094",
+      "eaten": "0",
+      "unlocked": true,
+      "amount": "436.389039573102"
+    },
+    {
+      "type": 2,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 3,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 4,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 5,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 6,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 7,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 8,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    },
+    {
+      "type": 9,
+      "produced": "0",
+      "eaten": "0",
+      "unlocked": false,
+      "amount": "0"
+    }
+  ],
+  "generator": [
+    {
+      "generatorsKey": 0,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 1,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "generatorsKey": 2,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_producers": [
+    {
+      "speed_count": 292,
+      "quality_count": 270,
+      "unlocked": true,
+      "decelerate_count": 4,
+      "lifetime_produced": "24551008445378100",
+      "type": 0
+    },
+    {
+      "speed_count": 52,
+      "quality_count": 52,
+      "unlocked": true,
+      "decelerate_count": 0,
+      "lifetime_produced": "439728858.27729094",
+      "type": 1
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 2
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 3
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 4
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 5
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 6
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 7
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 8
+    },
+    {
+      "speed_count": 0,
+      "quality_count": 0,
+      "unlocked": false,
+      "decelerate_count": 0,
+      "lifetime_produced": "0",
+      "type": 9
+    }
+  ],
+  "upgrades": [
+    {
+      "key": 0,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 1,
+      "count": 230,
+      "unlocked": true
+    },
+    {
+      "key": 2,
+      "count": 262,
+      "unlocked": true
+    },
+    {
+      "key": 3,
+      "count": 99,
+      "unlocked": false
+    },
+    {
+      "key": 4,
+      "count": 99,
+      "unlocked": false
+    },
+    {
+      "key": 5,
+      "count": 9,
+      "unlocked": false
+    },
+    {
+      "key": 6,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 7,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 8,
+      "count": 1,
+      "unlocked": false
+    },
+    {
+      "key": 9,
+      "count": 1,
+      "unlocked": true
+    },
+    {
+      "key": 10,
+      "count": 6,
+      "unlocked": false
+    },
+    {
+      "key": 11,
+      "count": 16,
+      "unlocked": false
+    },
+    {
+      "key": 12,
+      "count": 8,
+      "unlocked": false
+    },
+    {
+      "key": 13,
+      "count": 0,
+      "unlocked": false
+    },
+    {
+      "key": 14,
+      "count": 0,
+      "unlocked": true
+    },
+    {
+      "key": 15,
+      "count": 0,
+      "unlocked": false
+    }
+  ],
+  "soap_page": {
+    "upgradesUnlocked": true,
+    "foundryUnlocked": false
+  },
   "milestones": {
     "ticketunlocked": false,
     "chargeunlocked": false,

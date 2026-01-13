@@ -39,14 +39,15 @@
 		foundryUnlocked: boolean;
 	}
 
-	SaveSystem.SaveCallback<SoapData>("soap", () => {
+	let saveKey = "soap_page";
+	SaveSystem.SaveCallback<SoapData>(saveKey, () => {
 		return {
 			upgradesUnlocked: upgradesUnlocked,
 			foundryUnlocked: foundryUnlocked,
 		};
 	});
 
-	SaveSystem.LoadCallback<SoapData>("soap", (data) => {
+	SaveSystem.LoadCallback<SoapData>(saveKey, (data) => {
 		upgradesUnlocked = data.upgradesUnlocked;
 		foundryUnlocked = data.foundryUnlocked;
 	});
