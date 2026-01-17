@@ -16,27 +16,6 @@
 	});
 
 	waitLocale();
-
-	onMount(() => {
-		window.addEventListener("beforeunload", async () => {
-			localStorage.setItem(
-				OfflineProps.saveId.toString(),
-				await SaveSystem.exportToString(),
-			);
-		});
-	});
-
-	onMount(() => {
-		let save = localStorage.getItem(OfflineProps.saveId.toString());
-		if (save) SaveSystem.importFromString(save);
-
-		document.querySelectorAll("button").forEach((button) => {
-			button.addEventListener("click", () => {
-				const audio = new Audio("/click.wav");
-				if (Settings.Sounds) audio.play();
-			});
-		});
-	});
 </script>
 
 <svelte:head>

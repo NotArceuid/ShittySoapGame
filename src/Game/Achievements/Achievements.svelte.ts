@@ -1,7 +1,23 @@
-import { InvokeableEvent } from "../Shared/Events";
 import type { Decimal } from "../Shared/BreakInfinity/Decimal.svelte";
 import { NotificationPopUp, type INotification } from "../../routes/Components/Notification.svelte";
 import { log } from "console";
+import { SaveSystem } from "../Saves";
+
+let savekey = "achievements";
+SaveSystem.SaveCallback<boolean[]>(savekey, () => {
+  let arr: boolean[] = []
+  Object.values(AchievementsData).forEach((e) => {
+    arr.push(e.unlocked ?? false);
+  })
+  return arr;
+})
+
+SaveSystem.LoadCallback<boolean[]>(savekey, (data) => {
+  let arr = Object.values(AchievementsData);
+  for (let i = 0; i < arr.length; i++) {
+    arr[i].unlocked = data[i];
+  }
+})
 
 export function UnlockAchievement(key: AchievementKey) {
   if (AchievementsData[key].unlocked)

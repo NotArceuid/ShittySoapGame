@@ -74,6 +74,30 @@
 		[ColorTheme.Dark]: "dark",
 	};
 
+	let saveBeforeUnload = $state(true);
+	onMount(() => {
+		window.addEventListener("beforeunload", async () => {
+			if (saveBeforeUnload)
+				localStorage.setItem(
+					OfflineProps.saveId.toString(),
+					await SaveSystem.exportToString(),
+				);
+		});
+	});
+
+	onMount(() => {
+		saveBeforeUnload = true;
+		let save = localStorage.getItem(OfflineProps.saveId.toString());
+		if (save) SaveSystem.importFromString(save);
+
+		document.querySelectorAll("button").forEach((button) => {
+			button.addEventListener("click", () => {
+				const audio = new Audio("/click.wav");
+				if (Settings.Sounds) audio.play();
+			});
+		});
+	});
+
 	onMount(() => {
 		setInterval(async () => {
 			localStorage.setItem(
@@ -116,6 +140,15 @@
 				<button class="w-full" onclick={saveToFile}>Save to file</button>
 			</div>
 			<SaveSlot save={true} idx="0" />
+			<button
+				class="bg-red-300 w-full"
+				onclick={() => {
+					localStorage.setItem(OfflineProps.saveId.toString(), "");
+					localStorage.setItem("savedate", "");
+					saveBeforeUnload = false;
+					location.reload();
+				}}>Delete Save</button
+			>
 		</div>
 	</div>
 </div>

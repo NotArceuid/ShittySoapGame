@@ -17,6 +17,7 @@
 		UnlockAchievement,
 	} from "../../../Game/Achievements/Achievements.svelte.ts";
 	import { SaveSystem } from "../../../Game/Saves.ts";
+	import { log } from "console";
 
 	let {
 		type,
@@ -193,7 +194,8 @@
 	});
 
 	SaveSystem.LoadCallback<SaveProps>(saveKey, (data) => {
-		data.showupgrades = canShowUpgrades;
+		log(data.showupgrades);
+		canShowUpgrades = data.showupgrades;
 	});
 </script>
 

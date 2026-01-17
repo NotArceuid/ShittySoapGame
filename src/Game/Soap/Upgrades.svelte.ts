@@ -13,9 +13,9 @@ export const UpgradeBought: InvokeableEvent<UpgradesKey> = new InvokeableEvent<U
 
 export enum UpgradesKey {
   RedSoapAutoSeller,
+  RedSoapAutoSellBonus,
   QualityUpgrade,
   SpeedUpgrade,
-  RedSoapAutoSellBonus,
   RedAutoSellReduction,
   BulkUpgrade,
   EatRedSoapUpgrade,
@@ -64,7 +64,7 @@ class RedSoapAutoSeller extends BaseUpgrade {
   maxCount = 9;
 
   get cost(): Decimal {
-    return new Decimal(this.count).factorial().mul(10);
+    return new Decimal(this.count + 1).factorial().mul(10).div(8);
   }
 
   getMax = () => {
@@ -157,7 +157,7 @@ class RedSoapAutoSellBonus extends BaseUpgrade {
   description = () => new ReactiveText("Still not satisfied yet? This upgrade increases the effect of red soap autoseller by 1% per level");
   maxCount = 99;
 
-  private costFormula = new Exponential(new Decimal(957), new Decimal(1.3));
+  private costFormula = new Exponential(new Decimal(5.7), new Decimal(1.3));
   get cost(): Decimal {
     return this.costFormula.Integrate(this.count, this.count + this.buyAmount).round();
   }
@@ -497,9 +497,9 @@ class ChargeSpeedUpgrade extends BaseUpgrade {
 
 export const UpgradesData: Record<UpgradesKey, BaseUpgrade> = $state({
   [UpgradesKey.RedSoapAutoSeller]: new RedSoapAutoSeller(),
+  [UpgradesKey.RedSoapAutoSellBonus]: new RedSoapAutoSellBonus(),
   [UpgradesKey.QualityUpgrade]: new QualityUpgrade(),
   [UpgradesKey.SpeedUpgrade]: new SpeedUpgrade(),
-  [UpgradesKey.RedSoapAutoSellBonus]: new RedSoapAutoSellBonus(),
   [UpgradesKey.BulkUpgrade]: new BulkUpgrade(),
   [UpgradesKey.RedAutoSellReduction]: new RedSoapAutoSellerCostRed(),
   [UpgradesKey.EatRedSoapUpgrade]: new EatRedSoapUpgrade(),
