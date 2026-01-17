@@ -164,5 +164,5 @@ export const MainLoop = new GameLoop();
 export const AutomationTick: number = 5;
 
 export function CalculateOfflineTick(tick: number) {
-  return Math.floor(Math.log10(tick) * 8);
+  return tick / 60;
 }

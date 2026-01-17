@@ -1,20 +1,27 @@
 {
   "player": {
     "version": "indevinitely",
-    "playtime": 3376,
-    "savetime": 1768613427355,
+    "playtime": 5,
+    "savetime": 1768660571982,
     "name": "Save Slot 1",
-    "money": "1018.2171204042601",
+    "money": "0",
     "ticket": "0",
     "charge": "0"
   },
+  "settings": {
+    "Theme": 1,
+    "Format": 0,
+    "Sounds": false
+  },
   "achievements": [
-    true,
     false,
     false,
     false,
     false,
-    true,
+    false,
+    false,
+    false,
+    false,
     false,
     false,
     false,
@@ -37,10 +44,10 @@
   "soap": [
     {
       "type": 0,
-      "produced": "1",
+      "produced": "0",
       "eaten": "0",
       "unlocked": true,
-      "amount": "1"
+      "amount": "0"
     },
     {
       "type": 1,
@@ -226,7 +233,7 @@
       "quality_count": 0,
       "unlocked": true,
       "decelerate_count": 0,
-      "lifetime_produced": "1",
+      "lifetime_produced": "0",
       "type": 0
     },
     {
@@ -303,7 +310,7 @@
     }
   ],
   "soap_page": {
-    "upgradesUnlocked": true,
+    "upgradesUnlocked": false,
     "foundryUnlocked": false
   },
   "0 + producer": {
