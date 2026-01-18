@@ -1,5 +1,4 @@
 import { dev } from "$app/environment";
-import { CalculateOfflineTick, RunOfflineCalculations } from "./Game.svelte";
 import { InvokeableEvent } from "./Shared/Events";
 
 export interface SaveEvents {

@@ -15,12 +15,16 @@ export enum UpgradesKey {
   QualityUpgrade,
   SpeedUpgrade,
   RedAutoSellReduction,
+  RedSpeedLevelBonus,
+  RedQualityLevelBonus,
   BulkUpgrade,
   EatRedSoapUpgrade,
   UnlockOrangeSoap,
   OrangeSoapAutoSeller,
   OrangeSoapAutoSellBonus,
   OrangeAutoSellReduction,
+  OrangeSpeedLevelBonus,
+  OrangeQualityLevelBonus,
   RedQualityAutobuy,
   RedSpeedAutobuy,
   UnlockFoundry,
@@ -178,7 +182,56 @@ class RedSoapAutoSellBonus extends BaseUpgrade {
   buttonStyle = Soaps[SoapType.Red].StyleColor;
   invertText = true;
 }
+class RedSpeedLevelBonus extends BaseUpgrade {
+  key = UpgradesKey.RedSpeedLevelBonus
+  name = "Speed Level Bonus";
+  description = () => new ReactiveText("Grants a 1% bonus to red soap producer speed at every 25 levels increments of speed upgrade you own. Increases by 1% every level. ");
+  maxCount = 50;
 
+  private costFormula = new ExpPolynomial(new Decimal("9.7e9"), new Decimal(1.3));
+  get cost(): Decimal {
+    return this.costFormula.Integrate(this.count, this.count + this.buyAmount).round();
+  }
+
+  getMax = () => {
+    let amt = this.costFormula.BuyMax(Player.Money, this.count);
+    return amt == -1 ? 1 : amt
+  }
+
+  effect = () => {
+    return new ReactiveText(`Speed Bonus: ${Math.floor(this.count / 25)}%`);
+  }
+
+  Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
+  ShowCondition = () => true;
+  buttonStyle = Soaps[SoapType.Red].StyleColor;
+  invertText = true;
+}
+class RedQualityLevelBonus extends BaseUpgrade {
+  key = UpgradesKey.RedQualityLevelBonus
+  name = "Quality Level Bonus";
+  description = () => new ReactiveText("Same as the speed upgrade one but for quality xd");
+  maxCount = 50;
+
+  private costFormula = new ExpPolynomial(new Decimal("9.7e9"), new Decimal(1.3));
+  get cost(): Decimal {
+    return this.costFormula.Integrate(this.count, this.count + this.buyAmount).round();
+  }
+
+  getMax = () => {
+    let amt = this.costFormula.BuyMax(Player.Money, this.count);
+    return amt == -1 ? 1 : amt
+  }
+
+  effect = () => {
+    return new ReactiveText(`Quality Bonus: ${Math.floor(this.count / 25)}%`);
+  }
+
+  Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
+  ShowCondition = () => true;
+  buttonStyle = Soaps[SoapType.Red].StyleColor;
+  invertText = true;
+}
 class RedSoapAutoSellerCostRed extends BaseUpgrade {
   key = UpgradesKey.RedAutoSellReduction
   name = "I have no soap now";
@@ -203,7 +256,6 @@ class RedSoapAutoSellerCostRed extends BaseUpgrade {
   buttonStyle = Soaps[SoapType.Red].StyleColor;
   invertText = true;
 }
-
 class BulkUpgrade extends BaseUpgrade {
   key = UpgradesKey.BulkUpgrade
   name = "I Want More!!!";
@@ -252,7 +304,6 @@ class EatRedSoapUpgrade extends BaseUpgrade {
   buttonStyle = Soaps[SoapType.Red].StyleColor;
   invertText = true;
 }
-
 class RedQualityAutobuy extends BaseUpgrade {
   key = UpgradesKey.RedQualityAutobuy
   name: string = "Red Quality Automation"
@@ -481,6 +532,59 @@ class OrangeSpeedAutoBuy extends BaseUpgrade {
   invertText = true;
 }
 
+class OrangeSpeedLevelBonus extends BaseUpgrade {
+  key = UpgradesKey.OrangeSpeedLevelBonus
+  name = "Speed Level Bonus x2";
+  description = () => new ReactiveText("Grants a 1% bonus to orange soap producer speed at every 25 levels increments of speed upgrade you own. Increases by 1% every level. ");
+  maxCount = 50;
+
+  private costFormula = new ExpPolynomial(new Decimal("9.7e25"), new Decimal(1.3));
+  get cost(): Decimal {
+    return this.costFormula.Integrate(this.count, this.count + this.buyAmount).round();
+  }
+
+  getMax = () => {
+    let amt = this.costFormula.BuyMax(Player.Money, this.count);
+    return amt == -1 ? 1 : amt
+  }
+
+  effect = () => {
+    return new ReactiveText(`Speed Bonus: ${Math.floor(this.count / 25)}%`);
+  }
+
+  Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
+  ShowCondition = () => UpgradesData[UpgradesKey.UnlockOrangeSoap].count > 0;
+  buttonStyle = Soaps[SoapType.Orange].StyleColor;
+  invertText = true;
+}
+
+
+class OrangeQualityLevelBOnus extends BaseUpgrade {
+  key = UpgradesKey.OrangeQualityLevelBonus
+  name = "Quality Level Bonus x2";
+  description = () => new ReactiveText("Grants a 1% bonus to orange soap producer quality at every 25 levels increments of speed upgrade you own. Increases by 1% every level. ");
+  maxCount = 50;
+
+  private costFormula = new ExpPolynomial(new Decimal("9.7e25"), new Decimal(1.3));
+  get cost(): Decimal {
+    return this.costFormula.Integrate(this.count, this.count + this.buyAmount).round();
+  }
+
+  getMax = () => {
+    let amt = this.costFormula.BuyMax(Player.Money, this.count);
+    return amt == -1 ? 1 : amt
+  }
+
+  effect = () => {
+    return new ReactiveText(`Quality Bonus: ${Math.floor(this.count / 25)}%`);
+  }
+
+  Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.greaterThan(this.cost)] as [() => ReactiveText, () => boolean];
+  ShowCondition = () => UpgradesData[UpgradesKey.UnlockOrangeSoap].count > 0;
+  buttonStyle = Soaps[SoapType.Orange].StyleColor;
+  invertText = true;
+}
+
 class CatUpgrade extends BaseUpgrade {
   key = UpgradesKey.CatPrestige
   name = "Buy a.. cat?";
@@ -533,6 +637,8 @@ export const UpgradesData: Record<UpgradesKey, BaseUpgrade> = $state({
   [UpgradesKey.SpeedUpgrade]: new SpeedUpgrade(),
   [UpgradesKey.BulkUpgrade]: new BulkUpgrade(),
   [UpgradesKey.RedAutoSellReduction]: new RedSoapAutoSellerCostRed(),
+  [UpgradesKey.RedSpeedLevelBonus]: new RedSpeedLevelBonus(),
+  [UpgradesKey.RedQualityLevelBonus]: new RedQualityLevelBonus(),
   [UpgradesKey.EatRedSoapUpgrade]: new EatRedSoapUpgrade(),
   [UpgradesKey.UnlockOrangeSoap]: new UnlockOrangeSoap(),
   [UpgradesKey.RedQualityAutobuy]: new RedQualityAutobuy(),
@@ -546,6 +652,8 @@ export const UpgradesData: Record<UpgradesKey, BaseUpgrade> = $state({
   [UpgradesKey.OrangeQualityAutoBuy]: new OrangeQualityAutobuy(),
   [UpgradesKey.ChargeSpeedUpgrade]: new ChargeSpeedUpgrade(),
   [UpgradesKey.CatPrestige]: new CatUpgrade(),
+  [UpgradesKey.OrangeSpeedLevelBonus]: new OrangeSpeedLevelBonus(),
+  [UpgradesKey.OrangeQualityLevelBonus]: new OrangeQualityLevelBOnus(),
 });
 
 const saveKey = "upgrades";

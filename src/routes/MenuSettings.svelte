@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from "svelte";
 	import { Settings } from "./Pages/Settings.svelte.ts";
 	import { ColorTheme } from "./Pages/Settings.svelte.ts";
 	import {
@@ -7,11 +6,9 @@
 		formatTime,
 		Notation,
 	} from "../Game/Shared/BreakInfinity/Formatter.svelte";
-	import SaveSlot from "./Pages/SaveSlot.svelte";
 	import { Player } from "../Game/Player.svelte";
 
 	let { open = $bindable() } = $props();
-	let saveStatus = $state("");
 
 	//@ts-ignore
 	let name = PKG_NAME;

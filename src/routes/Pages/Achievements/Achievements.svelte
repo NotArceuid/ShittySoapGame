@@ -18,8 +18,8 @@
 		).length}) achievementes unlocked
 	</h1>
 	<h1>
-		Granting a total of {UnlockedAchievementCount() * 0.01 + 1}x bonus to sell
-		multiplier
+		Granting a total of {(UnlockedAchievementCount() * 0.01 + 1).toFixed(2)}x
+		bonus to sell multiplier
 	</h1>
 	<div class="flex flex-wrap items-center content-center">
 		{#each Object.entries(AchievementsData) as achievement}

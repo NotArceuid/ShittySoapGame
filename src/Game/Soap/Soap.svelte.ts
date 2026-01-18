@@ -3,7 +3,7 @@ import { Decimal } from "../Shared/BreakInfinity/Decimal.svelte";
 import { SaveSystem } from "../Saves";
 import { ReactiveText } from "../Shared/ReactiveText.svelte";
 import { log } from "console";
-import { AchievementKey, AchievementsData, UnlockedAchievementCount } from "../Achievements/Achievements.svelte";
+import { UnlockedAchievementCount } from "../Achievements/Achievements.svelte";
 
 export abstract class SoapBase implements ISoapData {
   abstract Type: SoapType;
@@ -45,8 +45,8 @@ class RedSoap extends SoapBase {
     return new ReactiveText(`Sell multiplier: ${(this.EatAmount.div("5e12").format())}x`)
   }
   SellPrice: Decimal = Decimal.ONE;
-  DeccelerateBase: Decimal = new Decimal(1000);
-  DeccelReqBase: Decimal = new Decimal(100);
+  DeccelerateBase: Decimal = new Decimal(100);
+  DeccelReqBase: Decimal = new Decimal(1000);
   SpeedCostBase: Decimal = new Decimal(7.29);
   SpeedDivisor: Decimal = Decimal.ONE;
   QualityCostBase: Decimal = new Decimal(4.5);

@@ -1,17 +1,17 @@
 {
-  "player": {
-    "version": "indevinitely",
-    "playtime": 261,
-    "savetime": 1768698786537,
-    "name": "Save Slot 1",
-    "money": "674.426555653908",
-    "ticket": "0",
-    "charge": "0"
-  },
   "settings": {
     "Theme": 1,
     "Format": 0,
     "Sounds": false
+  },
+  "player": {
+    "version": "indevinitely",
+    "playtime": 310,
+    "savetime": 1768722927301,
+    "name": "Save Slot 1",
+    "money": "28019.800304695098",
+    "ticket": "0",
+    "charge": "0"
   },
   "achievements": [
     true,
@@ -22,12 +22,12 @@
     true,
     true,
     true,
-    false,
+    true,
     false,
     true,
     true,
-    false,
-    false,
+    true,
+    true,
     false,
     false,
     false,
@@ -44,10 +44,10 @@
   "soap": [
     {
       "type": 0,
-      "produced": "136316.87373224698",
+      "produced": "714653.577775153",
       "eaten": "0",
       "unlocked": true,
-      "amount": "2.65018215422999e-21"
+      "amount": "2615.63769726662"
     },
     {
       "type": 1,
@@ -116,12 +116,12 @@
   "upgrades": [
     {
       "key": 0,
-      "count": 7,
+      "count": 8,
       "unlocked": false
     },
     {
       "key": 1,
-      "count": 22,
+      "count": 30,
       "unlocked": false
     },
     {
@@ -131,7 +131,7 @@
     },
     {
       "key": 3,
-      "count": 8,
+      "count": 9,
       "unlocked": true
     },
     {
@@ -229,11 +229,11 @@
   ],
   "soap_producers": [
     {
-      "speed_count": 24,
-      "quality_count": 16,
+      "speed_count": 40,
+      "quality_count": 30,
       "unlocked": true,
-      "decelerate_count": 1,
-      "lifetime_produced": "136316.87373224698",
+      "decelerate_count": 0,
+      "lifetime_produced": "714653.577775153",
       "type": 0
     },
     {

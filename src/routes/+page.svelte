@@ -15,7 +15,6 @@
 	import Footer from "./Footer.svelte";
 	import MenuSettings from "./MenuSettings.svelte";
 	import { onMount } from "svelte";
-	import { type IAchievement } from "../Game/Achievements/Achievements.svelte.ts";
 	import NotificationHandler from "./Components/NotificationHandler.svelte";
 	import {
 		NotificationPopUp,

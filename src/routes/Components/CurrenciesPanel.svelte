@@ -89,7 +89,7 @@
 						disabled={btns[1]}
 						customStyle={btnStyle}
 						>{#snippet content()}
-							10
+							5
 						{/snippet}</ActionButton
 					>
 				{/if}

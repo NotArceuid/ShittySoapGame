@@ -2,12 +2,10 @@ import { SoapBase, Soaps, SoapType } from "../../../Game/Soap/Soap.svelte";
 import { Player } from "../../../Game/Player.svelte";
 import { Decimal } from "../../../Game/Shared/BreakInfinity/Decimal.svelte";
 import { ExpPolynomial } from "../../../Game/Shared/Math";
-import { Multipliers } from "../../../Game/Shared/Multipliers";
 import { SaveSystem } from "../../../Game/Saves";
 import { ResetUpgrades, UpgradesData, UpgradesKey } from "../../../Game/Soap/Upgrades.svelte";
 import { AchievementKey, AchievementsData, UnlockAchievement } from "../../../Game/Achievements/Achievements.svelte";
 import { ChargeMilestones } from "../Foundry/Foundry.svelte.ts";
-import { log } from "console";
 
 export class SoapProducer {
   public SoapType: SoapType;
@@ -22,14 +20,12 @@ export class SoapProducer {
   public Progress: Decimal = $state(Decimal.ZERO)
   public AutoEat: boolean = $state(false);
   public AutoSellUnlocked: boolean = $state(false);
-  public DeccelerateBase: Decimal = $state(Decimal.ONE);
 
   public EatSoapUnlocked: boolean = $state(false)
   public DeccelerateUnlocked: boolean = $state(false)
-  constructor(props: SoapProducerProps) {
-    this.SoapType = props.type;
-    this.Soap = Soaps[props.type];
-    this.DeccelerateBase = props.DeccelerateBase;
+  constructor(type: SoapType) {
+    this.SoapType = type;
+    this.Soap = Soaps[type];
     this.SpeedFormula = new ExpPolynomial(this.Soap.SpeedCostBase, new Decimal(1.15));
     this.QualityFormula = new ExpPolynomial(this.Soap.QualityCostBase, new Decimal(1.17));
   }
@@ -42,10 +38,31 @@ export class SoapProducer {
     return this.QualityFormula.Integrate(this.QualityCount, this.QualityCount + amount);
   }
 
+  getQualityLevelBonus() {
+    switch (this.SoapType) {
+      case SoapType.Red:
+        return UpgradesData[UpgradesKey.RedSpeedLevelBonus].count;
+      case SoapType.Orange:
+        return UpgradesData[UpgradesKey.OrangeSpeedLevelBonus].count;
+      default:
+        return 1;
+    }
+  }
+  getSpeedLevelBonus() {
+    switch (this.SoapType) {
+      case SoapType.Red:
+        return UpgradesData[UpgradesKey.RedQualityLevelBonus].count;
+      case SoapType.Orange:
+        return UpgradesData[UpgradesKey.OrangeQualityLevelBonus].count;
+      default:
+        return 1;
+    }
+  }
+
   get Quality() {
     let upgCount = UpgradesData[UpgradesKey.QualityUpgrade].count;
     let amt = Decimal.ONE
-      .mul(1 + this.QualityCount).div(3) // Multi from upgrade
+      .mul((1 + this.QualityCount) * Math.pow(this.getQualityLevelBonus(), Math.floor(this.QualityCount / 25))).div(3) // Multi from upgrade
       .mul(((upgCount) + 1) * Math.pow(2, Math.floor(upgCount) / 25))
       .mul(this.DecelerateCount > 0 ? this.Soap.DeccelerateBase.mul(Decimal.pow(4, this.DecelerateCount + 1)) : 1) // mult from decel
       .mul(ChargeMilestones.get(0)!.formula().add(1))
@@ -57,7 +74,7 @@ export class SoapProducer {
   get Speed() {
     let upgCount = UpgradesData[UpgradesKey.SpeedUpgrade].count;
     let amt = Decimal.ONE
-      .mul(1 + (this.SpeedCount)) // Multi from upgrade 
+      .mul((1 + this.SpeedCount) * Math.pow(this.getSpeedLevelBonus(), Math.floor(this.SpeedCount / 25))) // Multi from upgrade 
       .mul(((upgCount) + 1) * Math.pow(2, Math.floor(upgCount / 25)))
       .div(this.DecelerateCount !== 0 ? this.DecelerateCount * 5 : 1) // nerfs from decel
       .mul(ChargeMilestones.get(1)!.formula().add(1))
@@ -174,53 +191,17 @@ export interface SoapProducerSave {
 }
 
 export const SoapProducers: Record<SoapType, SoapProducer> = {
-  [SoapType.Red]: new SoapProducer({
-    type: SoapType.Red,
-    DeccelerateBase: new Decimal(2500)
-  }),
-  [SoapType.Orange]: new SoapProducer({
-    type: SoapType.Orange,
-    DeccelerateBase: new Decimal(10)
-  }),
-  [SoapType.Yellow]: new SoapProducer({
-    type: SoapType.Yellow,
-    DeccelerateBase: new Decimal(1.0)
-  }),
-  [SoapType.Green]: new SoapProducer({
-    type: SoapType.Green,
-    DeccelerateBase: new Decimal(1.0)
-  }),
-  [SoapType.Blue]: new SoapProducer({
-    type: SoapType.Blue,
-    DeccelerateBase: new Decimal(1.0)
-  }),
-  [SoapType.Indigo]: new SoapProducer({
-    type: SoapType.Indigo,
-    DeccelerateBase: new Decimal(1.0)
-  }),
-  [SoapType.Violet]: new SoapProducer({
-    type: SoapType.Violet,
-    DeccelerateBase: new Decimal(1.0)
-  }),
-  [SoapType.White]: new SoapProducer({
-    type: SoapType.White,
-    DeccelerateBase: new Decimal(1.0)
-  }),
-  [SoapType.Black]: new SoapProducer({
-    type: SoapType.Black,
-    DeccelerateBase: new Decimal(1.0)
-  }),
-  [SoapType.Rainbow]: new SoapProducer({
-    type: SoapType.Rainbow,
-    DeccelerateBase: new Decimal(1.0)
-  })
+  [SoapType.Red]: new SoapProducer(SoapType.Red),
+  [SoapType.Orange]: new SoapProducer(SoapType.Orange),
+  [SoapType.Yellow]: new SoapProducer(SoapType.Yellow),
+  [SoapType.Green]: new SoapProducer(SoapType.Green),
+  [SoapType.Blue]: new SoapProducer(SoapType.Blue),
+  [SoapType.Indigo]: new SoapProducer(SoapType.Indigo),
+  [SoapType.Violet]: new SoapProducer(SoapType.Violet),
+  [SoapType.White]: new SoapProducer(SoapType.White),
+  [SoapType.Black]: new SoapProducer(SoapType.Black),
+  [SoapType.Rainbow]: new SoapProducer(SoapType.Rainbow)
 };
-
-export interface AutosellProps {
-  Bonus: Decimal;
-  CostReduction: Decimal;
-  Cap: Decimal;
-}
 
 let saveKey = "soap_producers";
 SaveSystem.SaveCallback<SoapProducerSave[]>(saveKey, () => {
@@ -250,8 +231,3 @@ SaveSystem.LoadCallback<SoapProducerSave[]>(saveKey, (data) => {
     SoapProducers[key].ProducedAmount = new Decimal(value.lifetime_produced);
   })
 });
-
-interface SoapProducerProps {
-  DeccelerateBase: Decimal;
-  type: SoapType;
-}
