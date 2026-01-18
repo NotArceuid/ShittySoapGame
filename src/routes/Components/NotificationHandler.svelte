@@ -19,6 +19,7 @@
 	<div class="flex flex-row border-b">
 		<h1 class="text-lg text-center wrap-break-word">{data?.name}</h1>
 		<button
+			onclick={done}
 			class="max-w-6 min-h-6 p-0 m-0 ml-auto flex items-center justify-center"
 			>X</button
 		>

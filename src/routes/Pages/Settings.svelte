@@ -8,7 +8,7 @@
 		Notation,
 	} from "../../Game/Shared/BreakInfinity/Formatter.svelte.ts";
 	import SaveSlot from "./SaveSlot.svelte";
-	import { ColorTheme, Settings } from "./Settings.svelte.ts";
+	import { ColorTheme, SetTheme, Settings } from "./Settings.svelte.ts";
 	import { onMount } from "svelte";
 	import { OfflineProps } from "../../Game/Game.svelte.ts";
 	import { NotificationPopUp } from "../Components/Notification.svelte.ts";
@@ -49,14 +49,7 @@
 		else idx = idx + 1;
 
 		Settings.Theme = entries[idx];
-		document.documentElement.classList.remove(classList[oldTheme]);
-		switch (Settings.Theme) {
-			case ColorTheme.Dark:
-				document.documentElement.classList.toggle(classList[ColorTheme.Dark]);
-				break;
-			case ColorTheme.Light:
-				document.documentElement.classList.toggle(classList[ColorTheme.Light]);
-		}
+		SetTheme(oldTheme);
 	}
 
 	function RotateNotation() {
@@ -71,11 +64,6 @@
 
 		formatter.Notation = Settings.Format;
 	}
-
-	let classList: Record<ColorTheme, string> = {
-		[ColorTheme.Light]: "light",
-		[ColorTheme.Dark]: "dark",
-	};
 
 	let saveBeforeUnload = $state(true);
 	onMount(() => {
@@ -119,10 +107,10 @@
 		<div class="w-3/12 p-2 space-y-1">
 			<h1 class="text-center font-bold">Settings</h1>
 			<div class="flex flex-row flex-wrap gap-2">
-				<button onclick={RotateNotation} class="w-full"
+				<button onclick={RotateNotation} class="w-full border"
 					>Format Type: {Notation[Settings.Format]}</button
 				>
-				<button onclick={RotateTheme} class="w-full"
+				<button onclick={RotateTheme} class="w-full border"
 					>Color Theme: {ColorTheme[Settings.Theme]}</button
 				>
 			</div>
@@ -137,14 +125,14 @@
 		<div class="w-3/12 p-2 space-y-1">
 			<h1 class="text-center font-bold">Saves</h1>
 			<div class="flex flex-wrap flex-row gap-2">
-				<button class="w-full" onclick={saveToClipboard}
+				<button class="w-full border" onclick={saveToClipboard}
 					>Save to clipboard</button
 				>
-				<button class="w-full" onclick={saveToFile}>Save to file</button>
+				<button class="w-full border" onclick={saveToFile}>Save to file</button>
 			</div>
 			<SaveSlot save={true} idx="0" />
 			<button
-				class="bg-red-300 w-full text-black"
+				class="bg-red-300 w-full text-black border"
 				onclick={() => {
 					localStorage.setItem(OfflineProps.saveId.toString(), "");
 					localStorage.setItem("savedate", "");

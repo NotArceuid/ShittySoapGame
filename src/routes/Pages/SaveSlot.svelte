@@ -63,9 +63,9 @@
 	<h1 class="text-left pb-2">{Player.Name}</h1>
 	<div class="flex flex-wrap flex-row gap-2 mb-2">
 		{#if save}
-			<button onclick={saveToLStorage} class="flex-1">Save</button>
+			<button onclick={saveToLStorage} class="flex-1 border">Save</button>
 		{/if}
-		<button class="flex-1" onclick={slidedown}>Load</button>
+		<button class="flex-1 border" onclick={slidedown}>Load</button>
 	</div>
 	<CollapsibleCard transition={{ transition: slide }} {isOpen}>
 		{#snippet header()}

@@ -1,6 +1,3 @@
-import { log } from "console";
-import { Player } from "./Player.svelte";
-import { SaveSystem } from "./Saves";
 import { InvokeableEvent } from "./Shared/Events";
 
 enum GameloopState {
@@ -164,5 +161,5 @@ export const MainLoop = new GameLoop();
 export const AutomationTick: number = 5;
 
 export function CalculateOfflineTick(tick: number) {
-  return tick / 60;
+  return Math.floor(tick / (60 * 1000));
 }

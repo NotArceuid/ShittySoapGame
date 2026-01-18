@@ -75,10 +75,11 @@
 			<h1 class="text-center text-2xl pb-3">Shitty Soap Game</h1>
 
 			<div class="flex flex-row w-full space-x-4">
-				<button class="w-full" onclick={() => (gameEntered = !gameEntered)}
-					>Play</button
+				<button
+					class="w-full border"
+					onclick={() => (gameEntered = !gameEntered)}>Play</button
 				>
-				<button class="w-full" onclick={() => (inMenuSettings = true)}
+				<button class="w-full border" onclick={() => (inMenuSettings = true)}
 					>Settings</button
 				>
 			</div>

@@ -96,5 +96,6 @@
 <style>
 	#soap-nav > * {
 		margin-right: 0.5rem;
+		border: 1px solid var(--color-border);
 	}
 </style>

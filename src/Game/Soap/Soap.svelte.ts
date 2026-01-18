@@ -18,6 +18,7 @@ export abstract class SoapBase implements ISoapData {
   abstract EatReq: Decimal;
   abstract SellPrice: Decimal;
   abstract StyleColor: string;
+  abstract DeccelReqBase: Decimal;
 
   Amount: Decimal = $state(Decimal.ZERO);
   EatAmount: Decimal = $state(Decimal.ZERO);
@@ -44,7 +45,8 @@ class RedSoap extends SoapBase {
     return new ReactiveText(`Sell multiplier: ${(this.EatAmount.div("5e12").format())}x`)
   }
   SellPrice: Decimal = Decimal.ONE;
-  DeccelerateBase: Decimal = new Decimal(100);
+  DeccelerateBase: Decimal = new Decimal(1000);
+  DeccelReqBase: Decimal = new Decimal(100);
   SpeedCostBase: Decimal = new Decimal(7.29);
   SpeedDivisor: Decimal = Decimal.ONE;
   QualityCostBase: Decimal = new Decimal(4.5);
@@ -53,7 +55,7 @@ class RedSoap extends SoapBase {
   MaxProgress = $state(new Decimal(100));
   EatReq = new Decimal("2.5e+14");
   Unlocked = true;
-  StyleColor: string = "bg-red-300";
+  StyleColor: string = "border-red-400";
 }
 
 class OrangeSoap extends SoapBase {
@@ -63,6 +65,7 @@ class OrangeSoap extends SoapBase {
 
   SellPrice: Decimal = new Decimal(5e15);
   DeccelerateBase: Decimal = new Decimal(1000);
+  DeccelReqBase: Decimal = new Decimal(1000);
   Type = SoapType.Orange;
   MaxProgress = new Decimal(500);
   EatReq = new Decimal("1e8");
@@ -70,7 +73,7 @@ class OrangeSoap extends SoapBase {
   QualityCostBase: Decimal = new Decimal(1e16);
   SpeedDivisor: Decimal = new Decimal(100000);
   QualityDivisor: Decimal = new Decimal(100000);
-  StyleColor: string = "bg-orange-300";
+  StyleColor: string = "border-orange-300";
 }
 
 class YellowSoap extends SoapBase {
@@ -81,13 +84,14 @@ class YellowSoap extends SoapBase {
   SellPrice: Decimal = new Decimal(1e18);
   DeccelerateBase: Decimal = new Decimal(100);
   Type = SoapType.Yellow;
+  DeccelReqBase: Decimal = new Decimal(1000);
   MaxProgress = new Decimal(100000);
   EatReq = Decimal.ZERO;
   SpeedCostBase: Decimal = Decimal.ONE;
   QualityCostBase: Decimal = Decimal.ONE;
   SpeedDivisor: Decimal = new Decimal(1000);
   QualityDivisor: Decimal = new Decimal(1000);
-  StyleColor: string = "bg-yellow-300";
+  StyleColor: string = "border-yellow-300";
 }
 
 class GreenSoap extends SoapBase {
@@ -99,12 +103,13 @@ class GreenSoap extends SoapBase {
   DeccelerateBase: Decimal = new Decimal(1000);
   Type = SoapType.Green;
   MaxProgress = new Decimal(100_000_000);
+  DeccelReqBase: Decimal = new Decimal(1000);
   EatReq = Decimal.ZERO;
   SpeedCostBase: Decimal = Decimal.ONE;
   QualityCostBase: Decimal = Decimal.ONE;
   SpeedDivisor: Decimal = new Decimal(1000);
   QualityDivisor: Decimal = new Decimal(1000);
-  StyleColor: string = "bg-green-300";
+  StyleColor: string = "border-green-300";
 }
 
 class BlueSoap extends SoapBase {
@@ -117,11 +122,12 @@ class BlueSoap extends SoapBase {
   Type = SoapType.Blue;
   MaxProgress = new Decimal(100);
   EatReq = Decimal.ZERO;
+  DeccelReqBase: Decimal = new Decimal(1000);
   SpeedCostBase: Decimal = Decimal.ONE;
   QualityCostBase: Decimal = Decimal.ONE;
   SpeedDivisor: Decimal = new Decimal(1000);
   QualityDivisor: Decimal = new Decimal(1000);
-  StyleColor: string = "bg-blue-300";
+  StyleColor: string = "border-blue-300";
 }
 
 class IndigoSoap extends SoapBase {
@@ -135,10 +141,11 @@ class IndigoSoap extends SoapBase {
   MaxProgress = new Decimal(100);
   EatReq = Decimal.ZERO;
   SpeedCostBase: Decimal = Decimal.ONE;
+  DeccelReqBase: Decimal = new Decimal(1000);
   QualityCostBase: Decimal = Decimal.ONE;
   SpeedDivisor: Decimal = new Decimal(1000);
   QualityDivisor: Decimal = new Decimal(1000);
-  StyleColor: string = "bg-white-300";
+  StyleColor: string = "border-white-300";
 }
 
 class VioletSoap extends SoapBase {
@@ -153,10 +160,11 @@ class VioletSoap extends SoapBase {
   MaxProgress = new Decimal(100);
   EatReq = Decimal.ZERO;
   SpeedCostBase: Decimal = Decimal.ONE;
+  DeccelReqBase: Decimal = new Decimal(1000);
   QualityCostBase: Decimal = Decimal.ONE;
   SpeedDivisor: Decimal = new Decimal(1000);
   QualityDivisor: Decimal = new Decimal(1000);
-  StyleColor: string = "bg-white-300";
+  StyleColor: string = "border-white-300";
 }
 
 class WhiteSoap extends SoapBase {
@@ -171,11 +179,12 @@ class WhiteSoap extends SoapBase {
 
   EatReq = Decimal.ZERO;
   SpeedCostBase: Decimal = Decimal.ONE;
+  DeccelReqBase: Decimal = new Decimal(1000);
   QualityCostBase: Decimal = Decimal.ONE;
   SpeedDivisor: Decimal = new Decimal(1000);
   QualityDivisor: Decimal = new Decimal(1000);
 
-  StyleColor: string = "bg-white-300";
+  StyleColor: string = "border-white-300";
 }
 
 class BlackSoap extends SoapBase {
@@ -189,12 +198,13 @@ class BlackSoap extends SoapBase {
   Type = SoapType.Black;
   MaxProgress = new Decimal(100);
   EatReq = Decimal.ZERO;
+  DeccelReqBase: Decimal = new Decimal(1000);
   SpeedCostBase: Decimal = Decimal.ONE;
   QualityCostBase: Decimal = Decimal.ONE;
   SpeedDivisor: Decimal = new Decimal(1000);
   QualityDivisor: Decimal = new Decimal(1000);
 
-  StyleColor: string = "bg-white-300";
+  StyleColor: string = "border-white-300";
 }
 
 class RainbowSoap extends SoapBase {
@@ -207,12 +217,13 @@ class RainbowSoap extends SoapBase {
   DeccelerateBase: Decimal = new Decimal(1_000_000_000);
   MaxProgress = new Decimal(100);
   EatReq = Decimal.ZERO;
+  DeccelReqBase: Decimal = new Decimal(1000);
   SpeedCostBase: Decimal = Decimal.ONE;
   QualityCostBase: Decimal = Decimal.ONE;
   SpeedDivisor: Decimal = new Decimal(1000);
   QualityDivisor: Decimal = new Decimal(1000);
 
-  StyleColor: string = "bg-white-300";
+  StyleColor: string = "border-white-300";
 }
 
 export enum SoapPages {

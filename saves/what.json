@@ -1,10 +1,10 @@
 {
   "player": {
     "version": "indevinitely",
-    "playtime": 5,
-    "savetime": 1768660571982,
+    "playtime": 261,
+    "savetime": 1768698786537,
     "name": "Save Slot 1",
-    "money": "0",
+    "money": "674.426555653908",
     "ticket": "0",
     "charge": "0"
   },
@@ -14,18 +14,18 @@
     "Sounds": false
   },
   "achievements": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
     false,
     false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
+    true,
+    true,
     false,
     false,
     false,
@@ -44,10 +44,10 @@
   "soap": [
     {
       "type": 0,
-      "produced": "0",
+      "produced": "136316.87373224698",
       "eaten": "0",
       "unlocked": true,
-      "amount": "0"
+      "amount": "2.65018215422999e-21"
     },
     {
       "type": 1,
@@ -116,32 +116,32 @@
   "upgrades": [
     {
       "key": 0,
-      "count": 0,
+      "count": 7,
       "unlocked": false
     },
     {
       "key": 1,
-      "count": 0,
+      "count": 22,
       "unlocked": false
     },
     {
       "key": 2,
-      "count": 0,
+      "count": 11,
       "unlocked": true
     },
     {
       "key": 3,
-      "count": 0,
+      "count": 8,
       "unlocked": true
     },
     {
       "key": 4,
-      "count": 0,
+      "count": 1,
       "unlocked": false
     },
     {
       "key": 5,
-      "count": 0,
+      "count": 2,
       "unlocked": false
     },
     {
@@ -229,11 +229,11 @@
   ],
   "soap_producers": [
     {
-      "speed_count": 0,
-      "quality_count": 0,
+      "speed_count": 24,
+      "quality_count": 16,
       "unlocked": true,
-      "decelerate_count": 0,
-      "lifetime_produced": "0",
+      "decelerate_count": 1,
+      "lifetime_produced": "136316.87373224698",
       "type": 0
     },
     {
@@ -310,11 +310,11 @@
     }
   ],
   "soap_page": {
-    "upgradesUnlocked": false,
+    "upgradesUnlocked": true,
     "foundryUnlocked": false
   },
   "0 + producer": {
-    "showupgrades": false
+    "showupgrades": true
   },
   "1 + producer": {
     "showupgrades": false

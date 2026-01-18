@@ -31,7 +31,7 @@
 		Player.BulkAmount = amount;
 	}
 
-	let btns: boolean[] = $state([true, false, false, false]);
+	let btns: boolean[] = $state([true, false, false, false, false]);
 	function SetButtonActive(id: number) {
 		for (let i = 0; i < btns.length; i++) {
 			btns[i] = false;
@@ -40,7 +40,7 @@
 		btns[id] = true;
 	}
 	let btnStyle =
-		"padding-left: 8px; padding-right: 8px; padding-top: 5px; padding-bottom: 5px;";
+		"padding-left: 8px; padding-right: 8px; padding-top: 2px; padding-bottom: 2px;";
 </script>
 
 <div class="border-x h-full border-border">
@@ -119,15 +119,18 @@
 						{/snippet}</ActionButton
 					>
 				{/if}
+
 				<ActionButton
 					onclick={() => {
 						SetMaxBulk(maxBulkAmt);
-						SetButtonActive(3);
+						SetButtonActive(4);
 					}}
-					disabled={btns[3]}
+					disabled={btns[4]}
 					customStyle={btnStyle}
 					>{#snippet content()}
-						Max
+						<span class="text-sm">
+							Max ({maxBulkAmt})
+						</span>
 					{/snippet}</ActionButton
 				>
 			</div>

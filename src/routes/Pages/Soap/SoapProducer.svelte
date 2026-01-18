@@ -201,9 +201,19 @@
 	});
 
 	SaveSystem.LoadCallback<SaveProps>(saveKey, (data) => {
-		log(data.showupgrades);
 		canShowUpgrades = data.showupgrades;
 	});
+
+	let barProgress = $derived(
+		producer.Speed.gt(producer.MaxProgress)
+			? producer.MaxProgress.format()
+			: producer.Progress.format(),
+	);
+	let barWidth = $derived(
+		producer.Speed.gt(producer.MaxProgress)
+			? 100
+			: producer.Progress.div(producer.MaxProgress).mul(100).toNumber(),
+	);
 </script>
 
 {#if unlocked}
@@ -216,21 +226,15 @@
 							{SoapNameMapping[type]} ({soap.Amount.format()}x)
 						</h1>
 						<h1 class="ml-auto">
-							({producer.Speed > producer.MaxProgress
-								? producer.MaxProgress.format()
-								: producer.Progress.format()} /
+							({barProgress} /
 							{producer.MaxProgress.format()})
 						</h1>
 					</div>
 					<div class="h-2 relative overflow-hidden rounded">
-						<!-- Progress bar with smooth transition -->
 						<div
-							class="{soap.StyleColor} absolute h-2 transition-all ease-out"
-							style="width: {producer.Speed > producer.MaxProgress
-								? 100
-								: producer.Progress.div(producer.MaxProgress).mul(100)}%"
+							class=" absolute h-2 transition-all ease-out bg-blue-300"
+							style="width: {barWidth}%"
 						></div>
-						<!-- Border overlay -->
 						<div
 							class="border border-gray-900 w-full h-full absolute rounded"
 						></div>

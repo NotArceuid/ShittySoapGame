@@ -111,7 +111,7 @@ export const AchievementsData: Record<AchievementKey, IAchievement> = $state({
   },
 
   [AchievementKey.SixNineNineNine]: {
-    name: "Six Nine Nien",
+    name: "6/99",
     description: "Cost: 69, level: 9/99",
     check: (...props) => props[0].eq(9)
   },

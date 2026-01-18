@@ -64,10 +64,10 @@
 		<div class="w-3/12 p-2 space-y-1">
 			<h1 class="text-center font-bold">Settings</h1>
 			<div class="flex flex-row flex-wrap gap-2">
-				<button onclick={RotateNotation} class="w-full"
+				<button onclick={RotateNotation} class="w-full border"
 					>Format Type: {Notation[Settings.Format]}</button
 				>
-				<button onclick={RotateTheme} class="w-full"
+				<button onclick={RotateTheme} class="w-full border"
 					>Color Theme: {ColorTheme[Settings.Theme]}</button
 				>
 			</div>
@@ -80,5 +80,7 @@
 		</div>
 	</div>
 
-	<button class="absolute right-50" onclick={() => (open = false)}>Back</button>
+	<button class=" border absolute right-50" onclick={() => (open = false)}
+		>Back</button
+	>
 </div>

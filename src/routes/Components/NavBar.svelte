@@ -35,6 +35,7 @@
 	}
 
 	#navbar button {
+		border: 1px solid var(--color-border);
 		margin-left: 0.5rem;
 	}
 </style>
