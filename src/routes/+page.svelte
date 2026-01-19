@@ -71,7 +71,7 @@
 				? 'invisible'
 				: 'visible'}"
 		>
-			<h1 class="text-center text-2xl pb-3">Shitty Soap Game</h1>
+			<h1 class="text-center text-2xl pb-3">Soap Game</h1>
 
 			<div class="flex flex-row w-full space-x-4">
 				<button

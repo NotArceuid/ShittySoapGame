@@ -19,6 +19,7 @@ export default defineConfig(({ mode }) => {
       PKG_VERSION: JSON.stringify(pkg.version),
       PKG_NAME: JSON.stringify(pkg.name),
     },
+    base: process.env.NODE_ENV == 'production' ? '/soap-game' : './',
     server: {
       allowedHosts: env.VITE_HOST ? [env.VITE_HOST] : []
     }
