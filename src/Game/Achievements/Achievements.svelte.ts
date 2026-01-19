@@ -50,6 +50,7 @@ export enum AchievementKey {
   Foundry,
   Bulk,
   Charge,
+  Cheapskate,
   OrangeSoap,
   OrangeDeccel1,
   ILY,
@@ -160,15 +161,25 @@ export const AchievementsData: Record<AchievementKey, IAchievement> = $state({
     check: (...props) => props[0].gt(3)
   },
 
+  [AchievementKey.OrangeSoap]: {
+    name: "Orange ca- i mean soap",
+    description: "You did it!!! You passed the wall!!",
+    check: (...props) => props[0].gt(0)
+  },
+  [AchievementKey.OrangeDeccel1]: {
+    name: "One orange deccel",
+    description: "This is where it get fastttttttttttt",
+    check: (...props) => props[0].gt(0)
+  },
   [AchievementKey.Foundry]: {
     name: "Foundry",
-    description: "You did it!!! You passed the wall!!",
+    description: "I hope they don't sue me",
     check: (...props) => props[0].gt(0)
   },
   [AchievementKey.Bulk]: {
     name: "Bulked upp",
     description: "get 25 max bulk buy",
-    check: (...props) => props[0].gt(24)
+    check: (...props) => props[0].gt(14)
   },
   [AchievementKey.Charge]: {
     name: "Unlock Charge",
@@ -176,15 +187,10 @@ export const AchievementsData: Record<AchievementKey, IAchievement> = $state({
     check: (...props) => props[0].gt(0)
   },
 
-  [AchievementKey.OrangeSoap]: {
-    name: "Orange ca- i mean soap",
-    description: "Unlock orange soap Meowmeowowemowe",
-    check: (...props) => props[0].gt(0)
-  },
-  [AchievementKey.OrangeDeccel1]: {
-    name: "One orange deccel",
-    description: "Deccelerate orange soap once ",
-    check: (...props) => props[0].gt(0)
+  [AchievementKey.Cheapskate]: {
+    name: "Cheapskate",
+    description: "Your red soap upgrades doesnt deduct your money now :)",
+    check: (...props) => props[0].gt(0) && props[1].gt(0)
   },
 
   [AchievementKey.ILY]: {
@@ -196,7 +202,7 @@ export const AchievementsData: Record<AchievementKey, IAchievement> = $state({
   [AchievementKey.Maxxed]: {
     name: "Maxxed",
     description: "Max out the speed and quality upgrades.",
-    check: (...props) => props[0].gt(600) && props[1].gt(600)
+    check: (...props) => props[0].gte(600) && props[1].gte(600)
   },
   [AchievementKey.Cat]: {
     name: "1.0.0's final achievement",

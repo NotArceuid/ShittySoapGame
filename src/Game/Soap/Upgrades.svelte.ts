@@ -7,6 +7,7 @@ import { SaveSystem } from "../Saves.ts";
 import type { IUpgradesInfo } from "../../routes/Components/UpgradesInfo.svelte.ts";
 import { Soaps, SoapType } from "./Soap.svelte.ts";
 import { AchievementKey, UnlockAchievement } from "../Achievements/Achievements.svelte.ts";
+import { SoapProducers } from "../../routes/Pages/Soap/SoapProducer.svelte.ts";
 
 export const UpgradeBought: InvokeableEvent<UpgradesKey> = new InvokeableEvent<UpgradesKey>();
 export enum UpgradesKey {
@@ -17,6 +18,8 @@ export enum UpgradesKey {
   RedAutoSellReduction,
   RedSpeedLevelBonus,
   RedQualityLevelBonus,
+  RedQualityAutobuy,
+  RedSpeedAutobuy,
   BulkUpgrade,
   EatRedSoapUpgrade,
   UnlockOrangeSoap,
@@ -25,8 +28,8 @@ export enum UpgradesKey {
   OrangeAutoSellReduction,
   OrangeSpeedLevelBonus,
   OrangeQualityLevelBonus,
-  RedQualityAutobuy,
-  RedSpeedAutobuy,
+  RedQualityNoCost,
+  RedSpeedNoCost,
   UnlockFoundry,
   BulkUpgrade2,
   OrangeQualityAutoBuy,
@@ -313,7 +316,7 @@ class RedQualityAutobuy extends BaseUpgrade {
     () => new ReactiveText(this.cost.format()), () => Player.Money.gte(this.cost)
   ]
 
-  ShowCondition: () => boolean = () => UpgradesData[UpgradesKey.UnlockOrangeSoap].count > 0;
+  ShowCondition: () => boolean = () => SoapProducers[SoapType.Red].DecelerateCount > 2;
   get cost() {
     return new Decimal("2.5e+20")
   }
@@ -330,7 +333,7 @@ class RedSpeedAutobuy extends BaseUpgrade {
   Requirements: [() => ReactiveText, () => boolean] = [
     () => new ReactiveText(this.cost.format()), () => Player.Money.gte(this.cost)]
 
-  ShowCondition: () => boolean = () => UpgradesData[UpgradesKey.UnlockOrangeSoap].count > 0;
+  ShowCondition: () => boolean = () => SoapProducers[SoapType.Red].DecelerateCount > 3;
   get cost() {
     return new Decimal("2.5e+20")
   }
@@ -345,7 +348,7 @@ class UnlockFoundry extends BaseUpgrade {
   description = () => new ReactiveText("The last push before cat prestige >:)");
   maxCount = 1;
   get cost() {
-    return new Decimal("2.5e+24");
+    return new Decimal("2.5e+25");
   }
   Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.gt(this.cost)] as [() => ReactiveText, () => boolean];
   ShowCondition = () => true;
@@ -359,14 +362,14 @@ class BulkUpgrade2 extends BaseUpgrade {
   get cost(): Decimal {
     let amt = Decimal.ZERO;
     for (let i = 0; i < this.buyAmount; i++) {
-      amt = amt.add(new Decimal("2.5e+9").mul(new Decimal(10).pow(UpgradesData[UpgradesKey.BulkUpgrade].count! + i)))
+      amt = amt.add(new Decimal("2.5e+9").mul(new Decimal(10).pow(UpgradesData[UpgradesKey.BulkUpgrade2].count! + i)))
     }
     return amt;
   }
   getMax = () => {
     let count = 0;
     let tempCost = new Decimal("2.5e+9");
-    let currentCount = UpgradesData[UpgradesKey.BulkUpgrade].count || 0;
+    let currentCount = UpgradesData[UpgradesKey.BulkUpgrade2].count || 0;
 
     while (count < this.maxCount) {
       let nextCost = tempCost.mul(new Decimal(10).pow(currentCount + count));
@@ -409,7 +412,6 @@ class UnlockOrangeSoap extends BaseUpgrade {
   buttonStyle = "border-orange-300";
   invertText = true;
 }
-
 
 class OrangeSoapAutoSeller extends BaseUpgrade {
   key = UpgradesKey.OrangeSoapAutoSeller
@@ -471,14 +473,13 @@ class OrangeSoapAutoSellBonus extends BaseUpgrade {
   invertText = true;
 }
 
-
 class OrangeSoapAutoSellReduction extends BaseUpgrade {
   key = UpgradesKey.OrangeAutoSellReduction
   name = "I need orange soap";
-  description = () => new ReactiveText("Too greedy buying the previous upgrade? Reduces the cost deduction of red soap autoseller by 1% per level");
+  description = () => new ReactiveText("I want moreeeeeeeeee orange soappppppppppppp");
   maxCount = 99;
 
-  private costFormula = new ExpPolynomial(new Decimal(1.5e20), new Decimal(1.3));
+  private costFormula = new ExpPolynomial(new Decimal(1.5e20), new Decimal(1.5));
   get cost(): Decimal {
     return this.costFormula.Integrate(this.count, this.count + this.buyAmount).round();
   }
@@ -497,6 +498,43 @@ class OrangeSoapAutoSellReduction extends BaseUpgrade {
   buttonStyle = "border-orange-300";
   invertText = true;
 }
+
+class RedSpeedNoCost extends BaseUpgrade {
+  key = UpgradesKey.RedSpeedNoCost
+  name: string = "Brookie D:"
+  description: () => ReactiveText = () => new ReactiveText("Buying red producer speed upgrades doesn't deduct your money anymore")
+  maxCount: number = 1;
+  Requirements: [() => ReactiveText, () => boolean] = [
+    () => new ReactiveText(this.cost.format()), () => Player.Money.gte(this.cost)
+  ]
+
+  ShowCondition: () => boolean = () => UpgradesData[UpgradesKey.UnlockOrangeSoap].count > 0;
+  get cost() {
+    return new Decimal("2.5e+20")
+  }
+
+  buttonStyle = Soaps[SoapType.Red].StyleColor;
+  invertText = true;
+}
+
+class RedQualityNoCost extends BaseUpgrade {
+  key = UpgradesKey.RedQualityNoCost
+  name: string = "I want my money "
+  description: () => ReactiveText = () => new ReactiveText("Buying red producer quality upgrades also doesn't deduct your money anymore")
+  maxCount: number = 1;
+  Requirements: [() => ReactiveText, () => boolean] = [
+    () => new ReactiveText(this.cost.format()), () => Player.Money.gte(this.cost)
+  ]
+
+  ShowCondition: () => boolean = () => UpgradesData[UpgradesKey.UnlockOrangeSoap].count > 0;
+  get cost() {
+    return new Decimal("2.5e+20")
+  }
+
+  buttonStyle = Soaps[SoapType.Red].StyleColor;
+  invertText = true;
+}
+
 class OrangeQualityAutobuy extends BaseUpgrade {
   key = UpgradesKey.OrangeQualityAutoBuy
   name: string = "Orange Quality Autobuy"
@@ -534,11 +572,11 @@ class OrangeSpeedAutoBuy extends BaseUpgrade {
 
 class OrangeSpeedLevelBonus extends BaseUpgrade {
   key = UpgradesKey.OrangeSpeedLevelBonus
-  name = "Speed Level Bonus x2";
+  name = "Speed Level Bonus ";
   description = () => new ReactiveText("Grants a 1% bonus to orange soap producer speed at every 25 levels increments of speed upgrade you own. Increases by 1% every level. ");
   maxCount = 50;
 
-  private costFormula = new ExpPolynomial(new Decimal("9.7e25"), new Decimal(1.3));
+  private costFormula = new ExpPolynomial(new Decimal("9.7e25"), new Decimal(1.5));
   get cost(): Decimal {
     return this.costFormula.Integrate(this.count, this.count + this.buyAmount).round();
   }
@@ -558,14 +596,13 @@ class OrangeSpeedLevelBonus extends BaseUpgrade {
   invertText = true;
 }
 
-
 class OrangeQualityLevelBOnus extends BaseUpgrade {
   key = UpgradesKey.OrangeQualityLevelBonus
-  name = "Quality Level Bonus x2";
+  name = "Quality Level Bonus ";
   description = () => new ReactiveText("Grants a 1% bonus to orange soap producer quality at every 25 levels increments of speed upgrade you own. Increases by 1% every level. ");
   maxCount = 50;
 
-  private costFormula = new ExpPolynomial(new Decimal("9.7e25"), new Decimal(1.3));
+  private costFormula = new ExpPolynomial(new Decimal("9.7e25"), new Decimal(1.5));
   get cost(): Decimal {
     return this.costFormula.Integrate(this.count, this.count + this.buyAmount).round();
   }
@@ -639,13 +676,15 @@ export const UpgradesData: Record<UpgradesKey, BaseUpgrade> = $state({
   [UpgradesKey.RedAutoSellReduction]: new RedSoapAutoSellerCostRed(),
   [UpgradesKey.RedSpeedLevelBonus]: new RedSpeedLevelBonus(),
   [UpgradesKey.RedQualityLevelBonus]: new RedQualityLevelBonus(),
-  [UpgradesKey.EatRedSoapUpgrade]: new EatRedSoapUpgrade(),
-  [UpgradesKey.UnlockOrangeSoap]: new UnlockOrangeSoap(),
   [UpgradesKey.RedQualityAutobuy]: new RedQualityAutobuy(),
   [UpgradesKey.RedSpeedAutobuy]: new RedSpeedAutobuy(),
+  [UpgradesKey.EatRedSoapUpgrade]: new EatRedSoapUpgrade(),
+  [UpgradesKey.UnlockOrangeSoap]: new UnlockOrangeSoap(),
   [UpgradesKey.OrangeSoapAutoSeller]: new OrangeSoapAutoSeller(),
   [UpgradesKey.OrangeSoapAutoSellBonus]: new OrangeSoapAutoSellBonus(),
   [UpgradesKey.OrangeAutoSellReduction]: new OrangeSoapAutoSellReduction(),
+  [UpgradesKey.RedSpeedNoCost]: new RedSpeedNoCost(),
+  [UpgradesKey.RedQualityNoCost]: new RedQualityNoCost(),
   [UpgradesKey.UnlockFoundry]: new UnlockFoundry(),
   [UpgradesKey.BulkUpgrade2]: new BulkUpgrade2(),
   [UpgradesKey.OrangeSpeedAutoBuy]: new OrangeSpeedAutoBuy(),
@@ -654,6 +693,7 @@ export const UpgradesData: Record<UpgradesKey, BaseUpgrade> = $state({
   [UpgradesKey.CatPrestige]: new CatUpgrade(),
   [UpgradesKey.OrangeSpeedLevelBonus]: new OrangeSpeedLevelBonus(),
   [UpgradesKey.OrangeQualityLevelBonus]: new OrangeQualityLevelBOnus(),
+
 });
 
 const saveKey = "upgrades";
@@ -697,6 +737,8 @@ export function ResetUpgrades() {
     UpgradesKey.BulkUpgrade2,
     UpgradesKey.OrangeSpeedAutoBuy,
     UpgradesKey.OrangeQualityAutoBuy,
+    UpgradesKey.RedSpeedNoCost,
+    UpgradesKey.RedQualityNoCost,
     UpgradesKey.CatPrestige,
   ];
 

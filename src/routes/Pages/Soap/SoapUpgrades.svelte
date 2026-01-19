@@ -72,6 +72,13 @@
 			)
 		)
 			UnlockAchievement(AchievementKey.BulkedUp);
+		if (
+			AchievementsData[AchievementKey.Cheapskate].check(
+				new Decimal(UpgradesData[UpgradesKey.RedSpeedNoCost].count),
+				new Decimal(UpgradesData[UpgradesKey.RedQualityNoCost].count),
+			)
+		)
+			UnlockAchievement(AchievementKey.Cheapskate);
 	});
 </script>
 

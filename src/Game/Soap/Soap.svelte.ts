@@ -66,7 +66,7 @@ class OrangeSoap extends SoapBase {
   }
 
   SellPrice: Decimal = new Decimal(5e15);
-  DeccelerateBase: Decimal = new Decimal(1000);
+  DeccelerateBase: Decimal = new Decimal(100);
   DeccelSpeedScaling: Decimal = new Decimal(500);
   DeccelReqBase: Decimal = new Decimal(1000);
   Type = SoapType.Orange;

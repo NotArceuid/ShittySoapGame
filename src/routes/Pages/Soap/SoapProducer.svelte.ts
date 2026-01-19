@@ -21,6 +21,8 @@ export class SoapProducer {
   public Progress: Decimal = $state(Decimal.ZERO)
   public AutoEat: boolean = $state(false);
   public AutoSellUnlocked: boolean = $state(false);
+  public UseSpeedUpgDeduction: boolean = $state(false);
+  public UseQualityUpgDeduction: boolean = $state(false);
 
   public EatSoapUnlocked: boolean = $state(false)
   public DeccelerateUnlocked: boolean = $state(false)
@@ -59,6 +61,25 @@ export class SoapProducer {
         return 1;
     }
   }
+
+  get QualityShouldDeduct() {
+    switch (this.SoapType) {
+      case SoapType.Red:
+        return UpgradesData[UpgradesKey.RedQualityNoCost].count < 1;
+      default:
+        return false;
+    }
+  }
+
+  get SpeedShouldDeduct() {
+    switch (this.SoapType) {
+      case SoapType.Red:
+        return UpgradesData[UpgradesKey.RedSpeedNoCost].count < 1;
+      default:
+        return false;
+    }
+  }
+
 
   get Quality() {
     let upgCount = UpgradesData[UpgradesKey.QualityUpgrade].count;
@@ -139,7 +160,9 @@ export class SoapProducer {
       return;
     }
 
-    Player.Money = Player.Money.sub(cost);
+    if (this.QualityShouldDeduct)
+      Player.Money = Player.Money.sub(cost);
+
     this.QualityCount = this.QualityCount + amount;
     this.Quality.add(amount);
   }
@@ -150,7 +173,8 @@ export class SoapProducer {
       return;
     }
 
-    Player.Money = Player.Money.sub(cost);
+    if (this.SpeedShouldDeduct)
+      Player.Money = Player.Money.sub(cost);
     this.SpeedCount = this.SpeedCount + amount;
     this.Speed.add(amount);
   }
