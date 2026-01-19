@@ -328,7 +328,7 @@
 						{#if canEat || DevHacks.skipUnlock}
 							<ActionButton
 								onclick={() => producer.Eat()}
-								disabled={producer.ProducedAmount.lt(producer.EatReq)}
+								disabled={producer.Soap.ProducedAmount.lt(producer.EatReq)}
 							>
 								{#snippet content()}
 									Eat Soap <div>
@@ -407,7 +407,7 @@
 				{#snippet body()}
 					<div class="flex flex-row border-border">
 						<h1>
-							Total: {producer.ProducedAmount.format()}
+							Total: {producer.Soap.ProducedAmount.format()}
 						</h1>
 						<h1 class="ml-auto">Quality: {producer.Quality.format()}</h1>
 						<h1 class="ml-auto">Speed: {producer.Speed.format()}</h1>
@@ -415,10 +415,10 @@
 					{#if canEat || DevHacks.skipUnlock}
 						<div class="flex flex-row">
 							<h1>
-								Eaten: {producer.EatAmount.format()}
+								Eaten: {producer.Soap.EatAmount.format()}
 							</h1>
 							<h1 class="ml-auto">
-								{producer.EatMessage()}
+								{producer.Soap.EatMessage()}
 							</h1>
 						</div>
 					{/if}

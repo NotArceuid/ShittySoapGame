@@ -152,12 +152,12 @@ export const AchievementsData: Record<AchievementKey, IAchievement> = $state({
 
   [AchievementKey.Deccelerate3]: {
     name: "Deccelerate 3",
-    description: "You'd love the quality autoseller i gave yall after this",
+    description: "Enjoying the automation upgrades? more is comming otw/",
     check: (...props) => props[0].gt(2)
   },
   [AchievementKey.Deccelerate4]: {
     name: "Deccelerate 4",
-    description: "Phew.. pass the wall. it sure took a while right.. right??",
+    description: "Last push before orange soap.. dont quit",
     check: (...props) => props[0].gt(3)
   },
 

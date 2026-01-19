@@ -316,9 +316,9 @@ class RedQualityAutobuy extends BaseUpgrade {
     () => new ReactiveText(this.cost.format()), () => Player.Money.gte(this.cost)
   ]
 
-  ShowCondition: () => boolean = () => SoapProducers[SoapType.Red].DecelerateCount > 2;
+  ShowCondition: () => boolean = () => SoapProducers[SoapType.Red].DecelerateCount > 1;
   get cost() {
-    return new Decimal("2.5e+20")
+    return new Decimal("7.5e+12")
   }
 
   buttonStyle = Soaps[SoapType.Red].StyleColor;
@@ -333,9 +333,9 @@ class RedSpeedAutobuy extends BaseUpgrade {
   Requirements: [() => ReactiveText, () => boolean] = [
     () => new ReactiveText(this.cost.format()), () => Player.Money.gte(this.cost)]
 
-  ShowCondition: () => boolean = () => SoapProducers[SoapType.Red].DecelerateCount > 3;
+  ShowCondition: () => boolean = () => SoapProducers[SoapType.Red].DecelerateCount > 1;
   get cost() {
-    return new Decimal("2.5e+20")
+    return new Decimal("7.5e+12")
   }
 
   buttonStyle = Soaps[SoapType.Red].StyleColor;
@@ -348,7 +348,7 @@ class UnlockFoundry extends BaseUpgrade {
   description = () => new ReactiveText("The last push before cat prestige >:)");
   maxCount = 1;
   get cost() {
-    return new Decimal("2.5e+25");
+    return new Decimal("2.5e+30");
   }
   Requirements = [() => new ReactiveText(this.cost.format()), () => Player.Money.gt(this.cost)] as [() => ReactiveText, () => boolean];
   ShowCondition = () => true;
@@ -362,13 +362,13 @@ class BulkUpgrade2 extends BaseUpgrade {
   get cost(): Decimal {
     let amt = Decimal.ZERO;
     for (let i = 0; i < this.buyAmount; i++) {
-      amt = amt.add(new Decimal("2.5e+9").mul(new Decimal(10).pow(UpgradesData[UpgradesKey.BulkUpgrade2].count! + i)))
+      amt = amt.add(new Decimal("2.5e+11").mul(new Decimal(10).pow(UpgradesData[UpgradesKey.BulkUpgrade2].count! + i)))
     }
     return amt;
   }
   getMax = () => {
     let count = 0;
-    let tempCost = new Decimal("2.5e+9");
+    let tempCost = new Decimal("2.5e+11");
     let currentCount = UpgradesData[UpgradesKey.BulkUpgrade2].count || 0;
 
     while (count < this.maxCount) {
@@ -679,6 +679,7 @@ export const UpgradesData: Record<UpgradesKey, BaseUpgrade> = $state({
   [UpgradesKey.RedQualityAutobuy]: new RedQualityAutobuy(),
   [UpgradesKey.RedSpeedAutobuy]: new RedSpeedAutobuy(),
   [UpgradesKey.EatRedSoapUpgrade]: new EatRedSoapUpgrade(),
+  [UpgradesKey.BulkUpgrade2]: new BulkUpgrade2(),
   [UpgradesKey.UnlockOrangeSoap]: new UnlockOrangeSoap(),
   [UpgradesKey.OrangeSoapAutoSeller]: new OrangeSoapAutoSeller(),
   [UpgradesKey.OrangeSoapAutoSellBonus]: new OrangeSoapAutoSellBonus(),
@@ -686,7 +687,6 @@ export const UpgradesData: Record<UpgradesKey, BaseUpgrade> = $state({
   [UpgradesKey.RedSpeedNoCost]: new RedSpeedNoCost(),
   [UpgradesKey.RedQualityNoCost]: new RedQualityNoCost(),
   [UpgradesKey.UnlockFoundry]: new UnlockFoundry(),
-  [UpgradesKey.BulkUpgrade2]: new BulkUpgrade2(),
   [UpgradesKey.OrangeSpeedAutoBuy]: new OrangeSpeedAutoBuy(),
   [UpgradesKey.OrangeQualityAutoBuy]: new OrangeQualityAutobuy(),
   [UpgradesKey.ChargeSpeedUpgrade]: new ChargeSpeedUpgrade(),

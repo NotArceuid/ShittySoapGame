@@ -33,7 +33,7 @@
 
 		{#if currUpgrade !== undefined}
 			<div
-				class="h-36 border mt-auto flex flex-col justify-center items-center"
+				class="h-42 border mt-auto flex flex-col justify-center items-center m-2"
 			>
 				<UpgradesInfo upgrade={currUpgrade} />
 			</div>

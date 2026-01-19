@@ -59,14 +59,14 @@
 			<div class="absolute p-2 w-full overflow-y-scroll">
 				{#each ChargeMilestones as milestones}
 					<div
-						class="border-b {Player.Charge.lt(milestones[1].threshold)
+						class="border-b {Player.Charge.lt(milestones.threshold)
 							? 'text-gray-600'
 							: 'text-green-600'}"
 					>
 						<h1 class="text-center">
-							{milestones[1].threshold.format()} Charge
+							{milestones.threshold.format()} Charge
 						</h1>
-						<h1 class="text-center">{milestones[1].text()}</h1>
+						<h1 class="text-center">{milestones.text()}</h1>
 					</div>
 				{/each}
 			</div>

@@ -30,8 +30,7 @@ export abstract class BaseGenerator implements IUpgradesInfo {
 
 class ChargeSpeed extends BaseGenerator {
   unlocked: boolean = true;
-  // 67 hahahahahahahhhhhahahhhah
-  private formula = new ExpPolynomial(new Decimal("1.067e+15"), new Decimal(2.5));
+  private formula = new ExpPolynomial(new Decimal("1.0618e+20"), new Decimal(2.5));
   private get cost() {
     return this.formula.Integrate(this.count, this.count + this.buyAmount);
   }

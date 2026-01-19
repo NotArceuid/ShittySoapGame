@@ -16,6 +16,7 @@ import {
   cmp,
 } from "../Math.ts";
 import { formatter } from "./Formatter.svelte.ts";
+import { OfflineProps } from "../../Game.svelte.ts";
 
 const pool = new Map<number | string, Decimal>();
 
@@ -197,6 +198,9 @@ export class Decimal {
   //#endregion
 
   public format(): string {
+    // minor performance optimization here since during the loading of offline progress, nothing is shown
+    if (OfflineProps.calculating)
+      return "";
     return formatter.format(this);
   }
 

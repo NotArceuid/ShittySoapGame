@@ -73,6 +73,13 @@
 		)
 			UnlockAchievement(AchievementKey.BulkedUp);
 		if (
+			AchievementsData[AchievementKey.Bulk].check(
+				new Decimal(UpgradesData[UpgradesKey.BulkUpgrade2].count),
+			)
+		)
+			UnlockAchievement(AchievementKey.Bulk);
+
+		if (
 			AchievementsData[AchievementKey.Cheapskate].check(
 				new Decimal(UpgradesData[UpgradesKey.RedSpeedNoCost].count),
 				new Decimal(UpgradesData[UpgradesKey.RedQualityNoCost].count),

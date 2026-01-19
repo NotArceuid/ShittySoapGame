@@ -10,7 +10,7 @@ import { log } from "console";
 
 export class SoapProducer {
   public SoapType: SoapType;
-  private Soap: SoapBase;
+  public Soap: SoapBase;
   public Unlocked: boolean = $state(true);
   public SpeedCount: number = $state(0)
   public SpeedFormula: ExpPolynomial;
@@ -41,7 +41,7 @@ export class SoapProducer {
     return this.QualityFormula.Integrate(this.QualityCount, this.QualityCount + amount);
   }
 
-  get QualityLevelBonus() {
+  QualityLevelBonus = $derived.by(() => {
     switch (this.SoapType) {
       case SoapType.Red:
         return UpgradesData[UpgradesKey.RedQualityLevelBonus].count + 1;
@@ -50,8 +50,9 @@ export class SoapProducer {
       default:
         return 1;
     }
-  }
-  get SpeedLevelBonus() {
+  })
+
+  SpeedLevelBonus = $derived.by(() => {
     switch (this.SoapType) {
       case SoapType.Red:
         return UpgradesData[UpgradesKey.RedSpeedLevelBonus].count + 1;
@@ -60,83 +61,63 @@ export class SoapProducer {
       default:
         return 1;
     }
-  }
+  })
 
-  get QualityShouldDeduct() {
+  QualityShouldDeduct = $derived.by(() => {
     switch (this.SoapType) {
       case SoapType.Red:
         return UpgradesData[UpgradesKey.RedQualityNoCost].count < 1;
       default:
         return true;
     }
-  }
+  })
 
-  get SpeedShouldDeduct() {
+  SpeedShouldDeduct = $derived.by(() => {
     switch (this.SoapType) {
       case SoapType.Red:
         return UpgradesData[UpgradesKey.RedSpeedNoCost].count < 1;
       default:
         return true;
     }
-  }
+  })
 
-
-  get Quality() {
+  Quality = $derived.by(() => {
     let upgCount = UpgradesData[UpgradesKey.QualityUpgrade].count;
     let amt = Decimal.ONE
       .mul((1 + this.QualityCount) * Math.pow(1 + (this.QualityLevelBonus / 100), Math.floor(this.QualityCount / 25))).div(3) // Multi from upgrade
       .mul(((upgCount) + 1) * Math.pow(2, Math.floor(upgCount) / 25))
       .mul(this.DecelerateCount > 0 ? this.Soap.DeccelerateBase.mul(Decimal.pow(4, this.DecelerateCount + 1)) : 1) // mult from decel
-      .mul(ChargeMilestones.get(0)!.formula().add(1))
+      .mul(ChargeMilestones[0].formula().add(1))
       .div(this.Soap.QualityDivisor);
 
     return amt;
-  }
+  })
 
-  get Speed() {
+  Speed = $derived.by(() => {
     //log((1 + this.SpeedCount) * Math.pow(1 + (this.getSpeedLevelBonus() / 100), Math.floor(this.SpeedCount / 25))) // Multi from upgrade 
     let upgCount = UpgradesData[UpgradesKey.SpeedUpgrade].count;
     let amt = Decimal.ONE
       .mul((1 + this.SpeedCount) * Math.pow(1 + (this.SpeedLevelBonus / 100), Math.floor(this.SpeedCount / 25))) // Multi from upgrade 
       .mul(((upgCount) + 1) * Math.pow(2, Math.floor(upgCount / 25)))
       .div(this.DecelerateCount !== 0 ? this.DecelerateCount * 5 : 1) // nerfs from decel
-      .mul(ChargeMilestones.get(1)!.formula().add(1))
       .div(this.Soap.SpeedDivisor)
 
     return amt
-  }
+  })
 
   // Exposing soap's properties
   get EatReq() {
     return this.Soap.EatReq;
   }
-  get DecelerateReq() {
+
+  DecelerateReq = $derived.by(() => {
     return this.Soap.DeccelReqBase.mul(this.DecelerateCount + 1).mul(new Decimal(10).pow(this.DecelerateCount));
-  }
-  get MaxProgress() {
+  })
+
+  MaxProgress = $derived.by(() => {
     return this.Soap.MaxProgress.mul(this.Soap.DeccelSpeedScaling.pow(this.DecelerateCount));
-  }
-  get Amount() {
-    return this.Soap.Amount;
-  }
-  set Amount(value) {
-    this.Soap.Amount = value
-  }
-  get ProducedAmount() {
-    return this.Soap.ProducedAmount;
-  }
-  set ProducedAmount(value) {
-    this.Soap.ProducedAmount = value;
-  }
-  get EatAmount() {
-    return this.Soap.EatAmount;
-  }
-  set EatAmount(value) {
-    this.Soap.EatAmount = value;
-  }
-  get EatMessage() {
-    return this.Soap.EatMessage;
-  }
+  })
+
   AddProgress() {
     if (AchievementsData[AchievementKey.HighSpeed].check(this.Progress, this.MaxProgress))
       UnlockAchievement(AchievementKey.HighSpeed)
@@ -190,7 +171,7 @@ export class SoapProducer {
     if (this.Soap.ProducedAmount.lt(this.EatReq) || !this.EatSoapUnlocked)
       return;
 
-    this.EatAmount = this.EatAmount.add(this.ProducedAmount);
+    this.Soap.EatAmount = this.Soap.EatAmount.add(this.Soap.ProducedAmount);
 
     this.QualityCount = 0;
     this.SpeedCount = 0;
@@ -238,7 +219,7 @@ SaveSystem.SaveCallback<SoapProducerSave[]>(saveKey, () => {
       quality_count: value.QualityCount,
       unlocked: value.Unlocked,
       decelerate_count: value.DecelerateCount,
-      lifetime_produced: value.ProducedAmount,
+      lifetime_produced: value.Soap.ProducedAmount,
       type: idx,
     })
   })
@@ -254,6 +235,6 @@ SaveSystem.LoadCallback<SoapProducerSave[]>(saveKey, (data) => {
     SoapProducers[key].QualityCount = value.quality_count;
     SoapProducers[key].Unlocked = value.unlocked;
     SoapProducers[key].DecelerateCount = value.decelerate_count;
-    SoapProducers[key].ProducedAmount = new Decimal(value.lifetime_produced);
+    SoapProducers[key].Soap.ProducedAmount = new Decimal(value.lifetime_produced);
   })
 });
