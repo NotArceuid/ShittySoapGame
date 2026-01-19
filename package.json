@@ -4,9 +4,10 @@
   "version": "1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "deploy": "gh-pages -d dist",
     "prepare": "svelte-kit sync || echo ''",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -45,5 +46,11 @@
     "prettier-plugin-svelte": "^3.4.1",
     "svelte-i18n": "^4.0.1",
     "svelte5-collapsible": "^1.1.8"
+  },
+  "homepage": {
+    "name": "Soap Game",
+    "version": "1.0",
+    "homepage": "https://notarceuid.github.io/soap-game",
+    "private": true
   }
 }
