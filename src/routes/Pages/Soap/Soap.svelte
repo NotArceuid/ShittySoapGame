@@ -58,6 +58,10 @@
 		upgradesUnlocked = data.upgradesUnlocked;
 		foundryUnlocked = data.foundryUnlocked;
 	});
+
+	function ChangePage(page: SoapPages) {
+		pageHandler.ChangePage(page);
+	}
 </script>
 
 <div
@@ -66,20 +70,14 @@
 		: 'opacity-100'}"
 >
 	<div class="flex flex-row w-full ml-2" id="soap-nav">
-		<button onclick={() => pageHandler.ChangePage(SoapPages.Produce)}>
-			Produce
-		</button>
+		<button onclick={() => ChangePage(SoapPages.Produce)}> Produce </button>
 
 		{#if upgradesUnlocked || DevHacks.skipUnlock}
-			<button onclick={() => pageHandler.ChangePage(SoapPages.Upgrades)}>
-				Upgrades
-			</button>
+			<button onclick={() => ChangePage(SoapPages.Upgrades)}> Upgrades </button>
 		{/if}
 
 		{#if foundryUnlocked || DevHacks.skipUnlock}
-			<button onclick={() => pageHandler.ChangePage(SoapPages.Foundry)}>
-				Foundry
-			</button>
+			<button onclick={() => ChangePage(SoapPages.Foundry)}> Foundry </button>
 		{/if}
 	</div>
 	<div

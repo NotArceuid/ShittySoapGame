@@ -232,7 +232,7 @@
 					</div>
 					<div class="h-2 relative overflow-hidden rounded">
 						<div
-							class=" absolute h-2 transition-all ease-out bg-blue-300"
+							class=" absolute h-2 transition-all ease-linear duration-25 bg-blue-300"
 							style="width: {barWidth}%"
 						></div>
 						<div

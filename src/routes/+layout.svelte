@@ -3,10 +3,6 @@
 	import { getLocaleFromNavigator, init, waitLocale } from "svelte-i18n";
 	import "../app.css";
 	import { RegisterLocales } from "../Locales/i18n";
-	import { onMount } from "svelte";
-	import { OfflineProps } from "../Game/Game.svelte";
-	import { Settings } from "./Pages/Settings.svelte.ts";
-	import { SaveSystem } from "../Game/Saves.ts";
 	let { children } = $props();
 
 	RegisterLocales();
