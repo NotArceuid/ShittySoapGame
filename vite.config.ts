@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [sveltekit(), tailwindcss(), nodePolyfills()],
+    base: '/soap-game/',
     define: {
       PKG_VERSION: JSON.stringify(pkg.version),
       PKG_NAME: JSON.stringify(pkg.name),
